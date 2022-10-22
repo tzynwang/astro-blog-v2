@@ -2,7 +2,7 @@
 layout: '../../layouts/BlogPost.astro'
 title: 2022 第34週 實作筆記：單色螢光筆功能
 pubDate: '2022-08-26 21:20:07'
-tags:
+category:
   - HTML
   - React
 ---

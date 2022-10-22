@@ -2,7 +2,7 @@
 layout: '../../layouts/BlogPost.astro'
 title: 2022 第42週 實作筆記：TypeScript type predicates
 pubDate: '2022-10-21 19:45:14'
-tags:
+category:
   - TypeScript
 ---
 
