@@ -10,7 +10,7 @@
 body {
   font-family: system-ui, Verdana, sans-serif;
   margin: auto;
-  padding: 2rem;
+  padding: 2rem 4rem;
   max-width: 80ch;
   text-align: left;
   word-wrap: break-word;
