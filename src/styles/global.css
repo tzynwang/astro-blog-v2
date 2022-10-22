@@ -1,67 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /*
   The CSS in this style tag is based off of Bear Blog's default CSS.
   https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
 body {
-	font-family: Verdana, sans-serif;
-	margin: auto;
-	padding: 20px;
-	max-width: 65ch;
-	text-align: left;
-	background-color: #fff;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	line-height: 1.5;
-	color: #444;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-strong,
-b {
-	color: #222;
-}
-a {
-	color: #3273dc;
+  font-family: system-ui, Verdana, sans-serif;
+  margin: auto;
+  padding: 2rem;
+  max-width: 80ch;
+  text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 nav a {
-	margin-right: 10px;
+  margin-right: 10px;
 }
 textarea {
-	width: 100%;
-	font-size: 16px;
+  width: 100%;
+  font-size: 1rem;
 }
 input {
-	font-size: 16px;
-}
-content {
-	line-height: 1.6;
+  font-size: 1rem;
 }
 table {
-	width: 100%;
+  width: 100%;
 }
 img {
-	max-width: 100%;
-	height: auto;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+/* style with tailwind */
+:root {
+  background-color: hsl(var(--b3));
+}
+body {
+  background-color: hsl(var(--b1));
+}
+a {
+  color: hsl(var(--pf));
+}
+h1 {
+  font-size: 3rem;
+  line-height: 1;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+h2 {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+h3 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+h4 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+h5 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+h6 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+ul li {
+  list-style-position: inside;
+  list-style-type: disc;
+}
+ol li {
+  list-style-position: inside;
+  list-style-type: decimal;
+}
+li li {
+  margin-left: 1rem;
+}
+p {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+hr {
+  border-top: 1px dashed hsl(var(--n));
+  margin: 1rem 0;
 }
 code {
-	padding: 2px 5px;
-	background-color: #f2f2f2;
+  padding: 2px 4px;
+  background-color: hsl(var(--sf));
 }
 pre {
-	padding: 1rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding: 1rem;
 }
 pre > code {
-	all: unset;
+  all: unset;
 }
 blockquote {
-	border: 1px solid #999;
-	color: #222;
-	padding: 2px 0px 2px 20px;
-	margin: 0px;
-	font-style: italic;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0px 0.5rem 1rem;
+  border-left: 4px solid hsl(var(--n));
 }
