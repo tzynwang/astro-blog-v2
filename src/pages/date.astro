@@ -1,0 +1,45 @@
+---
+import dayjs from 'dayjs';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+
+export interface Frontmatter {
+  title: string;
+  description: string;
+  date: string;
+  categories: string[];
+}
+
+const posts = (await Astro.glob<Frontmatter>('./*/*.md')).sort(
+  (a, b) =>
+    new Date(b.frontmatter.date).valueOf() -
+    new Date(a.frontmatter.date).valueOf()
+);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <ul>
+        {
+          posts.map((post) => (
+            <li class="post-list-item">
+              <a href={post.url} class="post-list-link">
+                <span>{post.frontmatter.title}</span>
+                <span>{dayjs(post.frontmatter.date).format('MM-DD')}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </main>
+    <Footer />
+  </body>
+</html>

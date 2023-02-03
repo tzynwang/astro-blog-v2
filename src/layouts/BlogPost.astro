@@ -1,76 +1,32 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
+import PostHeader from '../components/PostHeader.astro';
 import Footer from '../components/Footer.astro';
 
-export interface Props {
+interface Props {
   content: {
     title: string;
     description: string;
-    pubDate?: string;
-    updatedDate?: string;
-    heroImage?: string;
-    category?: string[];
+    date: string;
+    categories: string[];
   };
 }
 
 const {
-  content: { title, description, pubDate, updatedDate, heroImage, category },
+  content: { title, description, date, categories },
 } = Astro.props;
 ---
 
 <html lang="en">
   <head>
     <BaseHead title={title} description={description} />
-    <style>
-      .post-title {
-        font-size: 1.875rem;
-        line-height: 2.25rem;
-        margin-top: 0.75rem;
-        margin-bottom: 0.75rem;
-      }
-      .post-time {
-        display: block;
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
-      }
-      .category-container {
-        display: flex;
-        gap: 0.5rem;
-        justify-content: flex-start;
-        align-items: center;
-      }
-      .category {
-        padding: 2px 4px;
-        background-color: hsl(var(--n));
-        color: hsl(var(--nc));
-      }
-    </style>
   </head>
   <body>
     <Header />
     <main>
       <article>
-        {heroImage && <img width={720} height={360} src={heroImage} alt="" />}
-        <h1 class="post-title">{title}</h1>
-        {pubDate && <time class="post-time">{pubDate}</time>}
-        {
-          category && category.length && (
-            <div class="category-container">
-              {category.map((cat) => (
-                <span class="category">{cat}</span>
-              ))}
-            </div>
-          )
-        }
-        {
-          updatedDate && (
-            <div>
-              Last updated on <time>{updatedDate}</time>
-            </div>
-          )
-        }
-        <hr />
+        <PostHeader title={title} date={date} categories={categories} />
         <slot />
       </article>
     </main>

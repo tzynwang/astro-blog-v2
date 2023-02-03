@@ -1,0 +1,32 @@
+---
+import dayjs from 'dayjs';
+
+export interface Props {
+  url?: string;
+  title: string;
+  date: string;
+  categories: string[];
+}
+
+const { url, title, date, categories = [] } = Astro.props;
+---
+
+{
+  url ? (
+    <a href={url} class="post-title">
+      {title}
+    </a>
+  ) : (
+    <h2 class="post-title">{title}</h2>
+  )
+}
+<time class="post-time">{dayjs(date).format('YYYY-MM-DD')}</time>
+{
+  categories.length && (
+    <div class="categories-container">
+      {categories.map((cat) => (
+        <span class="categories">{cat}</span>
+      ))}
+    </div>
+  )
+}

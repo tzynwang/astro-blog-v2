@@ -11,13 +11,10 @@ body {
   font-family: system-ui, Verdana, sans-serif;
   margin: auto;
   padding: 2rem 4rem;
-  max-width: 80ch;
+  max-width: 90ch;
   text-align: left;
   word-wrap: break-word;
   overflow-wrap: break-word;
-}
-nav a {
-  margin-right: 10px;
 }
 textarea {
   width: 100%;
@@ -46,38 +43,24 @@ a {
   color: hsl(var(--pf));
 }
 h1 {
-  font-size: 3rem;
-  line-height: 1;
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
-}
-h2 {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-h3 {
   font-size: 1.875rem;
   line-height: 2.25rem;
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
 }
-h4 {
+h2,
+.post-title,
+.section-categories {
   font-size: 1.5rem;
   line-height: 2rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
-h5 {
+h3 {
   font-size: 1.25rem;
   line-height: 1.75rem;
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
-}
-h6 {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
 }
 ul li {
   list-style-position: inside;
@@ -100,6 +83,7 @@ hr {
 }
 code {
   padding: 2px 4px;
+  color: hsl(var(--sc));
   background-color: hsl(var(--sf));
 }
 pre {
@@ -115,4 +99,28 @@ blockquote {
   margin-bottom: 0.75rem;
   padding: 0.5rem 0px 0.5rem 1rem;
   border-left: 4px solid hsl(var(--n));
+}
+.post-time {
+  display: block;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.categories-container {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-start;
+  align-items: center;
+}
+.categories {
+  padding: 2px 4px;
+  background-color: hsl(var(--n));
+  color: hsl(var(--nc));
+}
+.post-list-item {
+  list-style-type: none;
+}
+.post-list-link {
+  display: flex;
+  justify-content: space-between;
+  font-variant-numeric: tabular-nums;
 }
