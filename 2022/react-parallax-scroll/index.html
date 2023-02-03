@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Global Metadata --><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="generator" content="Astro v1.5.2">
+
+<!-- Primary Meta Tags -->
+<title>2022 第20週 實作筆記：在 React APP 中實作滾動視差</title>
+<meta name="title" content="2022 第20週 實作筆記：在 React APP 中實作滾動視差">
+<meta name="description">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://example.com/2022/react-parallax-scroll/">
+<meta property="og:title" content="2022 第20週 實作筆記：在 React APP 中實作滾動視差">
+<meta property="og:description">
+<meta property="og:image" content="https://example.com/placeholder-social.jpg">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://example.com/2022/react-parallax-scroll/">
+<meta property="twitter:title" content="2022 第20週 實作筆記：在 React APP 中實作滾動視差">
+<meta property="twitter:description">
+<meta property="twitter:image" content="https://example.com/placeholder-social.jpg">
+
+  <link rel="stylesheet" href="/assets/css-margin-inline-end.5a53e6f3.css" /></head>
+  <body>
+    
+<header class="astro-WIAEFCSV">
+  <a href="/" class="site-title astro-WIAEFCSV">普通文組</a>
+  <nav class="nav-link-container astro-WIAEFCSV">
+    <a href="/date" class="astro-WIAEFCSV astro-3EJL25VA">
+	依日期瀏覽
+</a>
+
+    <a href="/categories" class="astro-WIAEFCSV astro-3EJL25VA">
+	依分類瀏覽
+</a>
+
+  </nav>
+  <hr class="astro-WIAEFCSV">
+</header>
+    <main>
+      <article>
+        <h2 class="post-title">2022 第20週 實作筆記：在 React APP 中實作滾動視差</h2>
+<time class="post-time">2022-05-21</time>
+<div class="categories-container">
+      <span class="categories">CSS</span><span class="categories">React</span>
+    </div>
+        <h2 id="總結">總結</h2>
+<p>使用 <code>position: sticky;</code> 製作出滾動視差（parallax effect）效果</p>
+<p><img src="/2022/react-parallax-scroll/react-parallax-scroll-demo.gif" alt="react-parallax-scroll-demo"></p>
+<p>展示：<a href="https://tzynwang.github.io/react-parallax-effect/">https://tzynwang.github.io/react-parallax-effect/</a>
+原始碼：<a href="https://github.com/tzynwang/react-parallax-effect/tree/feature/sticky">https://github.com/tzynwang/react-parallax-effect/tree/feature/sticky</a>
+參考來源：<a href="https://asana.com/?noredirect">Asana</a> 首頁的動畫效果</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="關於-asana-首頁的滾動視差">關於 Asana 首頁的滾動視差</h3>
+<ul>
+<li>左側圖片的動畫效果是透過 <code>transform</code> 製作出來的，並非 SVG 檔案；在捲動到一定位置時觸發 <code>transform</code> 來改變 HTMLElement 的位置（<code>transform: translate(...);</code>）與變形（<code>transform: scale(...);</code>）程度，以及 <code>border-radius</code> 數值</li>
+<li>數值推測：
+<ul>
+<li>目測第一區塊右側文字的 <code>getBoundingClientRect().top</code> 加上 <code>getBoundingClientRect().bottom</code> 除以二（即中線）超過 <code>window.innerHeight</code> 一半後開始 <code>position: sticky;</code> 效果</li>
+<li>在第二區塊的 <code>getBoundingClientRect().top</code> 超過 <code>window.innerHeight</code> 一半之後就開始進行圖片變形</li>
+<li>第三區塊的「開始」判定看來同第二區塊，而「動畫結束」判定看起來是「區塊的 <code>getBoundingClientRect().bottom</code> 小於 <code>window.innerHeight * 0.05</code> 後，將圖片的 <code>position: sticky;</code> 改為 <code>position: absolute;</code>」</li>
+</ul>
+</li>
+</ul>
+<h3 id="實作">實作</h3>
+<ul>
+<li>準備兩套圖文元件：<code>StaticSection</code> 與 <code>ScrollAnimationSection</code>，<code>StaticSection</code> 處理版面小於 900px 不展示捲動效果的情境，動畫相關的處理都放到 <code>ScrollAnimationSection</code> 與其子元件中</li>
+<li><code>TextBlock</code> 一個設定為 <code>100vh</code> 高，總計三個，而 <code>ImageContainer</code> 則配合三個 <code>TextBlock</code> 堆疊起來的總高度設定為 <code>300vh</code></li>
+<li>元件 <code>Body</code> 中，第 84-95 行旨在計算每一個 <code>TextBlock</code> 的頂部位置，配合 <code>useWindowScrollTop()</code> 回傳的捲動數值可以判定目前畫面捲動到哪一個區塊</li>
+<li>元件 <code>Body</code> 中的 <code>handleScroll</code> 會計算 <code>ImageContainer</code> 元件的頂部是否已經經過畫面頂端，若為 <code>true</code> 則開始準備展現滾動視差動畫效果</li>
+<li>元件 <code>AnimationImage</code> 根據目前畫面捲動的位置替換 <code>src</code> 內容
+<ul>
+<li>設定 <code>top: 50vh;</code> 搭配 <code>transform: translateY(-50%);</code> 做出圖片垂直置中的效果</li>
+<li>因本實作觸發動畫的捲動點與 Asana 版本的不同，在畫面判定捲到最後一個區塊的時候設定 <code>position: absolute;</code> 避免圖片繼續被往下推移</li>
+</ul>
+</li>
+<li>需注意 FireFox 目前並不支援 <code>transition-property: background;</code>，圖片目前僅有在 Chrome 上才會有 <code>transition</code> 效果</li>
+<li>需注意不能在 parent element 使用 <code>display: flex;</code> 否則 <code>position: sticky;</code> 會失效</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect">MDN: Element.getBoundingClientRect()</a></li>
+<li><a href="https://gist.github.com/brandonjp/478cf6e32d90ab9cb2cd8cbb0799c7a7">Gist: findOverflowParents.js</a></li>
+</ul>
+      </article>
+    </main>
+    <footer class="astro-4XU6VB77">
+	&copy; 2023 YOUR NAME HERE. All rights reserved.
+</footer>
+
+  </body></html>

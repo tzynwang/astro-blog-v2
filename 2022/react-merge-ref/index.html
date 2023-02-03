@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Global Metadata --><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="generator" content="Astro v1.5.2">
+
+<!-- Primary Meta Tags -->
+<title>2022 第36週 實作筆記：ref merging</title>
+<meta name="title" content="2022 第36週 實作筆記：ref merging">
+<meta name="description">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://example.com/2022/react-merge-ref/">
+<meta property="og:title" content="2022 第36週 實作筆記：ref merging">
+<meta property="og:description">
+<meta property="og:image" content="https://example.com/placeholder-social.jpg">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://example.com/2022/react-merge-ref/">
+<meta property="twitter:title" content="2022 第36週 實作筆記：ref merging">
+<meta property="twitter:description">
+<meta property="twitter:image" content="https://example.com/placeholder-social.jpg">
+
+  <link rel="stylesheet" href="/assets/css-margin-inline-end.5a53e6f3.css" /></head>
+  <body>
+    
+<header class="astro-WIAEFCSV">
+  <a href="/" class="site-title astro-WIAEFCSV">普通文組</a>
+  <nav class="nav-link-container astro-WIAEFCSV">
+    <a href="/date" class="astro-WIAEFCSV astro-3EJL25VA">
+	依日期瀏覽
+</a>
+
+    <a href="/categories" class="astro-WIAEFCSV astro-3EJL25VA">
+	依分類瀏覽
+</a>
+
+  </nav>
+  <hr class="astro-WIAEFCSV">
+</header>
+    <main>
+      <article>
+        <h2 class="post-title">2022 第36週 實作筆記：ref merging</h2>
+<time class="post-time">2022-09-10</time>
+<div class="categories-container">
+      <span class="categories">React</span>
+    </div>
+        <h2 id="總結">總結</h2>
+<p>在寫鐵人賽時發現自己遇到「元件有自己的 local ref ，但使用該元件的親元件可能也需要透過 ref 來執行一些 DOM 操作」的情境，搜尋後發現可以進行 ref merge 來把內外部的 refs 整併起來。此篇筆記會記錄一下程式碼與相關參考資料。</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="程式碼">程式碼</h3>
+<script src="https://gist.github.com/tzynwang/8e86fec0c8c61dbb374ce3819dd7a374.js"></script>
+<h3 id="mergerefcomponenttsx">mergeRef.Component.tsx</h3>
+<p>使用 <code>React.forwardRef</code> 讓引用此元件的親代元件可以傳入 ref。本身也有自己的 local ref（第 10 行），透過小工具 mergeRef（第 15 行）來將多個 refs 整理為單一個 component instance</p>
+<p>參考 React 官方文件可得知元件的 ref props 除了可以傳入 <code>createRef()</code> 與 <code>useRef()</code> 建立的 <code>MutableRefObject</code> 以外，也能接受傳入 callback function：</p>
+<blockquote>
+<p>Callback Refs: Instead of passing a <code>ref</code> attribute created by <code>createRef()</code>, you pass a function. The function receives the <strong>React component instance or HTML DOM element as its argument</strong>, which can be stored and accessed elsewhere.</p>
+</blockquote>
+<p>把 callback function 傳入元件的 ref props 時，該 function 接受元件實例（instance）或 HTML DOM 物件作為參數。</p>
+<p>附上 stackOverFlow 上的說明：</p>
+<blockquote>
+<p>Ref callbacks are another option, which are needed for some advanced cases. You pass a function into the element, and the function will be called back when the instance is created or destroyed. These have the type <code>(instance: T) => void</code>.</p>
+</blockquote>
+<p>補充：在程式碼第 7 行使用非匿名的 function declaration 即可在 react devTool 中看到 forwardRef component 的名稱。</p>
+<p><img src="/2022/react-merge-ref/name-forwardRef-component.png" alt="name-forwardRef-component"></p>
+<h3 id="mergerefts">mergeRef.ts</h3>
+<ul>
+<li>第 8 行：當 ref 為的型別為 function 時，把元件實例或 HTML DOM 作為參數傳入</li>
+<li>第 10 行：若 ref 不為 null 則把該元件的實例或 HTML DOM 物件指派給 <code>MutableRefObject.current</code></li>
+</ul>
+<p>執行完 mergeRef 後，透過 forwardRef 傳入的 ref 與元件本身的 local ref 都會指向該元件。</p>
+<h3 id="mergerefparentcomponenttsx">mergeRef.ParentComponent.tsx</h3>
+<p>展示實際使用情境，在親元件使用 <code>createRef</code> 建立 refObject 傳給支援 ref merge 的 Button 元件。</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://reactjs.org/docs/refs-and-the-dom.html">React: Refs and the DOM</a></li>
+<li><a href="https://github.com/gregberge/react-merge-refs#react-merge-refs">gregberge/react-merge-refs</a></li>
+<li><a href="https://stackoverflow.com/questions/65876809/property-current-does-not-exist-on-type-instance-htmldivelement-null">Property ‘current’ does not exist on type ‘((instance: HTMLDivElement | null) => void) | RefObject<htmldivelement>’</htmldivelement></a></li>
+<li><a href="https://mayursinhsarvaiya.medium.com/how-to-merge-refs-in-react-component-d5e4623b6924">How to merge refs in React component?</a></li>
+</ul>
+      </article>
+    </main>
+    <footer class="astro-4XU6VB77">
+	&copy; 2023 YOUR NAME HERE. All rights reserved.
+</footer>
+
+  </body></html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Global Metadata --><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="generator" content="Astro v1.5.2">
+
+<!-- Primary Meta Tags -->
+<title>2022 第21週 實作筆記： MaterialUI theme 一鍵換皮</title>
+<meta name="title" content="2022 第21週 實作筆記： MaterialUI theme 一鍵換皮">
+<meta name="description">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://example.com/2022/mui-daisyui-theme/">
+<meta property="og:title" content="2022 第21週 實作筆記： MaterialUI theme 一鍵換皮">
+<meta property="og:description">
+<meta property="og:image" content="https://example.com/placeholder-social.jpg">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://example.com/2022/mui-daisyui-theme/">
+<meta property="twitter:title" content="2022 第21週 實作筆記： MaterialUI theme 一鍵換皮">
+<meta property="twitter:description">
+<meta property="twitter:image" content="https://example.com/placeholder-social.jpg">
+
+  <link rel="stylesheet" href="/assets/css-margin-inline-end.5a53e6f3.css" /></head>
+  <body>
+    
+<header class="astro-WIAEFCSV">
+  <a href="/" class="site-title astro-WIAEFCSV">普通文組</a>
+  <nav class="nav-link-container astro-WIAEFCSV">
+    <a href="/date" class="astro-WIAEFCSV astro-3EJL25VA">
+	依日期瀏覽
+</a>
+
+    <a href="/categories" class="astro-WIAEFCSV astro-3EJL25VA">
+	依分類瀏覽
+</a>
+
+  </nav>
+  <hr class="astro-WIAEFCSV">
+</header>
+    <main>
+      <article>
+        <h2 class="post-title">2022 第21週 實作筆記： MaterialUI theme 一鍵換皮</h2>
+<time class="post-time">2022-05-29</time>
+<div class="categories-container">
+      <span class="categories">MaterialUI</span><span class="categories">React</span>
+    </div>
+        <h2 id="總結">總結</h2>
+<p>使用 React Context 來達成一鍵切換主題的效果</p>
+<p><img src="/2022/mui-daisyui-theme/demo.png" alt="demo"></p>
+<p>展示：<a href="https://tzynwang.github.io/mui-daisy-theme-demo-20220529/">https://tzynwang.github.io/mui-daisy-theme-demo-20220529/</a>
+原始碼：<a href="https://github.com/tzynwang/mui-components/tree/demo/20220529">https://github.com/tzynwang/mui-components/tree/demo/20220529</a>
+色票組合：使用 <a href="https://daisyui.com/docs/colors/">daisyUI: Colors</a> 中的 <code>coffee</code> 、 <code>cupcake</code> 與 <code>retro</code></p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">@mui/material: 5.8.1</span></span>
+<span class="line"><span style="color: #c9d1d9">@mui/styles: 5.8.0</span></span>
+<span class="line"><span style="color: #c9d1d9">daisyui: 2.15.1</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="reactcreatecontext">React.createContext</h3>
+<ul>
+<li>透過 <code>React.createContext</code> 建立 <code>ThemeContext</code> 物件，並 <code>value={{ themeName, setThemeName }}</code></li>
+<li>在元件 <code>ThemeToggle</code> 中透過 <code>React.useContext(ThemeContext)</code> 取得 <code>context</code> 物件，即可在使用者選擇不同主題時更新 <code>ThemeKey</code></li>
+</ul>
+<h3 id="modelstheme">@Models/Theme</h3>
+<ul>
+<li>在建立 Theme 物件（ <code>new Theme()</code> ）時，根據 <code>THEME_KEYS</code> 載入對應的主題設定檔，並透過 MaterialUI 的 <code>createTheme</code> 建立 <code>MuiTheme</code> 物件</li>
+</ul>
+<h3 id="componentsapp">@Components/App</h3>
+<ul>
+<li>使用 useEffect 監聽目前的 <code>themeName</code> ，並透過 <code>Theme.getTheme(themeName)</code> 取得對應的 <code>MuiTheme</code> 物件提供給 MaterialUI 的 <code>ThemeProvider</code></li>
+</ul>
+<h2 id="關於-deepmerge">關於 deepMerge()</h2>
+<ul>
+<li>
+<p>官方型別定義如右： <code>deepmerge&#x3C;T>(target: T, source: unknown, options?: DeepmergeOptions): T</code></p>
+</li>
+<li>
+<p>原始碼如下，可得知 <code>source</code> 的樣式設定會覆蓋掉 <code>target</code> 的內容，最終回傳被覆蓋後的 <code>target</code> ：</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #FF7B72">function</span><span style="color: #C9D1D9"> </span><span style="color: #D2A8FF">deepmerge</span><span style="color: #C9D1D9">(</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #FFA657">target</span><span style="color: #C9D1D9">,</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #FFA657">source</span><span style="color: #C9D1D9">,</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #FFA657">options</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">=</span><span style="color: #C9D1D9"> {</span></span>
+<span class="line"><span style="color: #C9D1D9">    clone: </span><span style="color: #79C0FF">true</span><span style="color: #C9D1D9">,</span></span>
+<span class="line"><span style="color: #C9D1D9">  }</span></span>
+<span class="line"><span style="color: #C9D1D9">) {</span></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #FF7B72">const</span><span style="color: #C9D1D9"> </span><span style="color: #79C0FF">output</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">=</span><span style="color: #C9D1D9"> options.clone </span><span style="color: #FF7B72">?</span><span style="color: #C9D1D9"> (</span><span style="color: #79C0FF">0</span><span style="color: #C9D1D9">, _extends2.default)({}, target) </span><span style="color: #FF7B72">:</span><span style="color: #C9D1D9"> target;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #FF7B72">if</span><span style="color: #C9D1D9"> (</span><span style="color: #D2A8FF">isPlainObject</span><span style="color: #C9D1D9">(target) </span><span style="color: #FF7B72">&#x26;&#x26;</span><span style="color: #C9D1D9"> </span><span style="color: #D2A8FF">isPlainObject</span><span style="color: #C9D1D9">(source)) {</span></span>
+<span class="line"><span style="color: #C9D1D9">    Object.</span><span style="color: #D2A8FF">keys</span><span style="color: #C9D1D9">(source).</span><span style="color: #D2A8FF">forEach</span><span style="color: #C9D1D9">((</span><span style="color: #FFA657">key</span><span style="color: #C9D1D9">) </span><span style="color: #FF7B72">=></span><span style="color: #C9D1D9"> {</span></span>
+<span class="line"><span style="color: #C9D1D9">      </span><span style="color: #8B949E">// Avoid prototype pollution</span></span>
+<span class="line"><span style="color: #C9D1D9">      </span><span style="color: #FF7B72">if</span><span style="color: #C9D1D9"> (key </span><span style="color: #FF7B72">===</span><span style="color: #C9D1D9"> </span><span style="color: #A5D6FF">'__proto__'</span><span style="color: #C9D1D9">) {</span></span>
+<span class="line"><span style="color: #C9D1D9">        </span><span style="color: #FF7B72">return</span><span style="color: #C9D1D9">;</span></span>
+<span class="line"><span style="color: #C9D1D9">      }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C9D1D9">      </span><span style="color: #FF7B72">if</span><span style="color: #C9D1D9"> (</span></span>
+<span class="line"><span style="color: #C9D1D9">        </span><span style="color: #D2A8FF">isPlainObject</span><span style="color: #C9D1D9">(source[key]) </span><span style="color: #FF7B72">&#x26;&#x26;</span></span>
+<span class="line"><span style="color: #C9D1D9">        key </span><span style="color: #FF7B72">in</span><span style="color: #C9D1D9"> target </span><span style="color: #FF7B72">&#x26;&#x26;</span></span>
+<span class="line"><span style="color: #C9D1D9">        </span><span style="color: #D2A8FF">isPlainObject</span><span style="color: #C9D1D9">(target[key])</span></span>
+<span class="line"><span style="color: #C9D1D9">      ) {</span></span>
+<span class="line"><span style="color: #C9D1D9">        </span><span style="color: #8B949E">// Since `output` is a clone of `target` and we have narrowed `target` in this block we can cast to the same type.</span></span>
+<span class="line"><span style="color: #C9D1D9">        output[key] </span><span style="color: #FF7B72">=</span><span style="color: #C9D1D9"> </span><span style="color: #D2A8FF">deepmerge</span><span style="color: #C9D1D9">(target[key], source[key], options);</span></span>
+<span class="line"><span style="color: #C9D1D9">      } </span><span style="color: #FF7B72">else</span><span style="color: #C9D1D9"> {</span></span>
+<span class="line"><span style="color: #C9D1D9">        output[key] </span><span style="color: #FF7B72">=</span><span style="color: #C9D1D9"> source[key];</span></span>
+<span class="line"><span style="color: #C9D1D9">      }</span></span>
+<span class="line"><span style="color: #C9D1D9">    });</span></span>
+<span class="line"><span style="color: #C9D1D9">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #C9D1D9">  </span><span style="color: #FF7B72">return</span><span style="color: #C9D1D9"> output;</span></span>
+<span class="line"><span style="color: #C9D1D9">}</span></span></code></pre>
+</li>
+</ul>
+<h3 id="備註">備註</h3>
+<ul>
+<li>自定義的 <code>MuiTheme</code> 需由開發者自行定義 <code>mode: light</code> 與 <code>mode: dark</code> 下的顏色樣式，切換自定義 MuiTheme 的 <code>palette.mode</code> 不會自動計算出對應的 <code>palette</code></li>
+<li>參考 <a href="https://mui.com/material-ui/customization/dark-mode/#dark-mode-with-a-custom-palette">MaterialUI 官方文件說明</a>： If you have a custom palette, you need to make sure that you have the correct values based on the mode. The next section explain how to do this.</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://reactjs.org/docs/context.html">React Official: Context</a></li>
+<li><a href="https://reactjs.org/docs/hooks-reference.html#usecontext">React Official: useContext</a></li>
+<li><a href="https://mui.com/material-ui/customization/dark-mode/">MaterialUI: Dark Mode</a></li>
+<li><a href="https://stackoverflow.com/questions/45251664/typescript-derive-union-type-from-tuple-array-values">Typescript derive union type from tuple/array values</a></li>
+<li><a href="https://stackoverflow.com/questions/53050011/remove-null-or-undefined-from-properties-of-a-type">remove null or undefined from properties of a type</a></li>
+</ul>
+      </article>
+    </main>
+    <footer class="astro-4XU6VB77">
+	&copy; 2023 YOUR NAME HERE. All rights reserved.
+</footer>
+
+  </body></html>

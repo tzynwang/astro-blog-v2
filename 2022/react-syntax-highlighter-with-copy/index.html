@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Global Metadata --><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="generator" content="Astro v1.5.2">
+
+<!-- Primary Meta Tags -->
+<title>2022 第22週 實作筆記：為 react-syntax-highlighter 加上複製功能</title>
+<meta name="title" content="2022 第22週 實作筆記：為 react-syntax-highlighter 加上複製功能">
+<meta name="description">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://example.com/2022/react-syntax-highlighter-with-copy/">
+<meta property="og:title" content="2022 第22週 實作筆記：為 react-syntax-highlighter 加上複製功能">
+<meta property="og:description">
+<meta property="og:image" content="https://example.com/placeholder-social.jpg">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://example.com/2022/react-syntax-highlighter-with-copy/">
+<meta property="twitter:title" content="2022 第22週 實作筆記：為 react-syntax-highlighter 加上複製功能">
+<meta property="twitter:description">
+<meta property="twitter:image" content="https://example.com/placeholder-social.jpg">
+
+  <link rel="stylesheet" href="/assets/css-margin-inline-end.5a53e6f3.css" /></head>
+  <body>
+    
+<header class="astro-WIAEFCSV">
+  <a href="/" class="site-title astro-WIAEFCSV">普通文組</a>
+  <nav class="nav-link-container astro-WIAEFCSV">
+    <a href="/date" class="astro-WIAEFCSV astro-3EJL25VA">
+	依日期瀏覽
+</a>
+
+    <a href="/categories" class="astro-WIAEFCSV astro-3EJL25VA">
+	依分類瀏覽
+</a>
+
+  </nav>
+  <hr class="astro-WIAEFCSV">
+</header>
+    <main>
+      <article>
+        <h2 class="post-title">2022 第22週 實作筆記：為 react-syntax-highlighter 加上複製功能</h2>
+<time class="post-time">2022-06-06</time>
+<div class="categories-container">
+      <span class="categories">React</span>
+    </div>
+        <h2 id="總結">總結</h2>
+<p>本家：<a href="https://react-syntax-highlighter.github.io/react-syntax-highlighter">React Syntax Highlighter</a>
+展示：<a href="https://tzynwang.github.io/react-syntax-highlighter-with-copy/">https://tzynwang.github.io/react-syntax-highlighter-with-copy/</a>
+原始碼：<a href="https://github.com/tzynwang/react-syntax-highlighter-with-copy/tree/demo/20220605">https://github.com/tzynwang/react-syntax-highlighter-with-copy/tree/demo/20220605</a></p>
+<p><img src="/2022/react-syntax-highlighter-with-copy/demo.png" alt="demo"></p>
+<p>加上複製功能不難，但在使用 rollup 打包完成並嘗試 import 套件時持續撞到</p>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">ERROR in ../react-syntax-highlighter-to-copy/node_modules/@emotion/react/dist/emotion-element-cbed451f.browser.esm.js 10:41-54</span></span>
+<span class="line"><span style="color: #c9d1d9">export 'createContext' (imported as 'createContext') was not found in 'react' (module has no exports)</span></span></code></pre>
+<p>之狀況（戰了 4 小時還是解不掉，先放置一下 ∠( ᐛ 」∠)＿ ），打算先將 @mui 系列的套件從 dependency 移除再嘗試打包看是否可以解決問題</p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #c9d1d9">@mui/icons-material: 5.8.2</span></span>
+<span class="line"><span style="color: #c9d1d9">@mui/material: 5.8.2</span></span>
+<span class="line"><span style="color: #c9d1d9">react: 17.0.2</span></span>
+<span class="line"><span style="color: #c9d1d9">rollup: 2.67.3</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<ul>
+<li>加工內容：滑鼠 <code>:hover</code> 到 CodeBlock 元件，元件右上角會出現複製圖示，點擊後即可複製 CodeBlock 全部內容；複製成功後，圖示會變為打鉤外觀，三秒後回復為一開始的複製樣式</li>
+<li>基本上只是對 <code>react-syntax-highlighter</code> default export 的元件加上 props <code>style</code> 攔截樣式內容（以便根據樣式來設定複製圖示的顏色），複製功能則是使用 <code>navigator.clipboard.writeText</code> 來處理（包在 <code>src/hooks/useCopy</code> 中）</li>
+<li><code>CodeBlockProps</code> 直接 extends <code>react-syntax-highlighter</code> 的型別定義（除了 props <code>children</code> 因在 CodeBlock 元件不會使用故以 Omit 處理掉），故 <code>react-syntax-highlighter</code> 所有可以使用的 props 都可以直接傳入 CodeBlock 中，並行為與原生套件一致</li>
+<li>解決掉 rollup 打包問題後，預計實作「可自訂復原秒數」與「可自訂複製圖示外觀與指定位置」之功能</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://rollupjs.org/guide/en/">rollup.js</a></li>
+<li><a href="https://dev.to/siddharthvenkatesh/component-library-setup-with-react-typescript-and-rollup-onj">Component library setup with React, TypeScript and Rollup</a></li>
+<li><a href="https://www.codefeetime.com/post/rollup-config-for-react-component-library-with-typescript-scss/">Rollup Config for React Component Library With TypeScript + SCSS</a></li>
+</ul>
+      </article>
+    </main>
+    <footer class="astro-4XU6VB77">
+	&copy; 2023 YOUR NAME HERE. All rights reserved.
+</footer>
+
+  </body></html>

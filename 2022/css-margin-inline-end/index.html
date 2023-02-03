@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Global Metadata --><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="generator" content="Astro v1.5.2">
+
+<!-- Primary Meta Tags -->
+<title>CSS 筆記：Logical properties 中的 margin-inline-end</title>
+<meta name="title" content="CSS 筆記：Logical properties 中的 margin-inline-end">
+<meta name="description">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://example.com/2022/css-margin-inline-end/">
+<meta property="og:title" content="CSS 筆記：Logical properties 中的 margin-inline-end">
+<meta property="og:description">
+<meta property="og:image" content="https://example.com/placeholder-social.jpg">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://example.com/2022/css-margin-inline-end/">
+<meta property="twitter:title" content="CSS 筆記：Logical properties 中的 margin-inline-end">
+<meta property="twitter:description">
+<meta property="twitter:image" content="https://example.com/placeholder-social.jpg">
+
+  <link rel="stylesheet" href="/assets/css-margin-inline-end.5a53e6f3.css" /></head>
+  <body>
+    
+<header class="astro-WIAEFCSV">
+  <a href="/" class="site-title astro-WIAEFCSV">普通文組</a>
+  <nav class="nav-link-container astro-WIAEFCSV">
+    <a href="/date" class="astro-WIAEFCSV astro-3EJL25VA">
+	依日期瀏覽
+</a>
+
+    <a href="/categories" class="astro-WIAEFCSV astro-3EJL25VA">
+	依分類瀏覽
+</a>
+
+  </nav>
+  <hr class="astro-WIAEFCSV">
+</header>
+    <main>
+      <article>
+        <h2 class="post-title">CSS 筆記：Logical properties 中的 margin-inline-end</h2>
+<time class="post-time">2022-07-13</time>
+<div class="categories-container">
+      <span class="categories">CSS</span>
+    </div>
+        <h2 id="範例">範例</h2>
+<p><img src="/2022/css-margin-inline-end/demo-0.png" alt="demo-0">
+<img src="/2022/css-margin-inline-end/demo-1.png" alt="demo-1"></p>
+<ul>
+<li>使用 <code>margin-inline-end</code> 可以達成「文字與後方標籤保持距離，且確保標籤會緊跟在文字末端」</li>
+<li>如果使用 <code>display: flex</code> 搭配 <code>gap</code> 無法做出「標籤緊跟在文字末端」的效果，因 <code>display: flex</code> 會把文字（儘管沒有透過 span 元素包起來）與標籤群分割為兩個不同的節點，標籤群便無法尾隨在文字區塊後方。</li>
+</ul>
+<p class="codepen" data-height="300" data-default-tab="html,result" data-slug-hash="eYMzrqG" data-user="Charlie7779" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/eYMzrqG">
+  margin-inline-end</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h2 id="筆記">筆記</h2>
+<h3 id="logical-properties">Logical properties</h3>
+<blockquote>
+<p>MDN: The margin-inline-end CSS property defines the <strong>logical inline end margin</strong> of an element, which maps to a physical margin depending on the element’s writing mode, directionality, and text orientation.</p>
+</blockquote>
+<blockquote>
+<p>web.dev: A <strong>logical property</strong> is one that references a side, corner or axis of the box model in context of the applicable language direction. It’s akin to referencing someone’s strong arm, rather than assuming it’s their right arm. “Right” is a physical arm reference, “strong” is a logical arm reference, contextual to the individual.</p>
+</blockquote>
+<h3 id="inline-dimension">Inline dimension</h3>
+<blockquote>
+<p>The dimension parallel to the <strong>flow of text within a line</strong>, i.e., the horizontal dimension in horizontal writing modes, and the vertical dimension in vertical writing modes. For standard English text, it is the horizontal dimension.</p>
+</blockquote>
+<ul>
+<li>以英文為例，被 <code>margin-inline</code> 這類 logical properties 控制的是某元素<strong>水平方向</strong>的間距</li>
+<li>但如果是中文（或日文）等直書文字，被 <code>margin-inline</code> 控制的會是<strong>垂直方向</strong>的間距</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-end">MDN: margin-inline-end</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Logical_Properties">MDN: CSS Logical Properties and Values</a></li>
+<li><a href="https://web.dev/logical-property-shorthands/">web.dev: Logical layout enhancements with flow-relative shorthands</a></li>
+</ul>
+      </article>
+    </main>
+    <footer class="astro-4XU6VB77">
+	&copy; 2023 YOUR NAME HERE. All rights reserved.
+</footer>
+
+  </body></html>
