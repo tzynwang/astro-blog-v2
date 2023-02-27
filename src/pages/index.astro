@@ -1,0 +1,23 @@
+---
+import BaseHead from '../layers/BaseHead.astro';
+const allPosts = await Astro.glob('../pages/posts/**/*.md');
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title="普通文組 2.0" description="tzyn blog v2 index" />
+  </head>
+  <body>
+    <h1>Astro</h1>
+    {
+      allPosts.map((post) => (
+        <li>
+          <a href={post.url}>{post.frontmatter.title}</a>
+          <div>{post.frontmatter.date}</div>
+          <div>{post.frontmatter.tag}</div>
+          <img src={post.frontmatter.banner} />
+        </li>
+      ))
+    }
+  </body>
+</html>
