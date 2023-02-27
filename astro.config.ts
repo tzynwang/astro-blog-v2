@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://tzynwang.github.io/'
+  site: 'https://tzynwang.github.io/',
+  integrations: [sitemap()],
 });
