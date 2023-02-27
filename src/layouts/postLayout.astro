@@ -1,0 +1,29 @@
+---
+import fs from 'fs';
+import { marked } from 'marked';
+import BaseHead from '../layers/BaseHead.astro';
+
+const { frontmatter } = Astro.props;
+const filePath = frontmatter.file;
+const rawFileContent = fs.readFileSync(filePath, 'utf8');
+const tocResult = marked
+  .lexer(rawFileContent)
+  .filter((token) => token.type === 'heading')
+  // @ts-ignore
+  .map((heading) => ({ depth: heading.depth, text: heading.text }));
+tocResult.shift();
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={frontmatter.title} description={frontmatter.summary} />
+  </head>
+  <body>
+    <h1>{frontmatter.title}</h1>
+    <img src={frontmatter.banner} alt="post banner" />
+    <p>date: {frontmatter.date}</p>
+    <p>tags: {frontmatter.tag}</p>
+    <ul>{tocResult.map((toc) => <li>{toc.text}</li>)}</ul>
+    <slot />
+  </body>
+</html>
