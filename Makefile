@@ -26,7 +26,8 @@ new:
 	echo "layout: '@Components/SinglePostLayout.astro'"
 	echo "title: $(post)" >> src/pages/posts/$(shell date +%Y)/$(post).md
 	echo "date: $(shell date +%F) $(shell date +%T)" >> src/pages/posts/$(shell date +%Y)/$(post).md
-	echo "tag: []" >> src/pages/posts/$(shell date +%Y)/$(post).md
+	echo "tag:" >> src/pages/posts/$(shell date +%Y)/$(post).md
+	echo "	- []" >> src/pages/posts/$(shell date +%Y)/$(post).md
 	echo "banner: " >> src/pages/posts/$(shell date +%Y)/$(post).md
 	echo "summary: " >> src/pages/posts/$(shell date +%Y)/$(post).md
 	echo "---" >> src/pages/posts/$(shell date +%Y)/$(post).md
