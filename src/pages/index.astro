@@ -1,11 +1,12 @@
 ---
 import BaseHead from '@Components/BaseHead.astro';
-import { sortPostByDate } from '@Tools/post';
+import { sortPostByDate, getPostWithCompiledSummary } from '@Tools/post';
 import type { Post } from '@Models/GeneralTypes';
 
 const allPosts = await Astro.glob<Post>('../pages/posts/**/*.md');
 const sortedPosts = sortPostByDate(allPosts);
 const firstTenPosts = sortedPosts.slice(0, 10);
+const postsWithCompiledSummary = getPostWithCompiledSummary(firstTenPosts);
 ---
 
 <html lang="en">
@@ -15,15 +16,17 @@ const firstTenPosts = sortedPosts.slice(0, 10);
   <body>
     <h1>普通文組 2.0</h1>
     {
-      firstTenPosts.map((post) => (
+      postsWithCompiledSummary.map((post) => (
         <li>
           <a href={post.url}>{post.frontmatter.title}</a>
           <div>{post.frontmatter.date}</div>
-          <div>{post.frontmatter.tag}</div>
+          <ul>
+            {post.frontmatter.tag.map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
           {post.frontmatter.banner && <img src={post.frontmatter.banner} />}
-          {post.frontmatter.summary && (
-            <div set:html={post.frontmatter.summary} />
-          )}
+          <div set:html={post.summary} />
         </li>
       ))
     }
