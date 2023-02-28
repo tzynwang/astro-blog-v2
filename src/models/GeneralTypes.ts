@@ -3,7 +3,7 @@ export type { MarkdownInstance } from 'astro';
 export interface Post {
   title: string;
   date: Date;
-  tag: string;
+  tag: string[];
   banner?: string;
   summary?: string;
 }
