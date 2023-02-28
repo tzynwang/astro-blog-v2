@@ -1,10 +1,11 @@
 ---
-import BaseHead from '@Layers/BaseHead.astro';
+import BaseHead from '@Components/BaseHead.astro';
 import { sortPostByDate } from '@Tools/post';
 import type { Post } from '@Models/GeneralTypes';
 
 const allPosts = await Astro.glob<Post>('../pages/posts/**/*.md');
 const sortedPosts = sortPostByDate(allPosts);
+const firstTenPosts = sortedPosts.slice(0, 10);
 ---
 
 <html lang="en">
@@ -12,9 +13,9 @@ const sortedPosts = sortPostByDate(allPosts);
     <BaseHead title="普通文組 2.0" description="tzyn blog v2 index" />
   </head>
   <body>
-    <h1>Astro</h1>
+    <h1>普通文組 2.0</h1>
     {
-      sortedPosts.map((post) => (
+      firstTenPosts.map((post) => (
         <li>
           <a href={post.url}>{post.frontmatter.title}</a>
           <div>{post.frontmatter.date}</div>

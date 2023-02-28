@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/postLayout.astro
+layout: '@Components/SinglePostLayout.astro'
 title: 透過 npx 在呼叫套件時省略 node_modules/.bin 前綴
 date: 2023-02-24 21:03:42
 tag: [Package Manager]
