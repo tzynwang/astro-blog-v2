@@ -23,7 +23,7 @@ preview:
 .PHONY: new
 new:
 	echo "---" >> src/pages/posts/$(shell date +%Y)/$(post).md
-	echo "layout: ../../../layouts/postLayout.astro"
+	echo "layout: '@Components/SinglePostLayout.astro'"
 	echo "title: $(post)" >> src/pages/posts/$(shell date +%Y)/$(post).md
 	echo "date: $(shell date +%F) $(shell date +%T)" >> src/pages/posts/$(shell date +%Y)/$(post).md
 	echo "tag: []" >> src/pages/posts/$(shell date +%Y)/$(post).md
