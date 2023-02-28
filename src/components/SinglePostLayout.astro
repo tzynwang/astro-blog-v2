@@ -20,7 +20,9 @@ const { frontmatter, headings } = Astro.props;
   <body>
     <h1>{frontmatter.title}</h1>
     <p>date: {frontmatter.date}</p>
-    <p>tags: {frontmatter.tag}</p>
+    <p>tags:</p>
+    <ul>{frontmatter.tag.map((tag) => <li>{tag}</li>)}</ul>
+    <p>toc:</p>
     <ul>{headings.map((heading) => <li>{heading.text}</li>)}</ul>
     <slot />
   </body>
