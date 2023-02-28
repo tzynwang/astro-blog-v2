@@ -4,8 +4,7 @@
     "importsNotUsedAsValues": "error",
     "baseUrl": "./src",
     "paths": {
-      "@Layers/*": ["layers/*"],
-      "@Layouts/*": ["layouts/*"],
+      "@Components/*": ["components/*"],
       "@Models/*": ["models/*"],
       "@Pages/*": ["pages/*"],
       "@Styles/*": ["styles/*"],
