@@ -2,9 +2,11 @@
 layout: '@Components/SinglePostLayout.astro'
 title: 透過 npx 在呼叫套件時省略 node_modules/.bin 前綴
 date: 2023-02-24 21:03:42
-tag: [Package Manager]
+tag:
+  - [Package Manager]
+  - [Test Tag]
 banner: /2023/npx-package-runner/evie-s-aFGZmB0vmIg.jpg
-summary: 在把專案 `package.json` 中的 `scripts` 內容都移植到 `Makefile` 時，發現在 make 腳本中如果省略 `npx` 或 `yarn` 的話，就無法執行套件，修正完腳本後查了一下 `npx` 到底做了哪些事情，這篇筆記基本上就是圍繞在這個主題上。
+summary: 在把專案 package.json 中的 scripts 內容都移植到 Makefile 時，發現在 make 腳本中如果省略 npx 或 yarn 的話，就無法執行套件，修正完腳本後查了一下 npx 到底做了哪些事情，這篇筆記基本上就是圍繞在這個主題上。
 ---
 
 ## 總結
