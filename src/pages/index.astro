@@ -1,5 +1,5 @@
 ---
-import BaseHead from '@Components/BaseHead.astro';
+import Head from '@Components/Head.astro';
 import { sortPostByDate, getPostWithCompiledSummary } from '@Tools/post';
 import type { Post } from '@Models/GeneralTypes';
 
@@ -10,9 +10,7 @@ const postsWithCompiledSummary = getPostWithCompiledSummary(firstTenPosts);
 ---
 
 <html lang="en">
-  <head>
-    <BaseHead title="普通文組 2.0" description="tzyn blog v2 index" />
-  </head>
+  <Head title="普通文組 2.0" description="tzyn blog v2 index" />
   <body>
     <h1>普通文組 2.0</h1>
     {

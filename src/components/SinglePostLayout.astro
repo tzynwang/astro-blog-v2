@@ -1,5 +1,5 @@
 ---
-import BaseHead from '@Components/BaseHead.astro';
+import Head from '@Components/Head.astro';
 import type { Post, Heading } from '@Models/GeneralTypes';
 
 interface Props {
@@ -11,12 +11,7 @@ const { frontmatter, headings } = Astro.props;
 ---
 
 <html lang="en">
-  <head>
-    <BaseHead
-      title={frontmatter.title}
-      description={frontmatter.summary || ''}
-    />
-  </head>
+  <Head title={frontmatter.title} description={frontmatter.summary || ''} />
   <body>
     <h1>{frontmatter.title}</h1>
     <p>date: {frontmatter.date}</p>
