@@ -1,5 +1,5 @@
 ---
-import Head from '@Components/Head.astro';
+import Html from '@Components/Html.astro';
 import type { Post, Heading } from '@Models/GeneralTypes';
 
 interface Props {
@@ -10,15 +10,12 @@ interface Props {
 const { frontmatter, headings } = Astro.props;
 ---
 
-<html lang="en">
-  <Head title={frontmatter.title} description={frontmatter.summary || ''} />
-  <body>
-    <h1>{frontmatter.title}</h1>
-    <p>date: {frontmatter.date}</p>
-    <p>tags:</p>
-    <ul>{frontmatter.tag.map((tag) => <li>{tag}</li>)}</ul>
-    <p>toc:</p>
-    <ul>{headings.map((heading) => <li>{heading.text}</li>)}</ul>
-    <slot />
-  </body>
-</html>
+<Html title={frontmatter.title} description={frontmatter.summary || ''}>
+  <h1>{frontmatter.title}</h1>
+  <p>date: {frontmatter.date}</p>
+  <p>tags:</p>
+  <ul>{frontmatter.tag.map((tag) => <li>{tag}</li>)}</ul>
+  <p>toc:</p>
+  <ul>{headings.map((heading) => <li>{heading.text}</li>)}</ul>
+  <slot />
+</Html>
