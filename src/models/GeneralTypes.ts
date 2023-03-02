@@ -1,4 +1,4 @@
-export type { MarkdownInstance } from 'astro';
+export type { MarkdownInstance, GetStaticPathsOptions, Page } from 'astro';
 
 export interface Post {
   title: string;
