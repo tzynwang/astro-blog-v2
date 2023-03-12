@@ -1,4 +1,5 @@
 ---
+import Footer from '@Components/Footer.astro';
 import { AVATAR } from '@Models/GeneralModels';
 import '@Styles/global.css';
 
@@ -41,4 +42,5 @@ const { title, description, image = AVATAR } = Astro.props;
   <body>
     <slot />
   </body>
+  <Footer />
 </html>
