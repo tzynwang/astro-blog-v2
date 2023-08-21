@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第7週 實作筆記：在離開路由前顯示確認視窗</title>
+    <meta name="title" content="2022 第7週 實作筆記：在離開路由前顯示確認視窗">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-router-block/">
+    <meta property="og:title" content="2022 第7週 實作筆記：在離開路由前顯示確認視窗">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-router-block/">
+    <meta property="twitter:title" content="2022 第7週 實作筆記：在離開路由前顯示確認視窗">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第7週 實作筆記：在離開路由前顯示確認視窗</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-02-16 18:30</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span><span class="astro-2IYMVI75">
+  webpack
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本" class="astro-QTOKGA5Y">版本</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#useblock" class="astro-QTOKGA5Y">useBlock</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#無條件阻擋about-元件" class="astro-QTOKGA5Y">無條件阻擋：About 元件</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#有條件阻擋form-元件" class="astro-QTOKGA5Y">有條件阻擋：Form 元件</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#webpack-devserver-設定" class="astro-QTOKGA5Y">webpack devServer 設定</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>本篇筆記記錄如何使用 react-router-dom (v5) 的 <code>useHistory()</code> 與 Web API <code>beforeunload</code> event 在以下時間點跳出確認訊息：</p>
+<ul>
+<li>使用者點擊重新整理（<code>beforeunload</code>）</li>
+<li>使用者關閉分頁（<code>beforeunload</code>）</li>
+<li>使用者按下「上（下）一頁」準備離開當下畫面（<code>history.block()</code>）</li>
+</ul>
+<p><img src="/2022/react-router-block/react-router-block-demo.gif" alt="leave prompt"></p>
+<p>原始碼：<a href="https://github.com/tzynwang/react-router-block/tree/version/2">https://github.com/tzynwang/react-router-block/tree/version/2</a></p>
+<h2 id="版本">版本</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">react-router-dom: 5.3.0</span></span>
+<span class="line"><span style="color: #e1e4e8">webpack: 5.69.0</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="useblock">useBlock</h3>
+<script src="https://gist.github.com/tzynwang/64078bcedb90e4b1e17479d45bbca97d.js"></script>
+<ul>
+<li>
+<p><code>beforeunload</code> 能偵測的是「重新整理」與「關閉分頁」這兩種行為，而使用者點擊「上（下）一頁」會由 <code>useHistory()</code> 產生的 <code>history</code> instance 來阻擋</p>
+</li>
+<li>
+<p>從 args 傳入 <code>block</code> 參數，讓 useBlock 可以在特定條件下解除阻擋行為（例：使用者已經填完表單所有內容）</p>
+</li>
+<li>
+<p>第 25-31 行：當引用 useBlock 的元件掛載至畫面上時，將 <code>history.block()</code> 回傳的 instance 保存到變數 <code>BLOCK</code> 中，並在引用 useBlock 的元件從畫面上卸載時，執行 <code>BLOCK</code></p>
+</li>
+<li>
+<p>第 26 行：使用 <code>window.confirm</code> 彈出瀏覽器原生的對話框，詢問使用者是否離開網頁，選擇不離開（<code>!leave</code>）則回傳 <code>false</code> 取消離開的行為</p>
+</li>
+<li>
+<p>參考 <code>@types/history</code> 可得知 <code>history.block()</code> 與其 args 的 type 分別如下列：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">interface</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">History</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">HistoryLocationState</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">LocationState</span><span style="color: #E1E4E8">> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">block</span><span style="color: #E1E4E8">(</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #FFAB70">prompt</span><span style="color: #F97583">?:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">boolean</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">TransitionPromptHook</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">HistoryLocationState</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  )</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">UnregisterCallback</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">type</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">TransitionPromptHook</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">S</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">LocationState</span><span style="color: #E1E4E8">> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">location</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Location</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">S</span><span style="color: #E1E4E8">>,</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">action</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Action</span></span>
+<span class="line"><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">false</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">void</span><span style="color: #E1E4E8">;</span></span></code></pre>
+<p>為了讓 type check 不會報錯，在使用者確認離開畫面時，讓傳入 <code>history.block()</code> 的匿名函式回傳 <code>undefined</code> 而非 <code>true</code>（第 30 行）</p>
+</li>
+</ul>
+<h3 id="無條件阻擋about-元件">無條件阻擋：About 元件</h3>
+<script src="https://gist.github.com/tzynwang/fe1c004da511941c3e1cb83723c98f93.js"></script>
+<p>直接在元件中呼叫 <code>useBlock()</code>，並傳入空物件（不需解除條件）</p>
+<h3 id="有條件阻擋form-元件">有條件阻擋：Form 元件</h3>
+<script src="https://gist.github.com/tzynwang/d31470f3de89cf5ac39e4b3f1dbf2eda.js"></script>
+<p>傳入 <code>useState</code> 變數 <code>block</code>，在使用者按下送出表單的按鈕時，將 <code>block</code> 設定為 <code>false</code>，並在畫面重新整理（元件重新掛載到畫面上後），重設 <code>block</code> 為 <code>true</code> 避免 F5 後阻擋失效</p>
+<h3 id="webpack-devserver-設定">webpack devServer 設定</h3>
+<ul>
+<li>在後端 server 沒有配合的情況下，使用 <code>BrowserRouter</code> 來處理路由會導致畫面重新整理、或是使用者直接輸入路由時遭遇 404</li>
+<li>如果在開發時使用 webpack devServer 來執行 react APP，則設定 <code>webpack.config.js</code> 的 <code>devServer</code> 其 <code>historyApiFallback: true</code> 即可使用 <code>BrowserRouter</code>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #B392F0">devServer</span><span style="color: #E1E4E8">: {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">historyApiFallback</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">true</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+</li>
+<li>若 react APP 是部署到 GitHub Pages（或任何無法配合 history mode 的 server）則需使用 <code>react-router-dom</code> 的 <code>HashRouter</code> 來處理路由，而路由會帶上井字號</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://v5.reactrouter.com/web/api/history">react-router v5: history</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event">MDN: beforeunload event</a></li>
+<li><a href="https://stackoverflow.com/questions/65526447/react-router-v5-2-blocking-route-change-with-createbrowserhistory-and-history">React Router v5.2 - Blocking route change with createBrowserHistory and history.block</a></li>
+<li><a href="https://stackoverflow.com/questions/27928372/react-router-urls-dont-work-when-refreshing-or-writing-manually">React-router urls don’t work when refreshing or writing manually</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

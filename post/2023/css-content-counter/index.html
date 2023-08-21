@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>使用 CSS `content` 與 `counter` 設定序列的數字樣式</title>
+    <meta name="title" content="使用 CSS `content` 與 `counter` 設定序列的數字樣式">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/css-content-counter/">
+    <meta property="og:title" content="使用 CSS `content` 與 `counter` 設定序列的數字樣式">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/css-content-counter/">
+    <meta property="twitter:title" content="使用 CSS `content` 與 `counter` 設定序列的數字樣式">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">使用 CSS `content` 與 `counter` 設定序列的數字樣式</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-05-26 19:35</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#展示" class="astro-QTOKGA5Y">展示</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#實作解說" class="astro-QTOKGA5Y">實作解說</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#注意事項" class="astro-QTOKGA5Y">注意事項</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>除了可以透過 <code>display: list-item</code> 搭配 <code>::marker</code> 來設定序列樣式外，也可透過 CSS <code>content</code> 搭配 <code>counter()</code> 來實現類似的效果，且後者因為不強制使用 <code>display: list-item</code> 會讓排版更為簡單。此篇筆記會介紹一下兩者的實作方式。</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="展示">展示</h3>
+<iframe src="https://codesandbox.io/embed/css-content-with-counter-6mkfsi?fontsize=14&#x26;hidenavigation=1&#x26;module=%2Fsrc%2Fstyles.css&#x26;theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="CSS content with counter" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+<h3 id="實作解說">實作解說</h3>
+<p>傳統做法：使用 <code>display: list-item</code> 讓 <code>li</code> 元件產生 <code>::marker</code> 部位，再透過指定 <code>::marker</code> 的 <code>content</code> 來設定序列的樣式。在範例中指定的樣式為 <code>decimal</code> 搭配小括號</p>
+<p>小缺點：因為 <code>display</code> 固定為 <code>list-item</code> 了，排版上不如 flex box 方便。</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #B392F0">.list_container</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">display</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">flex</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">flex-direction</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">column</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">gap</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">16</span><span style="color: #F97583">px</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">counter-reset</span><span style="color: #E1E4E8">: fruit-item;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">list-style-position</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">inside</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">.display_list_item</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">display</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">list-item</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/* 依照 .display_list_item 來增加序列數字  */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">counter-increment</span><span style="color: #E1E4E8">: fruit-item;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">.display_list_item::marker</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/* 使用十進制數字來作為序列樣式，並前後包夾小括號 */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">content</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">'('</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">counter</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">fruit-item</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">decimal</span><span style="color: #E1E4E8">) </span><span style="color: #9ECBFF">')'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<hr>
+<p>使用 <code>::before</code> 等偽元素來做出序列數字：想要在 <code>li</code> 元件中可以透過 <code>display: flex</code> 來排版的話，可在 <code>li</code> 元件中新增一個專門用來顯示數字的 <code>span</code> 元件，透過 CSS 指定此 <code>span::before</code> 的 <code>content</code> 來呈現序列。</p>
+<p>全部的 <code>list-style-type</code> 可以參考 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type#values">MDN: CSS > list-style-type Values</a></p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">&#x3C;!-- 下圖的 .counter 會負責呈現序列數字 --></span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">key</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"{item.id}"</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">className</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"list_item"</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">span</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">className</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"counter"</span><span style="color: #E1E4E8"> </span><span style="color: #FDAEB7; font-style: italic">/</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">span</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">className</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"item_value"</span><span style="color: #E1E4E8">>{item.value}&#x3C;/</span><span style="color: #85E89D">span</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">button</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">onClick</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"{removeItem(item.id)}"</span><span style="color: #E1E4E8">>remove this&#x3C;/</span><span style="color: #85E89D">button</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;/</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8">></span></span></code></pre>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #B392F0">.counter::before</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/* 原理與上方的 .display_list_item::marker 一樣，都是透過 content counter 來指定序列數字樣式 */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">content</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">counter</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">fruit-item</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">trad-chinese-informal</span><span style="color: #E1E4E8">) </span><span style="color: #9ECBFF">'、'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<h3 id="注意事項">注意事項</h3>
+<p>CSS 偽元素沒辦法透過 <code>inline-style</code> 來設定，參考 W3C 規格：</p>
+<blockquote>
+<p>The value of the style attribute must match the syntax of the contents of a CSS declaration block (excluding the delimiting braces), whose formal grammar is given below in the terms and conventions of the CSS core grammar:</p>
+</blockquote>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">declaration-list</span></span>
+<span class="line"><span style="color: #e1e4e8">  : S* declaration? [ ';' S* declaration? ]*</span></span>
+<span class="line"><span style="color: #e1e4e8">  ;</span></span></code></pre>
+<blockquote>
+<p><a href="https://stackoverflow.com/a/5293299">stackOverFlow</a>: Neither selectors (including pseudo-elements), nor at-rules, nor any other CSS construct are allowed.</p>
+</blockquote>
+<p>如果在畫面上有「根據不同條件來顯示對應的序列樣式」需求，需要根據條件一個一個產生對應的 css 樣式名稱。</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/display-listitem">MDN: CSS > display-listitem</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/content">MDN: CSS > content</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type">MDN: CSS > list-style-type</a></li>
+<li><a href="https://stackoverflow.com/questions/5293280/css-pseudo-classes-with-inline-styles">stackOverFlow: CSS Pseudo-classes with inline styles</a></li>
+<li><a href="https://stackoverflow.com/questions/14141374/using-css-before-and-after-pseudo-elements-with-inline-css">stackOverFlow: Using CSS :before and :after pseudo-elements with inline CSS?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

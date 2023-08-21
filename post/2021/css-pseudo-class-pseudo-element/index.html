@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「CSS pseudo class與pseudo element」相關筆記</title>
+    <meta name="title" content="「CSS pseudo class與pseudo element」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/css-pseudo-class-pseudo-element/">
+    <meta property="og:title" content="「CSS pseudo class與pseudo element」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/css-pseudo-class-pseudo-element/">
+    <meta property="twitter:title" content="「CSS pseudo class與pseudo element」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「CSS pseudo class與pseudo element」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-09-05 13:16</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Browser
+</span><span class="astro-2IYMVI75">
+  CSS
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#原始問題" class="astro-QTOKGA5Y">原始問題</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#回答" class="astro-QTOKGA5Y">回答</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#mdn" class="astro-QTOKGA5Y">MDN</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#level-1" class="astro-QTOKGA5Y">level 1</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#level-4" class="astro-QTOKGA5Y">level 4</a>
+            </li><li class="toc-4 astro-QTOKGA5Y">
+              <a href="#pseudo-classes" class="astro-QTOKGA5Y">Pseudo-classes</a>
+            </li><li class="toc-4 astro-QTOKGA5Y">
+              <a href="#pseudo-elements" class="astro-QTOKGA5Y">Pseudo-elements</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#constructing-the-object-model" class="astro-QTOKGA5Y">Constructing the Object Model</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="原始問題">原始問題</h2>
+<p>在共學群組中看到以下問題組，記錄一下閱讀 MDN 文件與 W3C 規格後的相關筆記
+「pseudo-elements 是不是一個元素？」
+「pseudo-elements 會出現在 DOM TREE 裡面嗎？」</p>
+<h2 id="回答">回答</h2>
+<blockquote>
+<p>pseudo-elements 是不是一個元素？</p>
+</blockquote>
+<ul>
+<li>不是，pseudo-elements 代表的是一個元素中的特定片段</li>
+<li>將 pseudo-elements 作為 CSS 選取器使用時，它會選取某元素的指定部位，比如<code>::first-line</code>代表選取某元素的第一行部位</li>
+</ul>
+<blockquote>
+<p>pseudo-elements 會出現在 DOM TREE 裡面嗎？</p>
+</blockquote>
+<ul>
+<li>不會，W3C level 1 已明確指出 pseudo-elements 與 pseudo-class 不存在於 HTML 中（do not exist in the HTML source, insert by the UA）</li>
+<li>DOM TREE 是瀏覽器讀取 HTML 原始碼後根據其內容生成，而 HTML 原始碼中並沒有 pseudo-elements，故不會出現在 DOM TREE 中（參考<a href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/constructing-the-object-model">Constructing the Object Model</a>）</li>
+</ul>
+<h2 id="筆記">筆記</h2>
+<h3 id="mdn">MDN</h3>
+<ul>
+<li>A CSS pseudo-class is a keyword added to a selector that specifies a special <strong>state</strong> of the selected element(s).</li>
+<li>A CSS pseudo-element is a keyword added to a selector that lets you style a <strong>specific part</strong> of the selected element(s).</li>
+</ul>
+<h3 id="level-1">level 1</h3>
+<ul>
+<li>Pseudo-classes and pseudo-elements can be used in CSS selectors, but <strong>do not exist in the HTML source</strong>. Rather, they are <strong>“inserted” by the UA</strong> under certain conditions to be used for addressing in style sheets.</li>
+<li>They are referred to as “classes” and “elements” since this is a convenient way of describing their behavior. More specifically, their behavior is defined by a fictional tag sequence.</li>
+</ul>
+<h3 id="level-4">level 4</h3>
+<h4 id="pseudo-classes">Pseudo-classes</h4>
+<ul>
+<li>Pseudo-classes are <strong>simple selectors</strong> that permit selection based on information that lies outside of the document tree or that can be awkward or impossible to express using the other simple selectors.</li>
+<li>They can also be dynamic, in the sense that <strong>an element can acquire or lose a pseudo-class while a user interacts with the document</strong>, without the document itself changing.</li>
+<li>Pseudo-classes <strong>do not appear in or modify the document source or document tree</strong>.</li>
+</ul>
+<h4 id="pseudo-elements">Pseudo-elements</h4>
+<ul>
+<li>Pseudo-elements represent <strong>abstract elements</strong> of the document beyond those elements explicitly created by the document language.</li>
+<li>A pseudo-element represents an element <strong>not directly present in the document tree</strong>. They are used to create abstractions about the document tree beyond those provided by the document tree.</li>
+<li>For example, pseudo-elements can be used to select portions of the document that do not correspond to a document-language element (including such ranges as don’t align to element boundaries or fit within its tree structure); that represent content <strong>not in the document tree</strong> or in an alternate projection of the document tree; or that rely on information provided by styling, layout, user interaction, and other processes that are <strong>not reflected in the document tree</strong>.</li>
+</ul>
+<h3 id="constructing-the-object-model">Constructing the Object Model</h3>
+<p><img src="/2021/css-pseudo-class-pseudo-element/full-process.png" alt="DOM TREE formatting process"></p>
+<p>Every time the browser processes HTML markup, it goes through all of the steps below: convert bytes to characters, identify tokens, convert tokens to nodes, and build the DOM tree.</p>
+<ol>
+<li>Conversion: The browser <strong>reads the raw bytes of HTML</strong> off the disk or network, and translates them to individual characters based on specified encoding of the file (for example, UTF-8).</li>
+<li>Tokenizing: The browser converts strings of characters into <strong>distinct tokens</strong>—as specified by the <a href="https://html.spec.whatwg.org/multipage/">W3C HTML5 standard</a>; for example, <code>&#x3C;html></code>, <code>&#x3C;body></code>—and other strings within angle brackets. Each token has a special meaning and its own set of rules.</li>
+<li>Lexing: The emitted tokens are converted into “objects,” which define their properties and rules.</li>
+<li>DOM construction: Finally, because the HTML markup defines relationships between different tags (some tags are contained within other tags) the created objects are linked in a tree data structure that also captures the parent-child relationships defined in the original markup: the HTML object is a parent of the body object, the body is a parent of the paragraph object, and so on.</li>
+</ol>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.w3.org/TR/CSS1/#pseudo-classes-and-pseudo-elements">W3C: Cascading Style Sheets, level 1</a></li>
+<li><a href="https://www.w3.org/TR/selectors-4/">W3C: Selectors Level 4</a></li>
+<li><a href="https://www.w3.org/TR/css-pseudo-4/">W3C: CSS Pseudo-Elements Module Level 4</a></li>
+<li><a href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/constructing-the-object-model">Constructing the Object Model</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

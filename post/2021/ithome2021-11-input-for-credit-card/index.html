@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>30天挑戰：「信用卡資料的inputmode設定」 相關筆記</title>
+    <meta name="title" content="30天挑戰：「信用卡資料的inputmode設定」 相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/ithome2021-11-input-for-credit-card/">
+    <meta property="og:title" content="30天挑戰：「信用卡資料的inputmode設定」 相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/ithome2021-11-input-for-credit-card/">
+    <meta property="twitter:title" content="30天挑戰：「信用卡資料的inputmode設定」 相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">30天挑戰：「信用卡資料的inputmode設定」 相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-08-25 15:01</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  HTML
+</span><span class="astro-2IYMVI75">
+  2021鐵人賽
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#實測結果" class="astro-QTOKGA5Y">實測結果</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<ul>
+<li>透過<code>input</code>的<code>inputmode</code>設定來控制呼叫出來的鍵盤樣式</li>
+<li>如果是為了接受信用卡資料的話，設定為<code>type="tel"</code>搭配<code>inputmode="numeric"</code>可以在 iPhone Chrome 叫出僅有數字鍵的鍵盤</li>
+<li>CodePen 實驗頁：<a href="https://codepen.io/Charlie7779/pen/OJgPWJa">https://codepen.io/Charlie7779/pen/OJgPWJa</a></li>
+</ul>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">Google Chrome (iOS/WebKit): 92.0.4515.90</span></span></code></pre>
+<h2 id="實測結果">實測結果</h2>
+<p><img src="/2021/ithome2021-11-input-for-credit-card/inputmode.png" alt="各種inputmode呼叫的鍵盤樣式"></p>
+<ul>
+<li><code>none</code>：不會呼叫任何鍵盤</li>
+<li><code>tel</code>：點選左下角<code>+*#</code>鍵可切換為符號鍵盤</li>
+<li><code>decimal</code>：點選左下角<code>.</code>鍵可直接輸入<code>.</code>號，不會切換為符號鍵盤</li>
+<li><code>numeric</code>：僅提供數字鍵盤</li>
+<li><code>text</code>：呼叫一般鍵盤</li>
+<li><code>search</code>：右下角的「換行」鍵改為「前往」（英文鍵盤為「go」）</li>
+<li><code>email</code>：空白鍵右側追加<code>@</code>與<code>.</code>鍵</li>
+<li><code>url</code>：空白鍵右側追加<code>/</code>與<code>.</code>鍵</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode">MDN: inputmode</a></li>
+<li><a href="https://stackoverflow.com/questions/48534229/what-is-the-correct-input-type-for-credit-card-numbers">What is the correct input type for credit card numbers?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

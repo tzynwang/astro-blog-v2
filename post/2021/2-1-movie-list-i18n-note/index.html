@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>Alpha Camp「2-1 電影清單之按讚與刪除」技術記錄</title>
+    <meta name="title" content="Alpha Camp「2-1 電影清單之按讚與刪除」技術記錄">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/2-1-movie-list-i18n-note/">
+    <meta property="og:title" content="Alpha Camp「2-1 電影清單之按讚與刪除」技術記錄">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/2-1-movie-list-i18n-note/">
+    <meta property="twitter:title" content="Alpha Camp「2-1 電影清單之按讚與刪除」技術記錄">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">Alpha Camp「2-1 電影清單之按讚與刪除」技術記錄</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-05-05 14:56</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  JavaScript
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#controllerupdaterating" class="astro-QTOKGA5Y">controller.updateRating()</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#controllerupdatedeletestatus" class="astro-QTOKGA5Y">controller.updateDeleteStatus()</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#viewfontsizetoggle" class="astro-QTOKGA5Y">view.fontSizeToggle()</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#viewgeneratepostermodal" class="astro-QTOKGA5Y">view.generatePosterModal()</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <p class="codepen" data-height="265" data-theme-id="dark" data-default-tab="js,result" data-user="Charlie7779" data-slug-hash="YzNmOGY" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="A22: My Favorite Movies：按讚與刪除">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/YzNmOGY">
+  A22: My Favorite Movies：按讚與刪除</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h2 id="總結">總結</h2>
+<p>本次作業中實作的功能：</p>
+<ul>
+<li>根據點擊次數記錄電影分數（尚未導入 Cache 或 Storage API，分頁關掉後即失去記錄）</li>
+<li>點擊 X 按鈕後，自畫面上移除該部電影的資訊</li>
+<li>i18n（實作英文與中文介面的切換）</li>
+</ul>
+<h2 id="筆記">筆記</h2>
+<h3 id="controllerupdaterating">controller.updateRating()</h3>
+<p>監聽<code>&#x3C;div id="dataPanel"></code>的點擊事件，若使用者點選到「讚」或「爛」按鈕時，透過<code>HTMLTableRowElement.rowIndex</code>來取得點擊事件發生在<code>&#x3C;table></code>中的哪一行<code>row</code>上（可從<code>rowIndex</code>推斷使用者點選的是哪一部電影），進而更新<code>data.movies</code>中相對應電影的分數。</p>
+<p>其他解法：也可直接在「讚」或「爛」按鈕上使用<code>dataset</code>賦予電影的<code>id</code>，點擊事件發生後就可透過<code>data.id</code>來取得點擊事件發生在哪一部電影身上</p>
+<h3 id="controllerupdatedeletestatus">controller.updateDeleteStatus()</h3>
+<p>使用者點選表格右端的 X 按鈕刪除電影後，透過<code>controller.updateDeleteStatus()</code>將被點擊電影的<code>deleteFlag</code>設定為<code>true</code>，用意是：在使用者進行介面語系切換後，<code>deleteFlag</code>為<code>true</code>的電影就不應該繼續出現在畫面上（<code>view.generateTableContents()</code>中會透過<code>filter()</code>篩選出<code>deleteFlag</code>不為<code>true</code>的電影）</p>
+<h3 id="viewfontsizetoggle">view.fontSizeToggle()</h3>
+<p>筆記：切換顯示語言後，發覺儘管 font-size 數值相同，英文字體的尺寸在視覺上比中文字體小不少，故使用<code>view.fontSizeToggle()</code>來根據當下顯示的語言調整畫面中的字體大小</p>
+<h3 id="viewgeneratepostermodal">view.generatePosterModal()</h3>
+<p>筆記：過去的作業多半是先將空的 modal 寫進 HTML，待點擊事件發生後再使用 JavaScript 更新 modal 中的內容；本次改用「點擊事件發生後，再根據被點擊的目標產生相對應的 modal（內容）」，相較以前作法，點擊後及時產生 modal 的好處是使用者不會看到一閃而逝的舊內容。</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/closest">Element.closest(selectors)</a>
+從<code>Element</code>開始往根部搜尋<code>selectors</code>，本次作業應用於<code>controller.updateRating()</code>中</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableRowElement/rowIndex">HTMLTableRowElement.rowIndex</a>
+取一個<code>table row</code>在整體<code>&#x3C;table></code>中的<code>rowIndex</code></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

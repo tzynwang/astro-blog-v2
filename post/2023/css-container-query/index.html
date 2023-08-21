@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2023 情人節禮包：CSS @container</title>
+    <meta name="title" content="2023 情人節禮包：CSS @container">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/css-container-query/">
+    <meta property="og:title" content="2023 情人節禮包：CSS @container">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/css-container-query/">
+    <meta property="twitter:title" content="2023 情人節禮包：CSS @container">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2023 情人節禮包：CSS @container</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-02-18 13:40</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#基本語法" class="astro-QTOKGA5Y">基本語法</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#範例" class="astro-QTOKGA5Y">範例</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>CSS <code>@container</code> 終於在 Chrome (105)、FireFox (110) 以及 Safari (16) 都實裝了。這篇筆記將記錄 <code>@container</code> 的基本語法，以及提供一個簡單的範例。</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="基本語法">基本語法</h3>
+<p>設定作為參考根據的容器 (<code>containment context</code>)：</p>
+<ul>
+<li>使用 <code>container-type</code> 來設定 <code>@container</code> 時要參考容器的「哪些」尺寸
+<ul>
+<li><code>size</code>: 同時參考容器的 <code>inline</code> 與 <code>block</code> 尺寸</li>
+<li><code>inline-size</code>: 僅參考容器的 <code>inline</code> 尺寸</li>
+<li><code>normal</code>: 該容器不會成為 <code>container size query</code> 的對象，但可作為 <code>container style query</code> 的標地</li>
+</ul>
+</li>
+<li>使用 <code>container-name</code> 來設定該容器的別名。在透過 <code>@container</code> 進行 query 時可透過名稱來指定容器</li>
+</ul>
+<p>以上 <code>container-type</code> 與 <code>container-name</code> 可合併在 <code>container</code> 中宣告，語法為 <code>container: &#x3C;name> | &#x3C;size></code>。</p>
+<p>在沒有指定容器名稱的情況下，容器內含物會參考最鄰近的親容器。可以透過直接宣告要參考的親容器名稱來覆蓋這個特性：</p>
+<blockquote>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries#naming_containment_contexts">MDN</a>: A container query applied styles <strong>based on the nearest ancestor with a containment context</strong>. It’s possible to give a containment context a name using the container-name property. Once named, the name can be used in a <code>@container</code> query so as to <strong>target a specific container</strong>.</p>
+</blockquote>
+<hr>
+<p>設定好容器後，就可透過 <code>@container</code> 語法來根據容器尺寸調整容器內含物的樣式。</p>
+<p>基礎組合如下，這代表 <code>.card</code> 元件通常使用 <code>1rem</code> 大小的字體，但如果其容器 <code>.container</code> 的 inline 尺寸大於 480px 則將字體大小改為 <code>2rem</code>。</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">&#x3C;</span><span style="color: #85E89D">div</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">class</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"container"</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">div</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">class</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"card"</span><span style="color: #E1E4E8">>...&#x3C;/</span><span style="color: #85E89D">div</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;/</span><span style="color: #85E89D">div</span><span style="color: #E1E4E8">></span></span></code></pre>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #B392F0">.container</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">container-type</span><span style="color: #E1E4E8">: inline-size;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">.card</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">font-size</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">1</span><span style="color: #F97583">em</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">@container</span><span style="color: #E1E4E8"> (min-width: 480px) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">.card</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">font-size</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">2</span><span style="color: #F97583">rem</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<hr>
+<p>Container query 專用單位：</p>
+<ul>
+<li><code>cqw</code>: 容器的 1% 寬</li>
+<li><code>cqh</code>: 容器的 1% 高</li>
+<li><code>cqi</code>: 容器的 1% inline 尺寸</li>
+<li><code>cqb</code>: 容器的 1% block 尺寸</li>
+<li><code>cqmin</code>: 取 cqi 與 cqb 中較小的值</li>
+<li><code>cqmax</code>: 取 cqi 與 cqb 中較大的值</li>
+</ul>
+<p>應用方式可參考下方範例原始碼。搭配 <code>clamp()</code> 來根據容器 inline 數值動態地調整字體大小：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">@container</span><span style="color: #E1E4E8"> (min-width: 720px) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">.card</span><span style="color: #E1E4E8"> </span><span style="color: #85E89D">h2</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">font-size</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">clamp</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">1.25</span><span style="color: #F97583">rem</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">1.25</span><span style="color: #F97583">rem</span><span style="color: #E1E4E8"> </span><span style="color: #FFAB70">+</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">1.5</span><span style="color: #FFAB70">cqi</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">5</span><span style="color: #F97583">rem</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<hr>
+<p>關於 inline 與 block 尺寸：</p>
+<blockquote>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Logical_Properties/Basic_concepts#block_and_inline_dimensions">inline</a>: The inline dimension is the dimension <strong>along which a line of text runs in the writing mode in use</strong>. Therefore, in an English document with the text running horizontally left to right, or an Arabic document with the text running horizontally right to left, the inline dimension is <strong>horizontal</strong>.</p>
+</blockquote>
+<blockquote>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Logical_Properties/Basic_concepts#block_and_inline_dimensions">block</a>: The block dimension is the other dimension, and the direction in which blocks — such as paragraphs — display one after the other. In English and Arabic, these run <strong>vertically</strong>, whereas in any vertical writing mode these run horizontally.</p>
+</blockquote>
+<p>簡單來說就是根據（文字）流的方向來判定是水平或是垂直尺寸。</p>
+<p>若是左右書寫的文字流，則 inline size 代表水平方向的尺寸、而 block size 則代表垂直方向的尺寸。</p>
+<h3 id="範例">範例</h3>
+<p>範例中的卡片元件會在其容器寬度小於 720px 時顯示為垂直的圖文排版，而當容器寬度大於 720px 時，卡片圖文將改為水平排列。</p>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="css,result" data-slug-hash="poOJNPw" data-user="Charlie7779" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/poOJNPw">
+  Container Query</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Container_Queries">MDN: CSS Container Queries</a></li>
+<li><a href="https://caniuse.com/?search=%40container">Can I use: @container</a></li>
+<li><a href="https://web.dev/cq-stable/">web.dev: Container queries land in stable browsers</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Logical_Properties/Basic_concepts">MDN: Basic concepts of Logical Properties and Values</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

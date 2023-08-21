@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「Express response default statusCode」相關筆記</title>
+    <meta name="title" content="「Express response default statusCode」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/express-default-res-status-code/">
+    <meta property="og:title" content="「Express response default statusCode」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/express-default-res-status-code/">
+    <meta property="twitter:title" content="「Express response default statusCode」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「Express response default statusCode」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-09-30 21:25</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  HTTP
+</span><span class="astro-2IYMVI75">
+  Express
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#原始問題" class="astro-QTOKGA5Y">原始問題</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#梳理" class="astro-QTOKGA5Y">梳理</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#關於後端-response-內容" class="astro-QTOKGA5Y">關於後端 response 內容</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#axios-處理-response-status" class="astro-QTOKGA5Y">axios 處理 response status</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#作答" class="astro-QTOKGA5Y">作答</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="原始問題">原始問題</h2>
+<p>專案為前後分離，而後端需通知前端某使用者「登入失敗」時：</p>
+<ol>
+<li>選擇使用預設的 status code，然後加上 status message 回覆前端</li>
+<li>將 status code 修改為 401，並加入 status message 後再回覆前端</li>
+</ol>
+<p>上述兩種作法有什麼差異？</p>
+<h2 id="梳理">梳理</h2>
+<p>題目本身沒有針對「預設的 status code」以及前後端是否有額外使用框架做出限制，故首次回答本題時有做出以下假設：</p>
+<ol>
+<li>後端使用 Express 架設伺服器</li>
+<li>前端使用 axios 接收 response</li>
+</ol>
+<h2 id="筆記">筆記</h2>
+<h3 id="關於後端-response-內容">關於後端 response 內容</h3>
+<ul>
+<li>Express 的<code>res</code>物件是 Node.js <code>response</code>物件的延伸；而參考 Node.js 文件後可得知其預設的 status code 為<code>200</code>
+<ul>
+<li>(Express official docs) The <code>res</code> object is an enhanced version of Node’s own <code>response</code> object and <strong>supports all built-in fields and methods</strong>.</li>
+<li>(Node.js official docs) If you don’t bother setting it, the HTTP status code on a response will always be 200.</li>
+</ul>
+</li>
+</ul>
+<h3 id="axios-處理-response-status">axios 處理 response status</h3>
+<ul>
+<li>參考 axios 官方文件，其預設 2xx success 以外的 status code 都會回傳 Promise reject
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// `validateStatus` defines whether to resolve or reject the promise for a given</span></span>
+<span class="line"><span style="color: #6A737D">// HTTP response status code. If `validateStatus` returns `true` (or is set to `null`</span></span>
+<span class="line"><span style="color: #6A737D">// or `undefined`), the promise will be resolved; otherwise, the promise will be</span></span>
+<span class="line"><span style="color: #6A737D">// rejected.</span></span>
+<span class="line"><span style="color: #B392F0">validateStatus</span><span style="color: #E1E4E8">: </span><span style="color: #F97583">function</span><span style="color: #E1E4E8"> (</span><span style="color: #FFAB70">status</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> status </span><span style="color: #F97583">>=</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">200</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">&#x26;&#x26;</span><span style="color: #E1E4E8"> status </span><span style="color: #F97583">&#x3C;</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">300</span><span style="color: #E1E4E8">; </span><span style="color: #6A737D">// default</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+</li>
+<li>若將 axios 改寫為 async/await 並搭配 try catch 的話，2xx 以外的 server response 都會被 catch 捕捉</li>
+</ul>
+<h2 id="作答">作答</h2>
+<p>根據以上筆記，回答題目中兩種作法的差異：</p>
+<ol>
+<li>使用預設的 status code 200 回覆前端時，前端需主動檢查 response 之 statusMessage，就算登入失敗也不會被 catch 捕捉</li>
+<li>將 response.statusCode 調整為 401 後，前端可直接在 catch 區塊處理登入失敗的邏輯，不需再檢查 statusMessage</li>
+</ol>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://expressjs.com/en/api.html#res">Express: Response</a></li>
+<li><a href="https://nodejs.org/api/http.html#http_response_statuscode">Node.js: response.statusCode</a></li>
+<li><a href="https://nodejs.org/en/docs/guides/anatomy-of-an-http-transaction/#http-status-code">Node.js: HTTP Status Code</a></li>
+<li><a href="https://github.com/axios/axios#request-config">axios: Request Config</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

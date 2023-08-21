@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>DevTools與CSS有關的新功能（Chrome 89）</title>
+    <meta name="title" content="DevTools與CSS有關的新功能（Chrome 89）">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/chrome-89-css/">
+    <meta property="og:title" content="DevTools與CSS有關的新功能（Chrome 89）">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/chrome-89-css/">
+    <meta property="twitter:title" content="DevTools與CSS有關的新功能（Chrome 89）">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">DevTools與CSS有關的新功能（Chrome 89）</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-03-03 19:22</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  DevTools
+</span><span class="astro-2IYMVI75">
+  CSS
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#devtools-中與-css-相關的新內容chrome-89" class="astro-QTOKGA5Y">DevTools 中與 CSS 相關的新內容（Chrome 89）</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#直接對-node-截圖" class="astro-QTOKGA5Y">直接對 node 截圖</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#可直接套用偽類target-至元件上" class="astro-QTOKGA5Y">可直接套用偽類:target 至元件上</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#直接在-devtools-裡面複製元件" class="astro-QTOKGA5Y">直接在 DevTools 裡面複製元件</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#支援-color-picker" class="astro-QTOKGA5Y">支援 color picker</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#複製元件的-css-內容" class="astro-QTOKGA5Y">複製元件的 CSS 內容</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#字體編輯面板experimental-features" class="astro-QTOKGA5Y">字體編輯面板（Experimental features）</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#flexbox-debug-工具experimental-features" class="astro-QTOKGA5Y">flexbox debug 工具（Experimental features）</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#附錄" class="astro-QTOKGA5Y">附錄</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#開啟-experimental-features" class="astro-QTOKGA5Y">開啟 Experimental features</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#檢查-chrome-的版本" class="astro-QTOKGA5Y">檢查 Chrome 的版本</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>本篇是記錄 Chrome 89 的 DevTools 中，CSS 相關新功能的筆記。</p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">Google Chrome: 89.0.4389.72 (Official Build) (64-bit)</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="devtools-中與-css-相關的新內容chrome-89">DevTools 中與 CSS 相關的新內容（Chrome 89）</h2>
+<h3 id="直接對-node-截圖">直接對 node 截圖</h3>
+<p>原文連結：<a href="https://developers.google.com/web/updates/2021/01/devtools#node-screenshot">https://developers.google.com/web/updates/2021/01/devtools#node-screenshot</a></p>
+<p><img src="/2021/chrome-89-css/node-screenshot.jpg" alt="node screenshot"></p>
+<p>在 node 上點擊右鍵，選擇 Capture node screenshot 後，截圖就會下載到本機。</p>
+<h3 id="可直接套用偽類target-至元件上">可直接套用偽類:target 至元件上</h3>
+<p>原文連結：<a href="https://developers.google.com/web/updates/2021/01/devtools#force-target">https://developers.google.com/web/updates/2021/01/devtools#force-target</a></p>
+<p><img src="/2021/chrome-89-css/target.jpg" alt="可直接套用 :target 偽類"></p>
+<p>不用點擊連結，即可套用<code>:target</code>到元件上。
+打開 DevTools，點選 Elements 標籤，點選元件後按下:hov 按鈕，即可展開支援套用的偽類（pseudo-element）清單。
+選擇<code>:target</code>後，即可直接觀察相關的 CSS 表現內容。</p>
+<p><img src="/2021/chrome-89-css/target-example.jpg" alt="target example"></p>
+<p><img src="/2021/chrome-89-css/target-example-select.jpg" alt="target example select"></p>
+<p>以上兩張螢幕截圖用到的原始碼：</p>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="html,result" data-user="Charlie7779" data-slug-hash="abBKWNL" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title=":target">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/abBKWNL">
+  :target</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h3 id="直接在-devtools-裡面複製元件">直接在 DevTools 裡面複製元件</h3>
+<p>原文連結：<a href="https://developers.google.com/web/updates/2021/01/devtools#duplicate-element">https://developers.google.com/web/updates/2021/01/devtools#duplicate-element</a></p>
+<p><img src="/2021/chrome-89-css/duplicate-element.jpg" alt="duplicate element"></p>
+<p><img src="/2021/chrome-89-css/duplicate-element-after.jpg" alt="duplicate element after"></p>
+<p>在元件上按下右鍵選擇 Duplicate element 後，該元件的副本就會出現在被拷貝的元件下方。
+支援快速鍵，點選元件後按下<code>Shift</code>+ <code>Alt</code>+ ⬇️（Windows）或<code>Shift</code>+ <code>Option</code>+ ⬇️（Mac）即可拷貝元件。</p>
+<h3 id="支援-color-picker">支援 color picker</h3>
+<p>原文連結：<a href="https://developers.google.com/web/updates/2021/01/devtools#color-picker">https://developers.google.com/web/updates/2021/01/devtools#color-picker</a>
+並且如果按住<code>Shift</code>後以滑鼠左鍵點擊顏色方塊的話，可以切換為不同的顏色編碼格式（RGBA、HSLA、Hex）</p>
+<h3 id="複製元件的-css-內容">複製元件的 CSS 內容</h3>
+<p>原文連結：<a href="https://developers.google.com/web/updates/2021/01/devtools#copy-css">https://developers.google.com/web/updates/2021/01/devtools#copy-css</a>
+在 Styles 區塊對元件的 CSS 設定按下右鍵，可複製 CSS 內容。</p>
+<p><img src="/2021/chrome-89-css/copy-CSS-properties.jpg" alt="copy css properties 1">
+如果是在選取器位置按下右鍵的話，會出現以下選項：</p>
+<ul>
+<li>Copy selector：複製選取器，上圖水藍色部分</li>
+<li>Copy rule：複製 CSS 規則，上圖黃色部分</li>
+<li>Copy all declarations：複製選取器與 CSS 規則，上圖水藍色加上黃色部分</li>
+</ul>
+<p><img src="/2021/chrome-89-css/copy-CSS-properties-1.jpg" alt="copy css properties 2">
+如果是在中括號<code>{}</code>區塊按下右鍵的話，選項如下：</p>
+<ul>
+<li>Copy declaration：複製紅框與粉框部分</li>
+<li>Copy property：複製紅框部分</li>
+<li>Copy value：複製粉框部分</li>
+<li>Copy rule：複製水藍色加上黃色部分</li>
+<li>Copy all declarations：僅複製黃色部分</li>
+</ul>
+<h3 id="字體編輯面板experimental-features">字體編輯面板（Experimental features）</h3>
+<p>原文連結：<a href="https://developers.google.com/web/updates/2021/01/devtools#font">https://developers.google.com/web/updates/2021/01/devtools#font</a></p>
+<p><img src="/2021/chrome-89-css/font-editor.jpg" alt="font editor"></p>
+<p>點選上圖紅框內的字體圖示，可即時調整字體設計。</p>
+<h3 id="flexbox-debug-工具experimental-features">flexbox debug 工具（Experimental features）</h3>
+<p>原文連結：<a href="https://developers.google.com/web/updates/2021/01/devtools#flexbox">https://developers.google.com/web/updates/2021/01/devtools#flexbox</a></p>
+<p><img src="/2021/chrome-89-css/flexbox-gap.jpg" alt="flex box gap">
+<img src="/2021/chrome-89-css/flexbox-align-items.jpg" alt="flexbox align items"></p>
+<p>有<code>display: flex;</code>特性的元件，右側會顯示 flex 圖示。
+滑鼠移動到 flex 相關的特性上，會在畫面中顯示提示。上圖分別是滑鼠指向<code>gap</code>與<code>align-items</code>。</p>
+<h2 id="附錄">附錄</h2>
+<h3 id="開啟-experimental-features">開啟 Experimental features</h3>
+<p><img src="/2021/chrome-89-css/experimental-features.jpg" alt="experimental features 1">
+<img src="/2021/chrome-89-css/experimental-features-1.jpg" alt="experimental features 2"></p>
+<p>點選 DevTools 的齒輪圖示（設定），移動到 Experiments 標籤，勾選需要開啟的相關功能。
+設定完畢後需關閉、重新啟動 DevTools 來套用設定。</p>
+<h3 id="檢查-chrome-的版本">檢查 Chrome 的版本</h3>
+<p><img src="/2021/chrome-89-css/check-chrome-version.png" alt="More icon >> Help >> About Google Chrome">
+<img src="/2021/chrome-89-css/chrome-version-info.png" alt="點選About Google Chrome後，即可看到Chrome版本"></p>
+<p>打開 Chrome 後，點選畫面右上角的垂直排列三點按鈕，依序選擇幫助、關於，點開關於後即可看到 Chrome 版本資訊。</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.w3schools.com/cssref/sel_target.asp">CSS :target Selector</a></li>
+<li><a href="https://www.google.com/chrome/update/">How to check Chrome’s version</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>閱讀筆記：Good Code, Bad Code Chapter 2 Layers of abstraction</title>
+    <meta name="title" content="閱讀筆記：Good Code, Bad Code Chapter 2 Layers of abstraction">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/good-code-bad-code-ch2-layers-of-abstraction/">
+    <meta property="og:title" content="閱讀筆記：Good Code, Bad Code Chapter 2 Layers of abstraction">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/good-code-bad-code-ch2-layers-of-abstraction/">
+    <meta property="twitter:title" content="閱讀筆記：Good Code, Bad Code Chapter 2 Layers of abstraction">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">閱讀筆記：Good Code, Bad Code Chapter 2 Layers of abstraction</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-03-07 20:04</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Software Architecture
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#為何需要抽象層" class="astro-QTOKGA5Y">為何需要抽象層</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#抽象層如何提升程式碼的品質" class="astro-QTOKGA5Y">抽象層如何提升程式碼的品質</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#實作要訣" class="astro-QTOKGA5Y">實作要訣</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>此篇文章是 Good Code, Bad Code: Think like a software engineer 第二章（Layers of abstraction）的閱讀筆記。此章重點為：</p>
+<ul>
+<li>為什麼需要抽象層（layers of abstraction）</li>
+<li>抽象層如何提升程式碼的品質</li>
+<li>實作要訣</li>
+</ul>
+<h2 id="筆記">筆記</h2>
+<h3 id="為何需要抽象層">為何需要抽象層</h3>
+<blockquote>
+<p><strong>How we structure code</strong> is one of the most fundamental aspects of code quality, and doing it well often comes down to <strong>creating clean layers of abstraction</strong>.</p>
+</blockquote>
+<p>本書作者認為程式碼的<strong>結構</strong>乃是影響程式碼品質最基礎的要素之一，而如果一段程式碼擁有良好的結構，通常代表該程式碼擁有明確的抽象層。</p>
+<blockquote>
+<p>More generally, if we do a good job of recursively breaking a problem down into subproblems and creating layers of abstraction, then <strong>no individual piece of code will ever seem particularly complicated</strong>, because it will be dealing with just a few easily comprehended concepts at a time.</p>
+</blockquote>
+<p>工程師在解決問題時，通常會將一開始的問題分拆為數個小問題各自擊破。對工程師來說，將大問題分拆為小問題會讓我們一次只需要面對原始問題的「一小部分」，這能降低每一道問題的複雜度與難度。</p>
+<p>結論：良好的抽象層規劃，能讓原本複雜的問題變簡單。一個大問題一旦被分解，工程師在理解（為了解決每一個小問題的）程式碼時也會比較輕鬆，因為每一次需要面對的問題其規模都變小了。</p>
+<h3 id="抽象層如何提升程式碼的品質">抽象層如何提升程式碼的品質</h3>
+<p>本書認為抽象層能夠強化程式碼的以下特性：</p>
+<ul>
+<li>可讀性：大拆小後，工程師單次需要閱讀的程式碼變少</li>
+<li>模組化：每個小功能專注於單一問題，降低彼此的耦合程度，避免日後每一次修改都會牽一髮動全身</li>
+<li>復用性（reusable）與通用性（generalizable）：承上，如果有良好的抽象層規劃，則每一小段程式碼除了能解決當下遭遇的問題外，也有機會在其他的問題情境中被使用</li>
+<li>可測試性：一大段程式碼被拆為粒度較細的段落後，可進一步針對各段程式碼進行測試。比起原本一整大段的狀態，可靠度較高</li>
+</ul>
+<h3 id="實作要訣">實作要訣</h3>
+<ul>
+<li>一個 function 完成後，是否能<strong>只用一句話</strong>概括該 function 要解決的問題。如果無法，則可規劃將此 function 分割為更多的 function</li>
+<li>在建立一個新的 class 或修改既有的程式碼時，盡量讓該 class 持續性地「只集合單一概念的程式碼」。並且合理規劃 public method，實作細節不需要公開，選擇暴露有限、有實際意義的接口即可（概念與 API 類似，取得結果時不需要知道實作細節）</li>
+<li>考慮定義 interface（以 TypeScript 情境來說，即定義 abstract class）：讓所有的實作都遵照該規格，降低日後修改需求的難度。實務上的好處是，待規格制定完畢後，實作的工項可以派發給其他人進行。以前後端的情境來說，即是 API 規格定好後，兩邊即可分頭執行工作，不會有等待、開發空轉的問題</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.manning.com/books/good-code-bad-code">Manning: Good Code, Bad Code</a></li>
+<li><a href="https://stackoverflow.com/questions/50110844/what-is-the-difference-between-interface-and-abstract-class-in-typescript">What is the difference between interface and abstract class in Typescript?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

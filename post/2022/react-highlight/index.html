@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第34週 實作筆記：單色螢光筆功能</title>
+    <meta name="title" content="2022 第34週 實作筆記：單色螢光筆功能">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-highlight/">
+    <meta property="og:title" content="2022 第34週 實作筆記：單色螢光筆功能">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-highlight/">
+    <meta property="twitter:title" content="2022 第34週 實作筆記：單色螢光筆功能">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第34週 實作筆記：單色螢光筆功能</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-08-26 21:20</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  HTML
+</span><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#原始碼" class="astro-QTOKGA5Y">原始碼</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#解說" class="astro-QTOKGA5Y">解說</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>實作了單色、支援多段標註的螢光筆功能</p>
+<p>原始碼：<a href="https://github.com/tzynwang/react-highlight">https://github.com/tzynwang/react-highlight</a>
+展示頁：<a href="https://tzynwang.github.io/react-highlight/">https://tzynwang.github.io/react-highlight/</a></p>
+<h2 id="原始碼">原始碼</h2>
+<script src="https://gist.github.com/tzynwang/6f65cf9702d1d6611479a64b53092b92.js"></script>
+<h2 id="解說">解說</h2>
+<ul>
+<li><code>handleSelectRange</code>：當點擊事件發生時，將選取起來的範圍替換為帶有 <code>highlight</code> class 的 span 元素
+<ul>
+<li>18 行：透過 <code>document.getSelection()</code> 取得畫面上目前的選取範圍（Selection object）</li>
+<li>22 行：透過 <code>getRangeAt()</code> 取得選取範圍裡第一個 Range 物件</li>
+<li>23-24 行：建立 class 為 highlight 的 span 元素，用於顯示使用者畫下的螢光筆範圍</li>
+<li>25 行：透過 <code>range.extractContents()</code> 將該段 Range 選取起來的內容從 document 中移除，同時將此段內容設定為 highlightSpan 的內容
+<ul>
+<li>JavaScript: The Definitive Guide - This method <strong>deletes the specified range of a document</strong> and returns a <code>DocumentFragment</code> node that contains the deleted content (or a copy of the deleted content).</li>
+</ul>
+</li>
+<li>26 行：將 highlightSpan 放回 Range 物件中
+<ul>
+<li>MDN: The <code>Range.insertNode()</code> method inserts a node at the start of the <code>Range</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>calculateHighlightArea</code>：計算 <code>highlight</code> span 元素的始末點
+<ul>
+<li>32 行：取得 <code>mainSpanRef</code> 的 childNodes</li>
+<li>39-48 行：檢查 childNodes 的內容，過濾掉 <code>node.textContent</code> 為空的元素，剩下有內容的 node 則推到陣列變數 <code>raw</code> 中
+<ul>
+<li>childNodes 可能為純文字（沒有被螢光筆標記起來的部分），也有可能是 span 元素（代表這段文字有畫螢光筆）</li>
+</ul>
+</li>
+<li>53 行：<code>raw</code> 陣列中第一個 childNode 的 range 起點必為零，結束點則是該元素的內容長度</li>
+<li>55-61 行：後續 childNode 的 range 則需要加上前一個元素的內容長度</li>
+<li>66-69 行：檢查 childNode 的 <code>nodeType</code>，只留下有被螢光筆標註過的 childNode，亦即只保留 <code>nodeType</code> 值為 1 的 span node，最後再透過 <code>.map()</code> 回傳 range 資料，即代表使用者標註螢光筆範圍的陣列（資料型態為 <code>number[][]</code>）</li>
+</ul>
+</li>
+<li><code>RenderContent</code>：根據（後端回傳的）標註範圍資料，在指定的節點中繪製螢光筆範圍
+<ul>
+<li>80-82 行：若陣列為空，代表沒有螢光筆標註範圍，回傳純文字即可</li>
+<li>85-97 行：若有標記範圍（陣列不為空），則根據螢光筆標註範圍的始末點反推算整個段落的純文字與螢光筆標註範圍
+<ul>
+<li>86-88 行：螢光筆標註範圍並非從零開始時，補上一個螢光筆段落前的純文字的範圍（起點為零，結束點為「螢光筆開始標註的範圍」，故為 <code>markRange[0][0]</code>）</li>
+<li>所有 <code>[...r, 1]</code> 都代表該段範圍是「螢光筆標註的範圍」</li>
+<li><code>[markRange[index - 1][1], markRange[index][0]]</code> 代表純文字範圍，起點是「前一個螢光筆標註範圍的終點」，結束點是「下一個螢光筆標註範圍的起點」</li>
+<li>97 行負責補上最後一段螢光筆標註後，剩下的純文字節點</li>
+</ul>
+</li>
+<li>101-117 行：已知 range 陣列長度若為 3 則代表該 range 是螢光筆範圍，故將文字 <code>.slice()</code> 後包進 有 class <code>highlight</code> 的 span 元素中，剩下純文字範圍直接回傳 <code>.slice()</code> 段落即可</li>
+</ul>
+</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Range/extractContents">MDN: Range.extractContents()</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Selection/getRangeAt">MDN: Selection.getRangeAt()</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Range/insertNode">MDN: Range.insertNode()</a></li>
+<li><a href="https://www.oreilly.com/library/view/javascript-the-definitive/0596000480/re565.html">JavaScript: The Definitive Guide - Range.extractContents()</a></li>
+<li><a href="https://stackoverflow.com/questions/5573030/difference-between-range-and-selection-in-browser">StackOverFlow: Difference between range and selection in browser</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

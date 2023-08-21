@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第20週 實作筆記：在 React APP 中實作滾動視差</title>
+    <meta name="title" content="2022 第20週 實作筆記：在 React APP 中實作滾動視差">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-parallax-scroll/">
+    <meta property="og:title" content="2022 第20週 實作筆記：在 React APP 中實作滾動視差">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-parallax-scroll/">
+    <meta property="twitter:title" content="2022 第20週 實作筆記：在 React APP 中實作滾動視差">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第20週 實作筆記：在 React APP 中實作滾動視差</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-05-21 15:03</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#關於-asana-首頁的滾動視差" class="astro-QTOKGA5Y">關於 Asana 首頁的滾動視差</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#實作" class="astro-QTOKGA5Y">實作</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>使用 <code>position: sticky;</code> 製作出滾動視差（parallax effect）效果</p>
+<p><img src="/2022/react-parallax-scroll/react-parallax-scroll-demo.gif" alt="parallax scroll demo"></p>
+<p>展示：<a href="https://tzynwang.github.io/react-parallax-effect/">https://tzynwang.github.io/react-parallax-effect/</a>
+原始碼：<a href="https://github.com/tzynwang/react-parallax-effect/tree/feature/sticky">https://github.com/tzynwang/react-parallax-effect/tree/feature/sticky</a>
+參考來源：<a href="https://asana.com/?noredirect">Asana</a> 首頁的動畫效果</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="關於-asana-首頁的滾動視差">關於 Asana 首頁的滾動視差</h3>
+<ul>
+<li>左側圖片的動畫效果是透過 <code>transform</code> 製作出來的，並非 SVG 檔案；在捲動到一定位置時觸發 <code>transform</code> 來改變 HTMLElement 的位置（<code>transform: translate(...);</code>）與變形（<code>transform: scale(...);</code>）程度，以及 <code>border-radius</code> 數值</li>
+<li>數值推測：
+<ul>
+<li>目測第一區塊右側文字的 <code>getBoundingClientRect().top</code> 加上 <code>getBoundingClientRect().bottom</code> 除以二（即中線）超過 <code>window.innerHeight</code> 一半後開始 <code>position: sticky;</code> 效果</li>
+<li>在第二區塊的 <code>getBoundingClientRect().top</code> 超過 <code>window.innerHeight</code> 一半之後就開始進行圖片變形</li>
+<li>第三區塊的「開始」判定看來同第二區塊，而「動畫結束」判定看起來是「區塊的 <code>getBoundingClientRect().bottom</code> 小於 <code>window.innerHeight * 0.05</code> 後，將圖片的 <code>position: sticky;</code> 改為 <code>position: absolute;</code>」</li>
+</ul>
+</li>
+</ul>
+<h3 id="實作">實作</h3>
+<ul>
+<li>準備兩套圖文元件：<code>StaticSection</code> 與 <code>ScrollAnimationSection</code>，<code>StaticSection</code> 處理版面小於 900px 不展示捲動效果的情境，動畫相關的處理都放到 <code>ScrollAnimationSection</code> 與其子元件中</li>
+<li><code>TextBlock</code> 一個設定為 <code>100vh</code> 高，總計三個，而 <code>ImageContainer</code> 則配合三個 <code>TextBlock</code> 堆疊起來的總高度設定為 <code>300vh</code></li>
+<li>元件 <code>Body</code> 中，第 84-95 行旨在計算每一個 <code>TextBlock</code> 的頂部位置，配合 <code>useWindowScrollTop()</code> 回傳的捲動數值可以判定目前畫面捲動到哪一個區塊</li>
+<li>元件 <code>Body</code> 中的 <code>handleScroll</code> 會計算 <code>ImageContainer</code> 元件的頂部是否已經經過畫面頂端，若為 <code>true</code> 則開始準備展現滾動視差動畫效果</li>
+<li>元件 <code>AnimationImage</code> 根據目前畫面捲動的位置替換 <code>src</code> 內容
+<ul>
+<li>設定 <code>top: 50vh;</code> 搭配 <code>transform: translateY(-50%);</code> 做出圖片垂直置中的效果</li>
+<li>因本實作觸發動畫的捲動點與 Asana 版本的不同，在畫面判定捲到最後一個區塊的時候設定 <code>position: absolute;</code> 避免圖片繼續被往下推移</li>
+</ul>
+</li>
+<li>需注意 FireFox 目前並不支援 <code>transition-property: background;</code>，圖片目前僅有在 Chrome 上才會有 <code>transition</code> 效果</li>
+<li>需注意不能在 parent element 使用 <code>display: flex;</code> 否則 <code>position: sticky;</code> 會失效</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect">MDN: Element.getBoundingClientRect()</a></li>
+<li><a href="https://gist.github.com/brandonjp/478cf6e32d90ab9cb2cd8cbb0799c7a7">Gist: findOverflowParents.js</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>SSH Keys for GitHub</title>
+    <meta name="title" content="SSH Keys for GitHub">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/git-ssh-key/">
+    <meta property="og:title" content="SSH Keys for GitHub">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/git-ssh-key/">
+    <meta property="twitter:title" content="SSH Keys for GitHub">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">SSH Keys for GitHub</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-02-22 20:01</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  git
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#步驟" class="astro-QTOKGA5Y">步驟</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文章" class="astro-QTOKGA5Y">參考文章</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<blockquote>
+<p>GitHub Docs About SSH: With SSH keys, you can connect to GitHub without supplying your username and personal access token at each visit.</p>
+</blockquote>
+<p>使用 SSH key 可以在不輸入 username 與密碼的情況下操作 GitHub/GitLab 的 repo
+本篇筆記乃為記錄在 Mac 產生 SSH key 的流程</p>
+<h2 id="步驟">步驟</h2>
+<ol>
+<li>
+<p>開啟 terminal 後，輸入 <code>ssh-keygen -t ed25519 -C "your@email.here"</code></p>
+<ul>
+<li><code>ed25519</code> 是產生 SSH key 的演算法</li>
+<li>若不需要搭配 email 產生 key 則 <code>-C "your@email.here"</code> 此 flag 與 email 一起移除</li>
+</ul>
+</li>
+<li>
+<p>出現 <code>"Enter a file in which to save the key,”</code> 訊息後，可直接按下 Enter 使用預設的檔案名稱保存 SSH key 或輸入自訂的檔案名稱來進行儲存</p>
+</li>
+<li>
+<p><code>secure passphrase</code> 可選擇略過不輸入</p>
+</li>
+<li>
+<p><code>cd ~/.ssh</code> 後 <code>ls</code> 查看資料夾內容，應會有一組檔案 <code>id_ed25519</code> 與 <code>id_ed25519.pub</code> 以及 <code>config</code>，若沒有 <code>config</code> 則輸入 <code>touch ~/.ssh/config</code> 建立一個</p>
+<ul>
+<li><code>id_ed25519</code> 的內容是私鑰，而 <code>.pub</code> 檔案裡面保存的則是公鑰</li>
+<li><a href="https://git-scm.com/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key">Pro Git book</a>: The <code>.pub</code> file is your public key, and the other file is the corresponding private key.</li>
+</ul>
+</li>
+<li>
+<p>在 terminal 輸入 <code>open ~/.ssh/config</code> 後，於檔案內貼入以下內容，注意最後一行的 <code>IdentityFile</code> 檔案名稱（<code>id_ed25519</code>）要與前面步驟建立的 SSH key 檔案名稱一致</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">Host *</span></span>
+<span class="line"><span style="color: #e1e4e8">  AddKeysToAgent yes</span></span>
+<span class="line"><span style="color: #e1e4e8">  IdentityFile ~/.ssh/id_ed25519</span></span></code></pre>
+</li>
+<li>
+<p>於 terminal 輸入 <code>cat ~/.ssh/id_ed25519.pub</code>  檢視公鑰內容並將 SSH key 複製起來，或也可輸入 <code>pbcopy &#x3C; ~/.ssh/id_ed25519.pub</code> 直接複製 SSH key 內容；注意「<code>id_ed25519.pub</code>」要與前面步驟建立的 SSH key 檔案名稱一致</p>
+</li>
+<li>
+<p>把 SSH key 貼到 GitHub/GitLab SSH Key 中，並注意之後需使用 GitHub/GitLab 的 SSH url 來 clone 或是 push 等指令（而非使用 HTTPS url）</p>
+</li>
+</ol>
+<p><img src="/2022/git-ssh-key/git-clone-ssh.png" alt="use SSH url to clone the repo"></p>
+<h2 id="參考文章">參考文章</h2>
+<ul>
+<li><a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/about-ssh">GitHub Docs: About SSH</a></li>
+<li><a href="https://git-scm.com/book/en/v2/Git-on-the-Server-Generating-Your-SSH-Public-Key">Pro Git book 4.3 Git on the Server - Generating Your SSH Public Key</a></li>
+<li><a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">GitHub Docs: Generating a new SSH key and adding it to the ssh-agent</a></li>
+<li><a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">GitHub Docs: Adding a new SSH key to your GitHub account</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>30天挑戰：「將Vue project部屬至GitHub Pages」相關筆記</title>
+    <meta name="title" content="30天挑戰：「將Vue project部屬至GitHub Pages」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/ithome2021-14-deploy-vue-project-to-github-page/">
+    <meta property="og:title" content="30天挑戰：「將Vue project部屬至GitHub Pages」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/ithome2021-14-deploy-vue-project-to-github-page/">
+    <meta property="twitter:title" content="30天挑戰：「將Vue project部屬至GitHub Pages」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">30天挑戰：「將Vue project部屬至GitHub Pages」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-08-31 10:05</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Vue
+</span><span class="astro-2IYMVI75">
+  2021鐵人賽
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#步驟" class="astro-QTOKGA5Y">步驟</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>記錄將 Vue project 部屬到 Github Pages 的相關步驟</p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">@vue/cli: 4.5.13</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="步驟">步驟</h2>
+<ol>
+<li>在專案<strong>根目錄</strong>建立<code>vue.config.js</code></li>
+<li>填入以下內容</li>
+</ol>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// in vue.config.js</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #79B8FF">module</span><span style="color: #E1E4E8">.</span><span style="color: #79B8FF">exports</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  publicPath: process.env.</span><span style="color: #79B8FF">NODE_ENV</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">===</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'production'</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">?</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'/my-project/'</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'/'</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<ul>
+<li>注意事項：
+<ul>
+<li>If you are deploying to <code>https://&#x3C;USERNAME>.github.io/</code> or to a custom domain, you can omit <code>publicPath</code> as it defaults to <code>"/"</code>.</li>
+<li>If you are deploying to <code>https://&#x3C;USERNAME>.github.io/&#x3C;REPO>/</code>, (i.e. your repository is at <code>https://github.com/&#x3C;USERNAME>/&#x3C;REPO></code>), set <code>publicPath</code> to <code>"/&#x3C;REPO>/"</code>.</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>在專案<strong>根目錄</strong>建立<code>deploy.sh</code>，填入以下內容</li>
+</ol>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">#!/usr/bin/env sh</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D"># abort on errors</span></span>
+<span class="line"><span style="color: #79B8FF">set</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">-e</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D"># build</span></span>
+<span class="line"><span style="color: #B392F0">npm</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">run</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">build</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D"># navigate into the build output directory</span></span>
+<span class="line"><span style="color: #79B8FF">cd</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">dist</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D"># 下面這區根據實際情況調整，不會用到的話，就維持註解狀態</span></span>
+<span class="line"><span style="color: #6A737D"># if you are deploying to a custom domain</span></span>
+<span class="line"><span style="color: #6A737D"># echo 'www.example.com' > CNAME</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #B392F0">git</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">init</span></span>
+<span class="line"><span style="color: #B392F0">git</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">add</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">-A</span></span>
+<span class="line"><span style="color: #B392F0">git</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">commit</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">-m</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'deploy'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D"># 下面這區根據實際情況調整，不會用到的話，就維持註解狀態</span></span>
+<span class="line"><span style="color: #6A737D"># if you are deploying to https://&#x3C;USERNAME>.github.io</span></span>
+<span class="line"><span style="color: #6A737D"># git push -f git@github.com:&#x3C;USERNAME>/&#x3C;USERNAME>.github.io.git main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D"># 下面這區根據實際情況調整，不會用到的話，就維持註解狀態</span></span>
+<span class="line"><span style="color: #6A737D"># if you are deploying to https://&#x3C;USERNAME>.github.io/&#x3C;REPO></span></span>
+<span class="line"><span style="color: #6A737D"># git push -f git@github.com:&#x3C;USERNAME>/&#x3C;REPO>.git main:gh-pages</span></span>
+<span class="line"><span style="color: #6A737D"># 最後成功時，用的是.git/config中的[remote "origin"] url = https://github.com/&#x3C;USERNAME>/&#x3C;REPO-NAME>.git</span></span>
+<span class="line"><span style="color: #B392F0">git</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">push</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">-f</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">https://github.com/</span><span style="color: #F97583">&#x3C;</span><span style="color: #9ECBFF">USERNAM</span><span style="color: #E1E4E8">E</span><span style="color: #F97583">></span><span style="color: #9ECBFF">/</span><span style="color: #F97583">&#x3C;</span><span style="color: #9ECBFF">REPO-NAM</span><span style="color: #E1E4E8">E</span><span style="color: #F97583">></span><span style="color: #9ECBFF">.git</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">master:gh-pages</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #79B8FF">cd</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">-</span></span></code></pre>
+<ol>
+<li>打開 Git Bash，cd 到專案目錄，記得路徑要用<code>''</code>包起來（比如<code>cd 'C:\Projects'</code>）</li>
+<li>先輸入<code>chmod +x deploy.sh</code>，再輸入<code>./deploy.sh</code>來執行腳本
+<img src="/2021/ithome2021-14-deploy-vue-project-to-github-page/gitBash.png" alt="執行畫面"></li>
+<li>腳本執行完畢後，repo 上會出現<code>gh-pages</code>這個 branch，去 pages 設定讓 GitHub Pages 抓取該 branch 即可</li>
+</ol>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://cli.vuejs.org/guide/deployment.html#github-pages">Vue CLI: Deployment to GitHub Pages</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

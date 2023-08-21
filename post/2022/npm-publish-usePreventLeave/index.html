@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第29週 實作筆記：發佈 npm 套件 usePreventLeave</title>
+    <meta name="title" content="2022 第29週 實作筆記：發佈 npm 套件 usePreventLeave">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/npm-publish-usePreventLeave/">
+    <meta property="og:title" content="2022 第29週 實作筆記：發佈 npm 套件 usePreventLeave">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/npm-publish-usePreventLeave/">
+    <meta property="twitter:title" content="2022 第29週 實作筆記：發佈 npm 套件 usePreventLeave">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第29週 實作筆記：發佈 npm 套件 usePreventLeave</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-07-23 11:18</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span><span class="astro-2IYMVI75">
+  rollup.js
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#packagejson-設定" class="astro-QTOKGA5Y">package.json 設定</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#rollupconfigjson-設定" class="astro-QTOKGA5Y">rollup.config.json 設定</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#tsconfigjson-設定" class="astro-QTOKGA5Y">tsconfig.json 設定</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#進版規律" class="astro-QTOKGA5Y">進版規律</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<ul>
+<li>記錄一下自製 React custom hook 套件 <a href="https://www.npmjs.com/package/react-hook-use-prevent-leave">usePrevent</a> 從打包到發佈時使用的設定</li>
+<li>關於目前使用的進版（package.json version）規律小記</li>
+</ul>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">rollup: 2.77.0</span></span>
+<span class="line"><span style="color: #e1e4e8">@rollup/plugin-node-resolve: 13.3.0</span></span>
+<span class="line"><span style="color: #e1e4e8">@rollup/plugin-typescript: 8.3.3</span></span>
+<span class="line"><span style="color: #e1e4e8">rollup-plugin-dts: 4.2.2</span></span>
+<span class="line"><span style="color: #e1e4e8">rollup-plugin-terser: 7.0.2</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="packagejson-設定">package.json 設定</h3>
+<blockquote>
+<p>code: <a href="https://github.com/tzynwang/react-hook-use-prevent-leave/blob/master/package.json">https://github.com/tzynwang/react-hook-use-prevent-leave/blob/master/package.json</a></p>
+</blockquote>
+<ul>
+<li>name 與 version：如果打算把套件發佈到 npm 上，這兩個是必填欄位，且 name 不可重複；官方文件建議發佈前可先在 <a href="https://www.npmjs.com/">https://www.npmjs.com/</a> 查詢目前是否有撞名的套件</li>
+<li>main：套件的入口
+<ul>
+<li>假設某套件 <code>a-package</code> 的 package.json/main 設定為 <code>dist/index.js</code></li>
+<li>則在執行 <code>import XXX from 'a-package'</code> 時，等同載入 <code>a-package/dist/index.js</code> 的內容</li>
+</ul>
+</li>
+<li>repository：可在此欄位註記原始碼的 repo url</li>
+<li>devDependencies：
+<ul>
+<li>本次發佈的 <code>usePreventLeave</code> 套件僅有在開發時需要引用到 <code>react</code> ， <code>typescript</code> 與 <code>rollup.js</code></li>
+<li>上傳到 npm 並被其他使用者下載後，預期此套件的使用者會在專案自行安裝 <code>react</code> （或 <code>typescript</code> ，如果需要的話）</li>
+<li>因此，在透過 <code>rollup.js</code> 打包時要將這些「不需要透過 <code>usePreventLeave</code> 提供的套件」排除，故這些僅有在開發時需要用到的套件都會被歸納在 devDependencies 類別中</li>
+</ul>
+</li>
+<li>scripts：以本次發佈的 <code>react-hook-use-prevent-leave</code> 為例
+<ul>
+<li><code>"rollup": "rm -rf dist &#x26;&#x26; rollup -c"</code> 先移除既有的 dist 資料夾，再透過 rollup.js 進行打包，加上 <code>-c</code> 代表打包時需使用位在根目錄的 <code>rollup.config.json</code> 設定檔</li>
+<li><code>"prepublishOnly": "npm run rollup"</code> 代表在終端機執行 <code>npm publish</code> 時，要先進行 <code>npm run rollup</code> 再跑 <code>npm publish</code></li>
+<li>白話文：在發佈套件前，先移除前一次打包產生的舊 dist 資料夾，再透過 rollup.js 打包，最後把打包好的內容發佈到 npm</li>
+</ul>
+</li>
+</ul>
+<h3 id="rollupconfigjson-設定">rollup.config.json 設定</h3>
+<blockquote>
+<p>code: <a href="https://github.com/tzynwang/react-hook-use-prevent-leave/blob/master/rollup.config.js">https://github.com/tzynwang/react-hook-use-prevent-leave/blob/master/rollup.config.js</a></p>
+</blockquote>
+<ul>
+<li>第 10 行：指定打包的入口為 <code>src/index.ts</code></li>
+<li>第 13 行：指定打包完的檔案路徑參考 package.json 中的 main</li>
+<li>第 14 行：設定打包格式為 <code>esm</code></li>
+<li>第 18 行：typescript 設定參考根目錄的 <code>tsconfig.json</code> 內容，並配合 <code>terser()</code> 來進行檔案壓縮（移除檔案內的空白等）</li>
+<li>第 19 行：打包時需要排除的 peer dependencies ， <code>external: ['react']</code> 即是「打包時請略過 <code>react</code> 這個套件」；完整解說可參考 <a href="https://rollupjs.org/guide/en/#peer-dependencies">rollup.js Peer dependencies</a></li>
+<li>第 22 - 24 行：根據 <code>dist/types/index.d.ts</code> 在套件的根目錄產生 <code>dist/index.d.ts</code> 檔案</li>
+</ul>
+<h3 id="tsconfigjson-設定">tsconfig.json 設定</h3>
+<blockquote>
+<p>code: <a href="https://github.com/tzynwang/react-hook-use-prevent-leave/blob/master/tsconfig.json">https://github.com/tzynwang/react-hook-use-prevent-leave/blob/master/tsconfig.json</a></p>
+</blockquote>
+<ul>
+<li>第 16 行：指定 jsx 如何編譯，參考 <a href="https://www.typescriptlang.org/tsconfig#jsx">TSConfig Reference: JSX</a></li>
+<li>第 27 與 29 行：指定 module 的解析方式，（根據 TSConfig Reference 文件）調整 <code>module</code> 設定會連帶影響 <code>moduleResolution</code> ；在專案僅支援 esm 的情況下，其實是設定 <code>module: esnext</code> 搭配 <code>moduleResolution: nodenext</code> 即可</li>
+<li>第 50 行：在這邊宣告 rollup.config.json 打包後的檔案位置（<code>dist</code> 資料夾）</li>
+</ul>
+<h3 id="進版規律">進版規律</h3>
+<blockquote>
+<p>版本號範例：A.B.C</p>
+</blockquote>
+<ul>
+<li>發佈新版本時若沒有任何 feature 要素（僅處理 performance 等），進最小版號 C</li>
+<li>若是因為有新的 features 而發佈新版本時，更新中間的版號 B，並最小版號 C 歸零</li>
+<li>最大的版號 A：因應大規模改版，比如 React 的 17 → 18 版本</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://docs.npmjs.com/cli/v8/configuring-npm/package-json">npm Docs: package.json</a></li>
+<li><a href="https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html#writing-a-configuration-file">TypeScript: Writing a Configuration File</a></li>
+<li><a href="https://www.typescriptlang.org/tsconfig">TSConfig Reference</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

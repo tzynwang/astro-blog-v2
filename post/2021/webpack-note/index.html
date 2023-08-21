@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「webpack環境設置步驟」相關筆記</title>
+    <meta name="title" content="「webpack環境設置步驟」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/webpack-note/">
+    <meta property="og:title" content="「webpack環境設置步驟」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/webpack-note/">
+    <meta property="twitter:title" content="「webpack環境設置步驟」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「webpack環境設置步驟」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-06-12 11:02</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  webpack
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#步驟" class="astro-QTOKGA5Y">步驟</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#資料夾結構" class="astro-QTOKGA5Y">資料夾結構</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#補充若須導入css" class="astro-QTOKGA5Y">補充：若須導入.css</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#補充若須導入scss" class="astro-QTOKGA5Y">補充：若須導入.scss</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>使用 webpack（本次搭配 axios 與 vue）開發前端 web APP 時的環境相關設置筆記
+2021/8/4 更新：追加 SCSS 相關設定</p>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">webpack: 5.38.1</span></span>
+<span class="line"><span style="color: #e1e4e8">webpack-cli: 4.7.2</span></span>
+<span class="line"><span style="color: #e1e4e8">vue: 2.6.14</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span>
+<span class="line"><span style="color: #e1e4e8"></span></span>
+<span class="line"><span style="color: #e1e4e8">// 2021/8/4追加</span></span>
+<span class="line"><span style="color: #e1e4e8">node-sass: 6.0.1</span></span>
+<span class="line"><span style="color: #e1e4e8">sass-loader: 12.1.0</span></span></code></pre>
+<h2 id="步驟">步驟</h2>
+<ol>
+<li>移動到專案資料夾內，在終端機輸入<code>npm init -y</code></li>
+</ol>
+<ul>
+<li><code>-y</code>可跳過所有關於<code>package.json</code>的設定問題</li>
+<li><a href="https://docs.npmjs.com/cli/v6/commands/npm-init">npm-init</a>: If the initializer is omitted (by just calling <code>npm init</code>), init will fall back to legacy init behavior. It will <strong>ask you a bunch of questions</strong>, and then write a <code>package.json</code> for you. You can also use <code>-y</code>/<code>--yes</code> to <strong>skip the questionnaire</strong> altogether.</li>
+</ul>
+<ol>
+<li>安裝<code>webpack</code>、<code>webpack-cli</code>、<code>axios</code>、<code>vue</code>與<code>html-webpack-plugin</code></li>
+</ol>
+<ul>
+<li><code>npm install &#x3C;package name> --save-dev</code></li>
+<li><a href="https://stackoverflow.com/questions/22891211/what-is-the-difference-between-save-and-save-dev">What is the difference between —save and —save-dev?</a></li>
+<li><a href="https://docs.npmjs.com/cli/v6/configuring-npm/package-json#devdependencies">npm: devDependencies</a>: If someone is planning on downloading and using your module in their program, then they probably <strong>don’t want or need to download and build the external test or documentation framework</strong> that you use. In this case, it’s best to map these additional items in a <strong>devDependencies</strong> object.</li>
+</ul>
+<ol>
+<li><code>package.json</code>設定如下：</li>
+</ol>
+<script src="https://gist.github.com/tzynwang/0036ecd4516c978467fe64266791de26.js"></script>
+<ul>
+<li><a href="https://webpack.js.org/configuration/watch/"><code>webpack --watch</code></a>: This means that after the initial build, webpack will <strong>continue to watch for changes</strong> in any of the resolved files. 執行<code>npm run watch</code>的話，webpack 會自動更新修改後的 src 內容；搭配 vs code liver server 的話，就能及時觀察到修正後的結果</li>
+</ul>
+<ol>
+<li>在根目錄中建立<code>webpack.config.js</code>，（在專案需要使用 vue 的情況下）設定如下：</li>
+</ol>
+<script src="https://gist.github.com/tzynwang/8dadd59d8eb258d7843727f7bbcd4419.js"></script>
+<ol>
+<li>在根目錄中建立資料夾<code>src</code>，其中的檔案名稱需與<code>webpack.config.js</code>搭配，故使用<code>index.js</code>與<code>template.html</code></li>
+</ol>
+<script src="https://gist.github.com/tzynwang/948dbc4dea908a2cc27b874949a35383.js"></script>
+<script src="https://gist.github.com/tzynwang/2bf0bd73c4f25713752a3c7decd13385.js"></script>
+<ol>
+<li>在終端機執行<code>npm run build</code>後，根目錄中出現資料夾<code>dist</code>，內有<code>index.html</code>與<code>main.js</code></li>
+</ol>
+<script src="https://gist.github.com/tzynwang/96051f1c7bdded10f79ad3caeaf838be.js"></script>
+<p>並且<code>main.js</code>已經根據<code>webpack.config.js</code>中<code>HtmlWebpackPlugin</code>的設定，自動嵌入<code>&#x3C;body></code>底部
+使用 webpack 進行打包的步驟到此結束</p>
+<h2 id="資料夾結構">資料夾結構</h2>
+<p><img src="/2021/webpack-note/webpack-folder-structure.png" alt="folder structure"></p>
+<h2 id="補充若須導入css">補充：若須導入.css</h2>
+<ol>
+<li>安裝<code>css-loader</code>與<code>mini-css-extract-plugin</code>（<code>npm i css-loader mini-css-extract-plugin -D</code>）</li>
+<li>在<code>index.js</code>中匯入.css 檔案</li>
+</ol>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./bootstrap.bundle'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./bootstrap.css'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./style.css'</span><span style="color: #E1E4E8">;</span></span></code></pre>
+<ol>
+<li><code>webpack.config.js</code>加入以下內容：</li>
+</ol>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">MiniCssExtractPlugin</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">require</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'mini-css-extract-plugin'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #79B8FF">module</span><span style="color: #E1E4E8">.</span><span style="color: #79B8FF">exports</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  plugins: [</span><span style="color: #F97583">new</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">MiniCssExtractPlugin</span><span style="color: #E1E4E8">()],</span></span>
+<span class="line"><span style="color: #E1E4E8">  module: {</span></span>
+<span class="line"><span style="color: #E1E4E8">    rules: [</span></span>
+<span class="line"><span style="color: #E1E4E8">      {</span></span>
+<span class="line"><span style="color: #E1E4E8">        test:</span><span style="color: #DBEDFF"> </span><span style="color: #9ECBFF">/</span><span style="color: #85E89D; font-weight: bold">\.</span><span style="color: #DBEDFF">css</span><span style="color: #F97583">$</span><span style="color: #9ECBFF">/</span><span style="color: #F97583">i</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">        use: [MiniCssExtractPlugin.loader, </span><span style="color: #9ECBFF">'css-loader'</span><span style="color: #E1E4E8">],</span></span>
+<span class="line"><span style="color: #E1E4E8">      },</span></span>
+<span class="line"><span style="color: #E1E4E8">    ],</span></span>
+<span class="line"><span style="color: #E1E4E8">  },</span></span>
+<span class="line"><span style="color: #E1E4E8">};</span></span></code></pre>
+<ul>
+<li><a href="https://webpack.js.org/plugins/mini-css-extract-plugin/">MiniCssExtractPlugin</a>：此 plugin 會在執行<code>npm run build</code>時將（匯入 index.js 的）.css 檔案獨立出來，並嵌入<code>index.html</code>中（預設在<code>&#x3C;head></code>尾端，可透過<a href="https://webpack.js.org/plugins/mini-css-extract-plugin/#insert"><code>insert</code>參數</a>修改）</li>
+<li><a href="https://webpack.js.org/configuration/module/#ruletest">Webpack config: Module Rule.test</a>: Include all modules that pass test assertion. If you supply a <code>Rule.test</code> option, you cannot also supply a <code>Rule.resource</code>.</li>
+</ul>
+<h2 id="補充若須導入scss">補充：若須導入.scss</h2>
+<ol>
+<li>除上述提及之 package 之外，追加安裝<code>node-sass</code>與<code>sass-loader</code></li>
+<li><code>webpack.config.js</code>的 plugins 與 module 設定如下：</li>
+</ol>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">plugins: [</span></span>
+<span class="line"><span style="color: #e1e4e8">  new MiniCssExtractPlugin(),</span></span>
+<span class="line"><span style="color: #e1e4e8">  new HtmlWebpackPlugin({</span></span>
+<span class="line"><span style="color: #e1e4e8">    inject: 'body',</span></span>
+<span class="line"><span style="color: #e1e4e8">    template: './src/index.html'</span></span>
+<span class="line"><span style="color: #e1e4e8">  })</span></span>
+<span class="line"><span style="color: #e1e4e8">],</span></span>
+<span class="line"><span style="color: #e1e4e8">module: {</span></span>
+<span class="line"><span style="color: #e1e4e8">  rules: [</span></span>
+<span class="line"><span style="color: #e1e4e8">    {</span></span>
+<span class="line"><span style="color: #e1e4e8">      test: /\.scss$/,</span></span>
+<span class="line"><span style="color: #e1e4e8">      use: [</span></span>
+<span class="line"><span style="color: #e1e4e8">        MiniCssExtractPlugin.loader,</span></span>
+<span class="line"><span style="color: #e1e4e8">        'css-loader',</span></span>
+<span class="line"><span style="color: #e1e4e8">        'sass-loader'</span></span>
+<span class="line"><span style="color: #e1e4e8">      ]</span></span>
+<span class="line"><span style="color: #e1e4e8">    }</span></span>
+<span class="line"><span style="color: #e1e4e8">  ]</span></span>
+<span class="line"><span style="color: #e1e4e8">}</span></span></code></pre>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://webpack.js.org/guides/getting-started/">Webpack 5: Getting Started</a></li>
+<li><a href="https://webpack.js.org/loaders/sass-loader/">Webpack 5: sass-loader</a></li>
+<li><a href="https://github.com/jantimon/html-webpack-plugin#readme">HTML Webpack Plugin</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

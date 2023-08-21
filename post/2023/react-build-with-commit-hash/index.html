@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>快速筆記：在 React app 取得最新的 git commit sha</title>
+    <meta name="title" content="快速筆記：在 React app 取得最新的 git commit sha">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/react-build-with-commit-hash/">
+    <meta property="og:title" content="快速筆記：在 React app 取得最新的 git commit sha">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/react-build-with-commit-hash/">
+    <meta property="twitter:title" content="快速筆記：在 React app 取得最新的 git commit sha">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">快速筆記：在 React app 取得最新的 git commit sha</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-06-10 10:09</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  GitLab
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#使用-child_process-取得-commit-hashtime" class="astro-QTOKGA5Y">使用 child_process 取得 commit hash/time</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#使用-gitlab-predefined-variables" class="astro-QTOKGA5Y">使用 GitLab Predefined Variables</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在一些因緣際會下收到「在 React app 運行時，希望能看到最新的 git commit sha 與 commit 時間」的需求。此篇筆記會提供兩種實現方式：</p>
+<ol>
+<li>使用 npm package <code>child_process</code> 來實作（傳統）</li>
+<li>透過 GitLab Predefined Variables 來處理（極度簡單）</li>
+</ol>
+<h2 id="筆記">筆記</h2>
+<h3 id="使用-child_process-取得-commit-hashtime">使用 <code>child_process</code> 取得 commit hash/time</h3>
+<p>需注意瀏覽器中不會有 <code>child_process</code> ，故下列程式碼需要在 React app 透過 webpack 打包或是透過 devServer 拉起來<strong>之前</strong>執行，再將 <code>{ hash, time }</code> 透過 <code>process.env</code> 或 webpack DefinePlugin 餵入 React app 中。</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> { execSync } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'child_process'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">default</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">getLatestCommitHistory</span><span style="color: #E1E4E8">() {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">try</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">hash</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">execSync</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'git rev-parse HEAD'</span><span style="color: #E1E4E8">).</span><span style="color: #B392F0">toString</span><span style="color: #E1E4E8">().</span><span style="color: #B392F0">trim</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">time</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">execSync</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'git log -1 --date=iso --format="%ad"'</span><span style="color: #E1E4E8">).</span><span style="color: #B392F0">toString</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> { hash, time };</span></span>
+<span class="line"><span style="color: #E1E4E8">  } </span><span style="color: #F97583">catch</span><span style="color: #E1E4E8"> (error) {</span></span>
+<span class="line"><span style="color: #E1E4E8">    console.</span><span style="color: #B392F0">error</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'Error getting the latest commit history:::'</span><span style="color: #E1E4E8">, error);</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> { hash: </span><span style="color: #9ECBFF">'no data'</span><span style="color: #E1E4E8">, time: </span><span style="color: #9ECBFF">'no data'</span><span style="color: #E1E4E8"> };</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<p>補充說明：取 <code>time</code> 中的 <code>--date=iso --format="%ad"</code> 可參考 <a href="https://git-scm.com/docs/pretty-formats">git: pretty formats</a> ，此二 flag 代表要取得 ISO 格式的 commit 時間。</p>
+<h3 id="使用-gitlab-predefined-variables">使用 GitLab Predefined Variables</h3>
+<p>在 GitLab CI/CD pipeline 中，可以直接透過 <code>CI_COMMIT_SHA</code> 這個關鍵字來取得觸發該次 pipeline build 的 commit hash。</p>
+<blockquote>
+<p>GitLab Docs > CI_COMMIT_SHA: The commit revision the project is built for.</p>
+</blockquote>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #85E89D">job1</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">stage</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">test</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    - </span><span style="color: #9ECBFF">echo "The job's commit hash is '$CI_COMMIT_SHA'"</span></span></code></pre>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://git-scm.com/docs/pretty-formats">git: pretty formats</a></li>
+<li><a href="https://docs.gitlab.com/ee/ci/variables/predefined_variables.html">GitLab Docs: Predefined variables reference</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

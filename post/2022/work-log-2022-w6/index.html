@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第6週 實作筆記：日期選取器</title>
+    <meta name="title" content="2022 第6週 實作筆記：日期選取器">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/work-log-2022-w6/">
+    <meta property="og:title" content="2022 第6週 實作筆記：日期選取器">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/work-log-2022-w6/">
+    <meta property="twitter:title" content="2022 第6週 實作筆記：日期選取器">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第6週 實作筆記：日期選取器</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-02-12 22:48</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>記錄一下工作專案會應用到的日期選取器（選項包含允許使用者自訂日期區間）
+demo: <a href="https://tzynwang.github.io/react-double-date-range/">https://tzynwang.github.io/react-double-date-range/</a>
+目前版本之 repo: <a href="https://github.com/tzynwang/react-double-date-range/tree/feature/3-third-version">https://github.com/tzynwang/react-double-date-range/tree/feature/3-third-version</a></p>
+<p><img src="/2022/work-log-2022-w6/createdAt.png" alt="created at"></p>
+<p><img src="/2022/work-log-2022-w6/updatedAt.png" alt="updated at"></p>
+<p>已實作內容：</p>
+<ul>
+<li>「建立日期區間」與「更新日期區間」互不影響彼此內容</li>
+<li>選擇選項「自訂日期區間」並選擇了開始與結束日期後，下拉選單會顯示使用者點選的開始與結束日期區間</li>
+<li>當使用者在「自訂日期區間」選擇的「開始日期」晚於「結束日期」時，自動重設「結束日期」的值</li>
+</ul>
+<h2 id="筆記">筆記</h2>
+<ul>
+<li>大部分的程式碼都包在 <code>FilterRangeSelector</code> 元件裡面，讓 <code>App.tsx</code> 保持簡短整潔</li>
+<li>因「建立日期區間」與「更新日期區間」為兩套互不影響的資料，故 <code>Selector</code> 與 <code>DateRangeCalender</code> 也直接實作兩套，雖然增加了一些重複內容，但讓事後回頭檢視 code 時比較容易理解其功能（省去目標在 createdAt 與 updatedAt 切來切去之間讓 code 的閱讀難度上升）</li>
+<li>透過 <code>useEffect</code> 分別訂閱 <code>dateRange.createdAt</code> 與 <code>dateRange.updatedAt</code> 的值來根據使用者選取了下拉選單的哪一個選項做出對應行為（單純計算日期即可、或是需要開啟 <code>DateRangeCalender</code>）</li>
+<li>透過 <code>useEffect</code> 訂閱 <code>calender</code> 的值，在 gte 日期晚於 lt 日期時重設 <code>calender.createdAt</code>/<code>calender.updatedAt</code> 的 <code>lt</code>，確保 lt 日期必定晚於 gte</li>
+<li>僅需要從 <code>App.tsx</code> 對 <code>FilterRangeSelector</code> 元件傳入 <code>setQueryParams</code> 使其可以更新 <code>queryParams</code> 的值即可</li>
+<li>使用 @mui DatePicker 元件需執行 <code>npm i @mui/lab</code> 並根據專案使用的日期套件 import 相對應的 <code>AdapterDateFns</code>，詳細參考 <a href="https://mui.com/components/date-picker/#requirements">Date Picker/Requirements</a></li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://day.js.org/docs/en/display/difference">Day.js: Difference</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

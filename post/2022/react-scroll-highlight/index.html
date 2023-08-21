@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第11週 實作筆記：Element.getBoundingClientRect()</title>
+    <meta name="title" content="2022 第11週 實作筆記：Element.getBoundingClientRect()">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-scroll-highlight/">
+    <meta property="og:title" content="2022 第11週 實作筆記：Element.getBoundingClientRect()">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-scroll-highlight/">
+    <meta property="twitter:title" content="2022 第11週 實作筆記：Element.getBoundingClientRect()">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第11週 實作筆記：Element.getBoundingClientRect()</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-03-21 22:57</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#資料流" class="astro-QTOKGA5Y">資料流</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#實作步驟拆解" class="astro-QTOKGA5Y">實作步驟拆解</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#原始碼" class="astro-QTOKGA5Y">原始碼</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>因應專案限制，在不使用 <code>Intersection Observer API</code> （因 IE 無支援）的情況下，透過 <code>Element.getBoundingClientRect()</code> 與 <code>Element.scrollTo()</code>, <code>Element.scrollTop</code> 做出類似效果</p>
+<p>需求情境：</p>
+<ul>
+<li>畫面左側為章節清單，右側顯示章節內容</li>
+<li>暫不考慮巢狀結構，章節全部平鋪</li>
+<li>使用者捲動畫面右側內容時，根據 viewport 中的內容於左側清單做出對應提示（例：畫面捲到「第三章」的內容時，左側清單的第三章項目字體顏色需改為提示色）</li>
+<li>使用者點擊左側清單時，右側 viewport 要跟著捲到相對應的章節位置</li>
+</ul>
+<p><img src="/2022/react-scroll-highlight/demo.gif" alt="demo"></p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">react: 17.0.2</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="資料流">資料流</h3>
+<ul>
+<li>同一份資料分別用來渲染左側清單與右側內容區塊</li>
+<li>在左側清單中的每一個項目都可以對應到右側每一個內容區塊時，可只使用一維陣列來儲存右側每一個內容區塊的 <code>getBoundingClientRect().top</code> 資料</li>
+</ul>
+<h3 id="實作步驟拆解">實作步驟拆解</h3>
+<ol>
+<li>於元件 <code>componentDidMount()</code> 後，將需要呈現在畫面上的資料保存至 <code>useState()</code> 變數 <code>content</code> 中</li>
+<li>將 <code>content</code> 傳給負責渲染左測清單、右側內容區塊的元件</li>
+<li>使用 <code>useRef()</code> 取得使用者捲動的對象並將 ref 保存到變數 <code>appMainRef</code> 中，並加上 <code>scroll</code> 事件監聽</li>
+<li>於右側內容區渲染完畢後，使用 <code>useState()</code> 保存各區塊的 <code>getBoundingClientRect().top</code> 資料，以便使用者點擊左側清單時，知道要將畫面捲到哪一個高度</li>
+<li>捲動事件發生時，取 <code>e.target.scrollTop</code> 比對現在捲動的位置，若為零（或捲動到底）則判定左側清單的第一（或最後一個項目）為 highlight 狀態；若以上兩者皆非，則透過 <code>appMainRef.current.children</code> 取得現在右側所有區塊的 <code>getBoundingClientRect().top</code> 資料，比對目前哪一個區塊的 <code>top</code> 超過螢幕一半高（<code>window.innerHeight / 2</code>），進而判斷哪一個區塊在 highlight 狀態</li>
+</ol>
+<h3 id="原始碼">原始碼</h3>
+<script src="https://gist.github.com/tzynwang/5b41a09f034172216a8b67e16d4ac218.js"></script>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect">MDN: Element.getBoundingClientRect()</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

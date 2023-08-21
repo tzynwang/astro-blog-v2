@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「產生順序數陣列」相關筆記</title>
+    <meta name="title" content="「產生順序數陣列」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/array-with-serial-number/">
+    <meta property="og:title" content="「產生順序數陣列」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/array-with-serial-number/">
+    <meta property="twitter:title" content="「產生順序數陣列」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「產生順序數陣列」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-06-14 18:27</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  JavaScript
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#array-constructor" class="astro-QTOKGA5Y">Array() constructor</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#arrayprototypekeys" class="astro-QTOKGA5Y">Array.prototype.keys()</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#arrayfrom" class="astro-QTOKGA5Y">Array.from()</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>使用<code>Array() constructor</code>、<code>Array.prototype.keys()</code>與<code>Array.from()</code>來建立一個陣列，該陣列包含從小到大的順序數列，如<code>[1, 2, 3, 4, 5, 6, 7]</code></p>
+<h2 id="筆記">筆記</h2>
+<h3 id="array-constructor">Array() constructor</h3>
+<p>傳入陣列長度，會得到對應該陣列長度的空陣列</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">let</span><span style="color: #E1E4E8"> x </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Array</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">7</span><span style="color: #E1E4E8">)</span></span>
+<span class="line"><span style="color: #6A737D">// x為[empty × 7]</span></span></code></pre>
+<blockquote>
+<p>MDN: If the only argument passed to the Array constructor is an <strong>integer between 0 and 2^32 - 1 (inclusive)</strong>, this returns a new JavaScript array with its <strong>length property set to that number</strong> (Note: this implies an array of arrayLength empty slots, not slots with actual undefined values). If the argument is any other number, a RangeError exception is thrown.</p>
+</blockquote>
+<h3 id="arrayprototypekeys">Array.prototype.keys()</h3>
+<p>此功能會回傳「Array Iterator object」，並非單純的陣列</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">array1</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> [</span><span style="color: #9ECBFF">'a'</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'b'</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'c'</span><span style="color: #E1E4E8">]</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">iterator</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> array1.</span><span style="color: #B392F0">keys</span><span style="color: #E1E4E8">()</span></span>
+<span class="line"><span style="color: #6A737D">// 呼叫iterator的話，會得到Array Iterator Object，而非陣列</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">for</span><span style="color: #E1E4E8"> (</span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">key</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> iterator) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(key) </span><span style="color: #6A737D">// 依序印出0、1、2</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<h3 id="arrayfrom">Array.from()</h3>
+<p>配合<code>Array.prototype.keys()</code>回傳的 Array Iterator Object，回傳該 Array Iterator Object 的淺拷貝陣列</p>
+<blockquote>
+<p>MDN: The <code>Array.from()</code> static method creates a <strong>new, shallow-copied Array instance</strong> from an array-like or iterable object.</p>
+</blockquote>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">let</span><span style="color: #E1E4E8"> serialNumber </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> Array.</span><span style="color: #B392F0">from</span><span style="color: #E1E4E8">(</span><span style="color: #B392F0">Array</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">7</span><span style="color: #E1E4E8">).</span><span style="color: #B392F0">keys</span><span style="color: #E1E4E8">(), </span><span style="color: #FFAB70">element</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> element </span><span style="color: #F97583">+</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">1</span><span style="color: #E1E4E8">)</span></span>
+<span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(serialNumber)</span></span>
+<span class="line"><span style="color: #6A737D">// 印出 Array [1, 2, 3, 4, 5, 6, 7]</span></span></code></pre>
+<p>步驟拆解如下：</p>
+<ol>
+<li><code>Array(7)</code>得到一個長度為 7 的空陣列</li>
+<li><code>Array(7).keys()</code>得到一個 Array Iterator Object，若使用<code>for...of</code>迴圈印出此物件的內容的話，會依序印出 0、1、2、3、4、5、6</li>
+<li><code>Array.from(Array(7).keys(), element => element + 1)</code>中的<code>element => element + 1</code>是傳入<code>Array.from()</code>的 Map function，會依序作用在陣列中的每一個項目上</li>
+</ol>
+<ul>
+<li>而傳入的 Map function 要做的事情是「為陣列中的每一個項目 +1」</li>
+<li>所以最後<code>Array.from()</code>回傳的陣列會是從 1 開始，而非 0</li>
+<li><code>element => element + 1</code>是以下原始碼的精簡版本：</li>
+</ul>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">element</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> element </span><span style="color: #F97583">+</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">1</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"><span style="color: #6A737D">// 簡化為</span></span>
+<span class="line"><span style="color: #FFAB70">element</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> { </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> element </span><span style="color: #F97583">+</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">1</span><span style="color: #E1E4E8"> }</span></span>
+<span class="line"><span style="color: #6A737D">// 簡化為</span></span>
+<span class="line"><span style="color: #FFAB70">element</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> element </span><span style="color: #F97583">+</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">1</span></span></code></pre>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Array">Array() constructor</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/keys">Array.prototype.keys()</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from">Array.from()</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

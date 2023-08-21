@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第10週 實作筆記：webpack scoped styles (index.module.(s)css)</title>
+    <meta name="title" content="2022 第10週 實作筆記：webpack scoped styles (index.module.(s)css)">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/webpack-css-module/">
+    <meta property="og:title" content="2022 第10週 實作筆記：webpack scoped styles (index.module.(s)css)">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/webpack-css-module/">
+    <meta property="twitter:title" content="2022 第10週 實作筆記：webpack scoped styles (index.module.(s)css)">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第10週 實作筆記：webpack scoped styles (index.module.(s)css)</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-03-13 19:55</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  webpack
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>記錄一下如何設定 <code>webpack.config.js</code> 使 React APP 可以使用 scoped style
+以下兩個 <code>&#x3C;button /></code> 的 className 皆設定為 <code>Styles.hello</code> ，但透過在 webpack.config.js 中設定 <code>module</code> 為 <code>true</code> 使其樣式不會互相影響</p>
+<p><img src="/2022/webpack-css-module/scoped-style-demo.png" alt="demo"></p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">sass: 1.49.9</span></span>
+<span class="line"><span style="color: #e1e4e8">sass-loader: 12.6.0</span></span>
+<span class="line"><span style="color: #e1e4e8">webpack: 5.70.0</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<script src="https://gist.github.com/tzynwang/836b24fe413e95e9d58f79e72d01e75d.js"></script>
+<ul>
+<li>如果是透過 <code>create-react-app</code> 建立並執行過 <code>npm run eject</code> 的 React APP 專案的話，需補安裝 <code>sass</code>（<code>npm i --save-dev sass</code>）</li>
+<li>第 15 行：需注意在處理 <code>CSS_REG</code> 時必須排除 <code>CSS_MODULE_REG</code>，避免 webpack 重複打包（.scss 類檔案同理）</li>
+<li>第 28 行：將名稱符合以下規範的檔案都視為 css module
+<blockquote>
+<p>enable CSS modules for all files matching /.module.\w+$/i.test(filename) and /.icss.\w+$/i.test(filename) regexp.</p>
+</blockquote>
+</li>
+<li>第 33 行：因 <code>namedExport</code> 設定為 <code>true</code> 故此處需搭配設定為 <code>camelCaseOnly</code>
+<blockquote>
+<p>based on the modules.namedExport option value, if true then camelCaseOnly, otherwise asIs</p>
+</blockquote>
+</li>
+<li>第 46 行：處理 <code>SCSS_MODULE_REG</code> 類檔案時，需設定 <code>options</code> 中的 <code>importLoaders</code> 數量為 1，意即在執行 <code>css-loader</code> 前需執行 <code>sass-loader</code>
+<blockquote>
+<p>Default: 0
+Allows to enables/disables or setups number of loaders applied before CSS loader for @import at-rules, CSS modules and ICSS imports, i.e. @import/composes/@value value from ‘./values.css’/etc.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://webpack.js.org/loaders/css-loader/#object-2">webpack 5: css-loader module mode</a></li>
+<li><a href="https://webpack.js.org/loaders/css-loader/#pure-css-css-modules-and-postcss">webpack 5 example: Pure CSS, CSS modules and PostCSS</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

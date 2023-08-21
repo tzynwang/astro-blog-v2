@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>瀏覽器上的 JavaScript snippet：bookmarklet</title>
+    <meta name="title" content="瀏覽器上的 JavaScript snippet：bookmarklet">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/bookmarklet/">
+    <meta property="og:title" content="瀏覽器上的 JavaScript snippet：bookmarklet">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/bookmarklet/">
+    <meta property="twitter:title" content="瀏覽器上的 JavaScript snippet：bookmarklet">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">瀏覽器上的 JavaScript snippet：bookmarklet</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-04-19 18:53</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Browser
+</span><span class="astro-2IYMVI75">
+  JavaScript
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#技術背景" class="astro-QTOKGA5Y">技術背景</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#實作" class="astro-QTOKGA5Y">實作</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<blockquote>
+<p>A small software application <strong>stored as a bookmark</strong> in a web browser, which typically allows a user to interact with the currently loaded web page in some way.</p>
+</blockquote>
+<blockquote>
+<p>Bookmarklets are browser bookmarks that <strong>execute JavaScript instead of opening a webpage</strong>.</p>
+</blockquote>
+<p>bookmarklet 是一種點擊後會執行 JavaScript 而非開啟頁面的（特殊）書籤
+近期的應用情境：點擊該 bookmarklet 後將 <code>// eslint-disable-line</code> 複製到剪貼簿中（因開發時有臨時、一次性的單行註解需求，但註解頻率沒有高到需要將整個專案的 eslint 設定改寫，故改為有需求時切回瀏覽器點擊 bookmarklet 取得單行註解）</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="技術背景">技術背景</h3>
+<ul>
+<li>Web browsers use URIs for the href attribute of the <code>&#x3C;a></code> tag and for bookmarks. The URI scheme, such as <code>http:</code>, <code>file:</code>, or <code>ftp:</code>, <strong>specifies the protocol and the format for the rest of the string</strong>. URI 本身的 scheme 旨在定義該字串屬於哪一種 protocol</li>
+<li>Browsers also implement a prefix <code>javascript:</code> that to a parser is just like any other URI. Internally, the browser sees that the specified protocol is javascript, <strong>treats the rest of the string as a JavaScript application which is then executed</strong>, and uses the resulting string as the new page. 而瀏覽器實作的 <code>javascript:</code> 前綴使得在此之後的字串被當作 JavaScript 來處理</li>
+<li>The executing script has access to the current page, which it may inspect and change. If the script <strong>returns an <code>undefined</code> type</strong> (rather than, for example, a string), the browser <strong>will not load a new page</strong>, with the result that the script simply runs against the current page content. This permits changes such as in-place font size and color changes without a page reload. 放在書籤中的 JavaScript 執行完畢後如果回傳 <code>undefined</code> 的話，就不會載入新的頁面
+<ul>
+<li>在 Chrome ver. 100.0.4896.88 (Official Build) (x86_64) 上測試的結果是，只有在回傳的資料型態是 string 的情況下會刷新畫面內容（該頁面的內容會被回傳的 string 直接取代掉）</li>
+<li>在回傳的資料型態不是 string 時，頁面內容不會有任何更動</li>
+</ul>
+</li>
+</ul>
+<h3 id="實作">實作</h3>
+<script src="https://gist.github.com/tzynwang/6efb52cdb234eb2051871151145ddfe8.js"></script>
+<p>將此內容複製到書籤的 URL 欄位中，存檔後點擊該書籤，即可複製註解內容 <code>// eslint-disable-line</code></p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Bookmarklet">Wiki: Bookmarklet</a></li>
+<li><a href="https://www.freecodecamp.org/news/what-are-bookmarklets/">What are Bookmarklets? How to Use JavaScript to Make a Bookmarklet in Chromium and Firefox</a></li>
+<li><a href="https://stackoverflow.com/questions/18872679/function-as-google-chrome-bookmark">Function as Google Chrome bookmark</a></li>
+<li><a href="https://mrcoles.com/bookmarklet/">Bookmarklet Creator with Script Includer</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

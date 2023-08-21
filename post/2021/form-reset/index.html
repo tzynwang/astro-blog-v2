@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「重設表單（form reset）」相關筆記</title>
+    <meta name="title" content="「重設表單（form reset）」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/form-reset/">
+    <meta property="og:title" content="「重設表單（form reset）」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/form-reset/">
+    <meta property="twitter:title" content="「重設表單（form reset）」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「重設表單（form reset）」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-05-13 14:27</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  HTML
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#範例展示" class="astro-QTOKGA5Y">範例展示</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#reset" class="astro-QTOKGA5Y">reset()</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#與button搭配-1" class="astro-QTOKGA5Y">與&lt;button&gt;搭配 1</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#typereset" class="astro-QTOKGA5Y">type=&quot;reset&quot;</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#與input搭配" class="astro-QTOKGA5Y">與&lt;input&gt;搭配</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#與button搭配-2" class="astro-QTOKGA5Y">與&lt;button&gt;搭配 2</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>HTML 本身即支援兩種重設表單<strong>全部</strong>內容的方法：</p>
+<ul>
+<li>Form <code>reset()</code>：作用在表單物件上（<code>formObject.reset()</code>）</li>
+<li>Input <code>type="reset"</code>：設置在表單的<code>&#x3C;input></code>上，點擊後觸發</li>
+</ul>
+<p>定義重設：將 input 欄位的值<strong>重置為預設值</strong></p>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">Google Chrome: 90.0.4430.93 (Official Build) (x86_64)</span></span>
+<span class="line"><span style="color: #e1e4e8">ox: macOS Big Suf Version 11.1</span></span></code></pre>
+<h2 id="範例展示">範例展示</h2>
+<p class="codepen" data-height="265" data-theme-id="dark" data-default-tab="html,result" data-user="Charlie7779" data-slug-hash="YzZwRxa" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="form reset">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/YzZwRxa">
+  form reset</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h2 id="reset"><code>reset()</code></h2>
+<ul>
+<li>對<code>formObject</code>使用，即會將該表單所有的 input 欄位都重設回預設值</li>
+<li><code>formObject</code>：HTML 中的<code>&#x3C;form></code>物件（The Form object represents an HTML <code>&#x3C;form></code> element.），可透過<code>document.querySelector()</code>抓取</li>
+</ul>
+<h3 id="與button搭配-1">與<code>&#x3C;button></code>搭配 1</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">&#x3C;!-- HTML部分 --></span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;</span><span style="color: #85E89D">form</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">class</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"first"</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">&#x3C;!-- 省略部分內容 --></span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">button</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">id</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"resetFirst"</span><span style="color: #E1E4E8">>Reset&#x3C;/</span><span style="color: #85E89D">button</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;/</span><span style="color: #85E89D">form</span><span style="color: #E1E4E8">></span></span></code></pre>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// JavaScript部分</span></span>
+<span class="line"><span style="color: #E1E4E8">document.</span><span style="color: #B392F0">querySelector</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'#resetFirst'</span><span style="color: #E1E4E8">).</span><span style="color: #B392F0">addEventListener</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'click'</span><span style="color: #E1E4E8">, (</span><span style="color: #FFAB70">event</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  document.</span><span style="color: #B392F0">querySelector</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'.first'</span><span style="color: #E1E4E8">).</span><span style="color: #B392F0">reset</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"><span style="color: #E1E4E8">  event.</span><span style="color: #B392F0">preventDefault</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"><span style="color: #E1E4E8">});</span></span></code></pre>
+<p>解說：</p>
+<ul>
+<li>監聽<code>&#x3C;button></code>的點擊事件，點擊事件發生後，抓取<code>formObject</code>，套用<code>reset()</code></li>
+<li>因<code>&#x3C;button></code>沒有設置任和<code>type</code>內容，故默認為<code>type="submit"</code>，所以在示範中加上<code>event.preventDefault()</code>來避免送出表單的動作
+<blockquote>
+<p><a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Basic_native_form_controls#actual_buttons">MDN</a>: For <code>&#x3C;button></code> elements, omitting the type attribute (or an invalid value of type) results in a submit button.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="typereset"><code>type="reset"</code></h2>
+<h3 id="與input搭配">與<code>&#x3C;input></code>搭配</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">&#x3C;!-- HTML部分 --></span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;</span><span style="color: #85E89D">form</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">&#x3C;!-- 省略部分內容 --></span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">input</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">type</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"reset"</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">value</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">'Reset by type="reest"'</span><span style="color: #E1E4E8"> /></span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;/</span><span style="color: #85E89D">form</span><span style="color: #E1E4E8">></span></span></code></pre>
+<ul>
+<li>直接將<code>&#x3C;input></code>設置為<code>type="reset"</code>即可，點擊後即會自動執行「重設表單中所有 input 欄位內容」的動作</li>
+<li>沒有設定<code>value</code>的話，預設顯示文字<code>Reset</code>；可透過設定<code>value</code>的值來修改顯示在按鈕中的文字</li>
+<li>不需額外設置 JavaScript</li>
+</ul>
+<h3 id="與button搭配-2">與<code>&#x3C;button></code>搭配 2</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">&#x3C;!-- HTML部分 --></span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;</span><span style="color: #85E89D">form</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">&#x3C;!-- 省略部分內容 --></span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">button</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">type</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"reset"</span><span style="color: #E1E4E8">>Reset&#x3C;/</span><span style="color: #85E89D">button</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;/</span><span style="color: #85E89D">form</span><span style="color: #E1E4E8">></span></span></code></pre>
+<ul>
+<li>效果與設置<code>input type="reset"</code>相同，點擊後即會重設表單中所有 input 欄位內容</li>
+<li>不需額外設置 JavaScript</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.w3schools.com/jsref/met_form_reset.asp">W3Schools: Form reset() Method</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/reset">MDN: input type=“reset”</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/Forms/Basic_native_form_controls#actual_buttons">MDN: Basic native form controls — Actual buttons</a></li>
+<li><a href="https://stackoverflow.com/a/9760424/15028185">Quotation marks in HTML attribute values?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

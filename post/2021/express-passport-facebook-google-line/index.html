@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「使用passport處理FB、Google第三方登入」相關筆記</title>
+    <meta name="title" content="「使用passport處理FB、Google第三方登入」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/express-passport-facebook-google-line/">
+    <meta property="og:title" content="「使用passport處理FB、Google第三方登入」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/express-passport-facebook-google-line/">
+    <meta property="twitter:title" content="「使用passport處理FB、Google第三方登入」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「使用passport處理FB、Google第三方登入」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-06-30 12:59</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Express
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#專案結構" class="astro-QTOKGA5Y">專案結構</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#fb-流程" class="astro-QTOKGA5Y">FB 流程</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#google-流程" class="astro-QTOKGA5Y">Google 流程</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#line-流程" class="astro-QTOKGA5Y">LINE 流程</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#authjs-內容" class="astro-QTOKGA5Y">auth.js 內容</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#appjs-設定" class="astro-QTOKGA5Y">app.js 設定</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#關於-oauth-20" class="astro-QTOKGA5Y">關於 OAuth 2.0</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#authentication" class="astro-QTOKGA5Y">Authentication</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#authorization" class="astro-QTOKGA5Y">Authorization</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>使用 npm package <code>passport-facebook</code>、<code>passport-google-oauth20</code>與<code>passport-line</code>讓 Todo List 專案可以透過 FB、Google 或 LINE 帳號進行第三方登入</p>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">passport: 0.4.1</span></span>
+<span class="line"><span style="color: #e1e4e8">passport-facebook: 3.0.0</span></span>
+<span class="line"><span style="color: #e1e4e8">passport-google-oauth20: 2.0.0</span></span>
+<span class="line"><span style="color: #e1e4e8">passport-line: 0.0.4</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="專案結構">專案結構</h3>
+<p>僅列出與本次實作相關的資料夾與檔案：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">config</span></span>
+<span class="line"><span style="color: #e1e4e8">  passport_FB.js</span></span>
+<span class="line"><span style="color: #e1e4e8">  passport_Google.js</span></span>
+<span class="line"><span style="color: #e1e4e8">  passport_LINE.js</span></span>
+<span class="line"><span style="color: #e1e4e8">models</span></span>
+<span class="line"><span style="color: #e1e4e8">  user.js</span></span>
+<span class="line"><span style="color: #e1e4e8">routes</span></span>
+<span class="line"><span style="color: #e1e4e8">  modules</span></span>
+<span class="line"><span style="color: #e1e4e8">    auth.js</span></span>
+<span class="line"><span style="color: #e1e4e8">app.js</span></span></code></pre>
+<h3 id="fb-流程">FB 流程</h3>
+<script src="https://gist.github.com/tzynwang/7b5d441f8127653fac09bbebd9a9ac0f.js"></script>
+<p><img src="/2021/express-passport-facebook-google-line/fb_dashboard.jpg" alt="fb dashboard"></p>
+<p>clientID 與 clientSecret 都可在 FB 開發者後台取得</p>
+<h3 id="google-流程">Google 流程</h3>
+<script src="https://gist.github.com/tzynwang/26b84e1bfaccf5dc353ad01b0d2cfd65.js"></script>
+<p>後台流程如下：</p>
+<ol>
+<li>
+<p>進入 GCP 後選擇 APIs &#x26; Service，選擇 Credentials 並建立新的 Oath client ID</p>
+<p><img src="/2021/express-passport-facebook-google-line/Google_step1.jpg" alt="Google step 1"></p>
+</li>
+<li>
+<p>應用程式類型因應練習專案選擇 Web application</p>
+<p><img src="/2021/express-passport-facebook-google-line/Google_step2.jpg" alt="Google step 2"></p>
+</li>
+<li>
+<p>與 FB 較為不同，Authorized redirect URIs 為必填，練習情況下直接導回<code>localhost:3000/&#x3C;auth/google/callback></code>即可（前述<code>&#x3C;></code>內容與 endpoint 設定一致）</p>
+<p><a href="/2021/express-passport-facebook-google-line/Google_step3.jpg">Google step 3</a></p>
+</li>
+</ol>
+<h3 id="line-流程">LINE 流程</h3>
+<script src="https://gist.github.com/tzynwang/21340bfe58134bb6e1cb6a07e9def494.js"></script>
+<p>官方說明文件：</p>
+<ul>
+<li><a href="https://developers.line.biz/en/docs/line-login/integrate-line-login/">Integrating LINE Login with your web app</a></li>
+<li><a href="https://developers.line.biz/zh-hant/docs/line-login/integrate-line-login/">整合 LINE Login 與 web app</a></li>
+</ul>
+<p>官方申請入口：<a href="https://developers.line.biz/en/services/line-login/">LINE Developer: Products / LINE Login</a></p>
+<p>後台流程如下：</p>
+<ol>
+<li>
+<p>與 FB 以及 Google 較不同，LINE 搭配 passport 處理第三方登入會用到的是<strong>Channel</strong> ID 與<strong>Channel</strong> Secret，兩筆資料可在 Basic Settings 中複製</p>
+<p><img src="/2021/express-passport-facebook-google-line/LINE_dashboard1.jpg" alt="LINE step 1">
+<img src="/2021/express-passport-facebook-google-line/LINE_dashboard2.jpg" alt="LINE step 2"></p>
+</li>
+<li>
+<p>切換到 LINE Login 分頁，設定 Callback URL</p>
+<p><img src="/2021/express-passport-facebook-google-line/LINE_dashboard3.jpg" alt="LINE step 3"></p>
+</li>
+<li>
+<p>其餘流程與 FB 以及 Google 登入的差異是，透過 LINE 向使用者要求授權時，不需要帶入<code>scope</code>資料（參考以下<code>auth.js</code>第 32 行，與 FB 以及 Google 的內容不同）</p>
+</li>
+</ol>
+<p>補充：</p>
+<ul>
+<li>LINE Login<strong>不會</strong>主動提供使用者的 Email 資訊，若須請求使用者的 Email，開發者要自行申請 Email address permission</li>
+<li>參考：<a href="https://developers.line.biz/en/docs/line-login/integrate-line-login/#applying-for-email-permission">Requesting permission to access the user’s email address</a></li>
+</ul>
+<h3 id="authjs-內容">auth.js 內容</h3>
+<script src="https://gist.github.com/tzynwang/302a2a4b7098456bcd09f233093946a6.js"></script>
+<h3 id="appjs-設定">app.js 設定</h3>
+<script src="https://gist.github.com/tzynwang/e9758c91408f8062498e2ef7f3ea6207.js"></script>
+<p>記得<code>require</code>在 config 資料夾中設定好的<code>passport_FB</code>與<code>passport_Google</code>並呼叫之即可</p>
+<h2 id="關於-oauth-20">關於 OAuth 2.0</h2>
+<blockquote>
+<p>OAuth allows you (the User) to grant access to your private resources on one site (which is called the Service Provider), to another site (called Consumer). While OpenID is all about using a single identity to sign into many sites, OAuth is about <strong>giving access to your stuff without sharing your identity at all</strong> (or its secret parts).</p>
+</blockquote>
+<p>Reference: <a href="https://hueniversedotcom.wordpress.com/2007/09/05/explaining-oauth/">Eran Hammer-Lahav: Explaining OAuth</a></p>
+<h3 id="authentication">Authentication</h3>
+<ul>
+<li>Authentication is about <strong>proving you are the correct person</strong> because you know things.</li>
+<li>Authentication means <strong>confirming your own identity</strong> (is the account and password correct?)</li>
+<li>（透過提供正確的帳號密碼組合）證明我是誰</li>
+</ul>
+<h3 id="authorization">Authorization</h3>
+<ul>
+<li>Authorization is <strong>asking for permission</strong> to do stuff.</li>
+<li>Authorization means <strong>granting access</strong> (is this user same as the one that just be authenticated?) to the system.</li>
+<li><a href="https://oauth.net/2/">OAuth 2.0</a>: is the industry-standard protocol for <strong>authorization</strong>.</li>
+<li>允許哪些 APP 來存取資料；以本次練習來說，就是「我同意此 Todo list 專案可以存取我在 FB 或是 Google 帳號中的部分資料」</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://youtu.be/o9e3ex-axzA">YouTube: Express (NodeJS) - Google oAuth 2.0 (passportJS)</a></li>
+<li>OAuth 2.0
+<ul>
+<li><a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2">DigitalOcean: An Introduction to OAuth 2</a></li>
+<li><a href="https://www.varonis.com/blog/what-is-oauth/">What is OAuth? Definition and How it Works</a></li>
+</ul>
+</li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

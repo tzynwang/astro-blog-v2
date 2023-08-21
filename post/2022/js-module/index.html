@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>在前端 React APP 專案中混用 ESM 與 CommonJS</title>
+    <meta name="title" content="在前端 React APP 專案中混用 ESM 與 CommonJS">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/js-module/">
+    <meta property="og:title" content="在前端 React APP 專案中混用 ESM 與 CommonJS">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/js-module/">
+    <meta property="twitter:title" content="在前端 React APP 專案中混用 ESM 與 CommonJS">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">在前端 React APP 專案中混用 ESM 與 CommonJS</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-03-30 20:16</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  webpack
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#esm-commonjs-nodejs" class="astro-QTOKGA5Y">ESM, CommonJS (Node.js)</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#webpack-處理方式" class="astro-QTOKGA5Y">webpack 處理方式</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>記錄一下如何設定 webpack 才能允許在專案中混用 EMS 與 CommonJS 的模組匯入、匯出語法
+錯誤訊息：<code>Uncaught TypeError: Cannot assign to read only property 'exports' of object '#&#x3C;Object>'</code></p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">webpack: 5.64.4</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="esm-commonjs-nodejs">ESM, CommonJS (Node.js)</h3>
+<script src="https://gist.github.com/tzynwang/1993d3b58216f442cfeea059bf5a5ef1.js"></script>
+<ul>
+<li>ESM: <code>import</code>, <code>export</code></li>
+<li>CommonJS (Node.js): <code>require</code>, <code>module.exports</code></li>
+<li>ES6 modules are <strong>automatically strict-mode</strong> code, even if you don’t write <code>"use strict";</code> in them. 模組內的程式碼一律預設為 strict mode</li>
+</ul>
+<h3 id="webpack-處理方式">webpack 處理方式</h3>
+<script src="https://gist.github.com/tzynwang/be7ff3ea4f3bf4b6beeacbc8acc90385.js"></script>
+<ul>
+<li>第 19 行：追加 <code>sourceType: "unambiguous",</code></li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/42449999/webpack-import-module-exports-in-the-same-module-caused-error">webpack: import + module.exports in the same module caused error</a></li>
+<li><a href="https://babeljs.io/docs/en/options">babel: Misc options/sourceType</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">MDN: JavaScript modules</a></li>
+<li><a href="https://hacks.mozilla.org/2015/08/es6-in-depth-modules/">ES6 In Depth: Modules</a></li>
+<li><a href="https://v8.dev/features/modules">v8 dev: JavaScript modules</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

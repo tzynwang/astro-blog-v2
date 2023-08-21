@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>30天挑戰：「CSS progress bar (stepper) 」技術記錄</title>
+    <meta name="title" content="30天挑戰：「CSS progress bar (stepper) 」技術記錄">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/ithome2021-1-progress-bar/">
+    <meta property="og:title" content="30天挑戰：「CSS progress bar (stepper) 」技術記錄">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/ithome2021-1-progress-bar/">
+    <meta property="twitter:title" content="30天挑戰：「CSS progress bar (stepper) 」技術記錄">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">30天挑戰：「CSS progress bar (stepper) 」技術記錄</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-08-05 10:48</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span><span class="astro-2IYMVI75">
+  2021鐵人賽
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#設計圖" class="astro-QTOKGA5Y">設計圖</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#html-結構" class="astro-QTOKGA5Y">HTML 結構</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#scss" class="astro-QTOKGA5Y">SCSS</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>記錄頭尾至頂至底的進度條之 HTML 結構與 CSS 設定</p>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="css,result" data-slug-hash="Pomdayv" data-user="Charlie7779" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/Pomdayv">
+  stepper (justify-content-between) (::after line)</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h2 id="設計圖">設計圖</h2>
+<p><img src="/2021/ithome2021-1-progress-bar/mobile.png" alt="手機版畫面"></p>
+<p><img src="/2021/ithome2021-1-progress-bar/desktop.png" alt="桌面版畫面"></p>
+<ul>
+<li>手機版不顯示步驟文字</li>
+<li>步驟圖示與文字需左右頭尾滿版</li>
+<li>三個狀態階段：已完成（黑底白字配黑線）、進行中（紅底白字配紅線）、待填寫（灰框灰字配灰線條）</li>
+</ul>
+<h2 id="html-結構">HTML 結構</h2>
+<script src="https://gist.github.com/tzynwang/8383c1f085057180b1cf87473c7e9e31.js"></script>
+<ul>
+<li>全部 stepper 的 HTML 結構都維持一致，代表日後可改用程式碼搭配迴圈動態產生 progress bar 內容</li>
+<li>stepper 的步驟數字不使用 CSS 偽元素，避免分散產生內容的相關邏輯
+<ul>
+<li>補充理由：「步驟數字不建議放到偽元素裡面，因為擴展為更多步驟，變數不好塞」、「（如果數字透過偽元素處理的話，）實務上若遇到多語系需求，或是不同數字的表達方式等等，就容易傷腦筋」</li>
+</ul>
+</li>
+<li>使用<code>complete</code>、<code>active</code>與<code>pending</code>三種 CSS class name 來明確標註不同狀態，增加原始碼的好讀性</li>
+</ul>
+<h2 id="scss">SCSS</h2>
+<script src="https://gist.github.com/tzynwang/ad326ea498a0945085e5961e188a3c21.js"></script>
+<ul>
+<li>第 9 行<code>.step-container</code>：注意並<strong>沒有</strong>使用<code>justify-content: space-between;</code></li>
+<li>第 18 行<code>.step-item</code>：
+<ul>
+<li>使用<code>flex: 1 1;</code>讓 flex item 佔據所有空間</li>
+<li><code>overflow-x: hidden;</code>乃是為了配合 progress bar line，重要的伏筆（？）</li>
+</ul>
+</li>
+<li>第 26 行<code>.step-item:not(:first-child)</code>：除了第一個 stepper 外，其餘 stepper 一律使用<code>padding-left</code>往右側退<code>1rem</code></li>
+<li>第 30 行<code>.step-item:last-child</code>：使用<code>flex: none;</code>讓最後一個 stepper 完全不額外佔據任何空間
+<img src="/2021/ithome2021-1-progress-bar/flex-none-demo.gif" alt="套用flex none後，最後一個stepper即可靠右置底"></li>
+<li>第 34-35 行：設定<code>.icon</code>與<code>.content</code>為<code>display: inline-block;</code>，即可直接水平排列</li>
+<li>第 39 行<code>.icon</code>：
+<ul>
+<li>設定<code>flex: none;</code>避免圖示本身被壓縮變形</li>
+<li>使用<code>text-align: center;</code>與<code>line-height: 32px;</code>讓文字水平垂直置中</li>
+</ul>
+</li>
+<li>第 53 行<code>.step-item:not(:last-child)</code>：
+<ul>
+<li>54 行<code>.content</code>設定為<code>position: relative;</code>作為 progress bar line 的定位基準點</li>
+<li>60 行<code>.content::after</code>：繪製 progress bar line，設定<code>left: calc(100% + 1rem);</code>讓線條往右推移，並因為第 18 行已經設定<code>.step-item</code>需<code>overflow-x: hidden;</code>，所以多餘的線條長度會直接被隱藏起來
+<img src="/2021/ithome2021-1-progress-bar/progress-line-demo.gif" alt="以.content為定位基準，右推100%後，再補推1rem留下一點空間"></li>
+<li>66 行<code>width: 99999px;</code>：直接設定一個足夠長的線段數值</li>
+</ul>
+</li>
+<li>第 73 行<code>.content-text</code>：手機版時不顯示，故<code>display: none;</code></li>
+<li>79-106 行：針對不同的狀態進行顏色調整</li>
+<li>第 109 行：在桌面版要顯示<code>.content-text</code>，將<code>display: inline-block;</code>加回</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://preview.pro.ant.design/form/step-form">Ant Design Pro: 分步表單</a></li>
+<li>特別銘謝：超感謝 Red Chou 助教願意撥冗給予原始碼的改善建議</li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

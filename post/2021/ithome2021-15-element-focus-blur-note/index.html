@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>30天挑戰：「為什麼這個input沒有觸發@blur=&quot;event&quot;」問題解析</title>
+    <meta name="title" content="30天挑戰：「為什麼這個input沒有觸發@blur=&#34;event&#34;」問題解析">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/ithome2021-15-element-focus-blur-note/">
+    <meta property="og:title" content="30天挑戰：「為什麼這個input沒有觸發@blur=&#34;event&#34;」問題解析">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/ithome2021-15-element-focus-blur-note/">
+    <meta property="twitter:title" content="30天挑戰：「為什麼這個input沒有觸發@blur=&#34;event&#34;」問題解析">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">30天挑戰：「為什麼這個input沒有觸發@blur=&quot;event&quot;」問題解析</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-09-02 09:49</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span><span class="astro-2IYMVI75">
+  HTML
+</span><span class="astro-2IYMVI75">
+  2021鐵人賽
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#原始問題" class="astro-QTOKGA5Y">原始問題</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#解答" class="astro-QTOKGA5Y">解答</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#補充" class="astro-QTOKGA5Y">補充</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="原始問題">原始問題</h2>
+<ul>
+<li>使用<code>input:checkbox</code>搭配<code>label</code>來製作 light/dark mode 的切換按鈕</li>
+<li><code>input:checkbox</code>使用<code>display: none;</code>隱藏於畫面中，而<code>label</code>與<code>input</code>綁定，故點擊<code>label</code>可勾選（取消勾選）該<code>input:checkbox</code></li>
+<li>想要為該<code>input</code>設定<code>@blur</code>事件，但怎麼嘗試都無法讓該元素進入<code>blur</code>狀態</li>
+</ul>
+<h2 id="解答">解答</h2>
+<blockquote>
+<p>An element is focusable if the user agent’s default behavior allows it to be focusable or if the element is specially focusable, but only if the element is either <strong>being rendered</strong> or is a descendant of a canvas element that represents embedded content.</p>
+</blockquote>
+<ul>
+<li>一個元素要被<strong>渲染</strong>到畫面上，他才能被聚焦（失焦）</li>
+<li>若把該元素設定為<code>display: none;</code>，他就不會被渲染到畫面上，故也不會有聚焦（失焦）行為</li>
+</ul>
+<h3 id="補充">補充</h3>
+<p>User agents should make the following elements focusable, unless platform conventions dictate otherwise:</p>
+<ul>
+<li><code>a</code> elements that have an <code>href</code> attribute</li>
+<li><code>link</code> elements that have an <code>href</code> attribute</li>
+<li><code>button</code> elements that are <strong>not disabled</strong></li>
+<li><code>input</code> elements whose type attribute are <strong>not in the Hidden state</strong> and that are <strong>not disabled</strong></li>
+<li><code>select</code> elements that are <strong>not disabled</strong></li>
+<li><code>textarea</code> elements that are <strong>not disabled</strong></li>
+<li><code>command</code> elements that do <strong>not have a disabled attribute</strong></li>
+<li>Elements with a <code>draggable</code> attribute set, if that would enable the user agent to allow the user to begin a drag operations for those elements without the use of a pointing device</li>
+<li>Editing hosts
+<ul>
+<li>If an element is <strong>editable</strong> and its parent element is not, or if an element is editable and it has no parent element, then the element is an editing host.</li>
+<li>Editable elements can be nested.</li>
+<li>Editing hosts are <strong>typically focusable</strong> and typically form part of the tab order.</li>
+<li>An editing host can contain non-editable sections, these are handled as described below.</li>
+<li>An editing host can contain non-editable sections that contain further editing hosts.</li>
+</ul>
+</li>
+<li>In addition, each shape that is generated for an <code>area</code> element should be focusable, unless platform conventions dictate otherwise.</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.w3.org/TR/2011/WD-html5-20110525/editing.html#focus-management">W3C HTML5 7.3.2 Focus management</a></li>
+<li><a href="https://lighthouse.alphacamp.co/courses/119/units/25991?comment_id=127363">Special Credit to TA Mike Huang from Alpha Camp</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

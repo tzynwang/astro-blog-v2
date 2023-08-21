@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「CSS Visual Formatting Model」相關筆記</title>
+    <meta name="title" content="「CSS Visual Formatting Model」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/css-visual-formatting-model/">
+    <meta property="og:title" content="「CSS Visual Formatting Model」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/css-visual-formatting-model/">
+    <meta property="twitter:title" content="「CSS Visual Formatting Model」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「CSS Visual Formatting Model」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-08-26 11:43</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#這是什麼" class="astro-QTOKGA5Y">這是什麼？</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#什麼影響元素排序" class="astro-QTOKGA5Y">什麼影響元素排序？</a>
+            </li><li class="toc-4 astro-QTOKGA5Y">
+              <a href="#box-dimensions" class="astro-QTOKGA5Y">Box dimensions</a>
+            </li><li class="toc-4 astro-QTOKGA5Y">
+              <a href="#box-type" class="astro-QTOKGA5Y">Box type</a>
+            </li><li class="toc-4 astro-QTOKGA5Y">
+              <a href="#positioning-schemes" class="astro-QTOKGA5Y">Positioning schemes</a>
+            </li><li class="toc-5 astro-QTOKGA5Y">
+              <a href="#normal-flow" class="astro-QTOKGA5Y">Normal flow</a>
+            </li><li class="toc-5 astro-QTOKGA5Y">
+              <a href="#floats" class="astro-QTOKGA5Y">Floats</a>
+            </li><li class="toc-5 astro-QTOKGA5Y">
+              <a href="#position-property" class="astro-QTOKGA5Y">position property</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#relationships-between-display-position-and-float" class="astro-QTOKGA5Y">Relationships between display, position, and float</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p><img src="/2021/css-visual-formatting-model/what-happen-to-css-when-page-load.png" alt="What happens to CSS when we load up a webpage"></p>
+<p>Udemy 的 Advanced CSS and Sass 在講解網頁載入 CSS 時提到關鍵字「visual formatting model」，此篇為閱讀相關文件後針對 visual formatting model 整理的筆記</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="這是什麼">這是什麼？</h3>
+<ul>
+<li>It is an algorithm that <strong>how</strong> elements in the document tree are <strong>processed for visual media</strong> (such as <strong>computer screen</strong>).</li>
+<li>It describes how user agents take the document tree, and process and <strong>display it for visual media</strong>.</li>
+<li>In the visual formatting model, each element in the document tree generates zero or more boxes according to the box model. The <strong>layout</strong> of these boxes is governed by:
+<ol>
+<li>box dimensions and type.</li>
+<li>positioning scheme (normal flow, float, and absolute positioning).</li>
+<li>relationships between elements in the document tree.</li>
+<li>external information (e.g., viewport size, intrinsic dimensions of images, etc.).</li>
+</ol>
+</li>
+<li>是 CSS 的一種<strong>規則</strong>，規定 boxes 在瀏覽器上的<strong>排列</strong>、以及 boxes 如何<strong>影響彼此的位置</strong></li>
+</ul>
+<blockquote>
+<p>結論：visual formatting model 決定一個元素會如何呈現在畫面上</p>
+</blockquote>
+<h3 id="什麼影響元素排序">什麼影響元素排序？</h3>
+<h4 id="box-dimensions">Box dimensions</h4>
+<ul>
+<li>What is box dimensions: Each box has a content area (e.g., text, an image, etc.) and optional surrounding padding, border, and margin areas.</li>
+</ul>
+<h4 id="box-type">Box type</h4>
+<ul>
+<li>A box’s type affects its behavior (layout) in the visual formatting model.</li>
+<li>The <code>display</code> property specifies a box’s type. 透過<code>display</code>可以設定 box model 的類別</li>
+<li>設定為<code>display: none;</code>時會有以下特性：
+<ul>
+<li>This value causes an element to <strong>not appear in the formatting structure</strong> (i.e., in visual media the element <strong>generates no boxes</strong> and <strong>has no effect on layout</strong>).</li>
+<li>Descendant elements do not generate any boxes either.</li>
+<li>The element and its content are <strong>removed from the formatting structure</strong> entirely.</li>
+<li>This behavior cannot be overridden by setting the ‘display’ property on the descendants.</li>
+<li>A display of <code>none</code> <strong>does not create an invisible box</strong>; it <strong>creates no box</strong> at all.</li>
+</ul>
+</li>
+</ul>
+<h4 id="positioning-schemes">Positioning schemes</h4>
+<p>CSS 2.1 有三種 positioning schemes：</p>
+<ol>
+<li>Normal flow</li>
+</ol>
+<ul>
+<li>block formatting of block-level boxes</li>
+<li>inline formatting of inline-level boxes</li>
+<li><strong>relative positioning</strong> of block-level and inline-level boxes</li>
+</ul>
+<ol>
+<li>Floats</li>
+</ol>
+<ul>
+<li>In the float model, a box is <strong>first laid out according to the normal flow</strong>, then <strong>taken out of the flow</strong> and shifted to the left or right as far as possible.</li>
+<li>Content may flow along the side of a float.</li>
+</ul>
+<ol>
+<li>Absolute positioning</li>
+</ol>
+<ul>
+<li>In the absolute positioning model, a box is <strong>removed from the normal flow entirely</strong> (it has <strong>no impact on later siblings</strong>) and assigned a position with respect to a containing block.</li>
+</ul>
+<h5 id="normal-flow">Normal flow</h5>
+<ul>
+<li>Boxes in the normal flow belong to a formatting context, which may be <strong>block</strong> or <strong>inline</strong>, but not both simultaneously.</li>
+<li>In a <strong>block formatting context</strong>, boxes are laid out <strong>one after the other, vertically</strong>, beginning at the top of a containing block.</li>
+<li>In an <strong>inline formatting context</strong>, boxes are laid out <strong>horizontally, one after the other</strong>, beginning at the top of a containing block.
+<ul>
+<li>The <strong>width</strong> of a line box is determined by a <strong>containing block</strong> and <strong>the presence of floats</strong>.</li>
+<li>The <strong>height</strong> of a line box is determined by the rules given in the section on <strong>line height</strong> calculations.</li>
+<li>A line box is always tall enough for all of the boxes it contains. However, it <strong>may be taller</strong> than the tallest box it contains (if, for example, boxes are aligned so that baselines line up).</li>
+<li>When the height of a box B is less than the height of the line box containing it, the <strong>vertical alignment</strong> of B within the line box is determined by the <code>vertical-align</code> property.</li>
+<li>When the total width of the inline-level boxes on a line is <strong>less than the width of the line box containing them</strong>, their <strong>horizontal distribution</strong> within the line box is determined by the <code>text-align</code> property.</li>
+</ul>
+</li>
+</ul>
+<h5 id="floats">Floats</h5>
+<ul>
+<li>A floated box is shifted to the left or right until its outer edge <strong>touches the containing block edge</strong> or the <strong>outer edge of another float</strong>.</li>
+<li>Since a <strong>float is not in the flow</strong>, non-positioned block boxes created before and after the float box flow vertically as if the float did not exist.</li>
+<li>However, the current and subsequent line boxes created next to the float are shortened as necessary to make room for the margin box of the float.</li>
+<li><code>clear</code> property: indicates which sides of an element’s box(es) may <strong>not be adjacent to an earlier floating box</strong>.</li>
+</ul>
+<h5 id="position-property"><code>position</code> property</h5>
+<ul>
+<li>static:
+<ul>
+<li>The box is a <strong>normal box</strong>, laid out according to the normal flow.</li>
+<li>The <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>left</code> properties <strong>do not apply</strong>.</li>
+</ul>
+</li>
+<li>relative:
+<ul>
+<li>The box’s position is calculated according to the normal flow, then the box is <strong>offset relative to its normal position</strong>. 根據 normal flow 的位置來進行偏移</li>
+<li>When a box B is relatively positioned, the position of the following box is calculated <strong>as though B were not offset</strong>. 鄰近元素會根據偏移前的原始位置來排序</li>
+<li>The effect of <code>position:relative</code> on table-row-group, table-header-group, table-footer-group, table-row, table-column-group, table-column, table-cell, and table-caption elements is <strong>undefined</strong>.</li>
+</ul>
+</li>
+<li>absolute:
+<ul>
+<li>The box’s <strong>position</strong> (and possibly <strong>size</strong>) is specified with the <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>left</code> properties. These properties specify offsets with respect to the box’s containing block. 設定為<code>position: absolute;</code>元素的<strong>位置與尺寸</strong>會被 top/right/bottom/left 影響</li>
+<li>Absolutely positioned boxes are <strong>taken out of the normal flow</strong>. This means they have <strong>no impact on the layout of later siblings</strong>. 排序脫離 normal flow，無法影響鄰近元素的排序</li>
+<li>Absolutely positioned boxes have <strong>margins</strong>, they <strong>do not collapse</strong> with any other margins.</li>
+</ul>
+</li>
+<li>fixed:
+<ul>
+<li>In the case of handheld, projection, screen, tty, and tv media types, the box is fixed with respect to the viewport and <strong>does not move when scrolled</strong>.</li>
+<li>In the case of the <strong>print media type</strong>, the box is <strong>rendered on every page</strong>, and is fixed with respect to the page box, even if the page is seen through a viewport (in the case of a print-preview, for example).</li>
+<li>For other media types, the presentation is <strong>undefined</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="relationships-between-display-position-and-float">Relationships between <code>display</code>, <code>position</code>, and <code>float</code></h3>
+<ol>
+<li>If <code>display: none;</code>, then <code>position</code> and <code>float</code> do not apply. In this case, the element <strong>generates no box</strong>.</li>
+<li>Otherwise, if <code>position</code> has the value <code>absolute</code> or <code>fixed</code>, the box is absolutely positioned, the computed value of <code>float</code> is <code>none</code></li>
+<li>Otherwise, if <code>float</code> has a value other than <code>none</code>, the box is floated.</li>
+</ol>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.w3.org/TR/CSS2/visuren.html">W3C: 9 Visual formatting model</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Visual_formatting_model">MDN: Visual formatting model</a></li>
+<li><a href="https://www.udemy.com/course/advanced-css-and-sass/">Udemy: Advanced CSS and Sass</a></li>
+<li><a href="https://www.tutorialrepublic.com/css-tutorial/css-visual-formatting.php">Tutorial Republic: CSS Visual Formatting</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10226046">從門外漢到前端新手系列 第 24 篇 CSS：淺談視覺格式化模型 Visual formatting model</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

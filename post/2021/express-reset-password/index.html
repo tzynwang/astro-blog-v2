@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>作業功能擴充：為老爸的私房錢新增「重設密碼」之功能</title>
+    <meta name="title" content="作業功能擴充：為老爸的私房錢新增「重設密碼」之功能">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/express-reset-password/">
+    <meta property="og:title" content="作業功能擴充：為老爸的私房錢新增「重設密碼」之功能">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/express-reset-password/">
+    <meta property="twitter:title" content="作業功能擴充：為老爸的私房錢新增「重設密碼」之功能">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">作業功能擴充：為老爸的私房錢新增「重設密碼」之功能</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-07-09 16:09</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Express
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#注意事項" class="astro-QTOKGA5Y">注意事項</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#實作" class="astro-QTOKGA5Y">實作</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#原始碼" class="astro-QTOKGA5Y">原始碼</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>使用套件<code>jsonwebtoken</code>與<code>nodemailer</code>替<a href="https://tzynwang.github.io/2021/mongoose-note/">老爸的私房錢（簡易記帳 APP）</a>實作重設密碼之功能
+密碼重設流程大方向如下：</p>
+<ol>
+<li>使用者點選「忘記密碼」</li>
+<li>請使用者輸入當初註冊的 Email，若有效，則發出一封包含「重設密碼連結」的 Email 給該信箱</li>
+<li>使用者收信、點選重設密碼連結後，該連結導向 APP 的重設密碼路由</li>
+<li>使用者更新密碼，更新成功後，跳轉回 APP 登入路由，使用者可使用新密碼登入 APP</li>
+</ol>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">express: 4.17.1</span></span>
+<span class="line"><span style="color: #e1e4e8">jsonwebtoken: 8.5.1</span></span>
+<span class="line"><span style="color: #e1e4e8">nodemailer: 6.6.2</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="注意事項">注意事項</h2>
+<ul>
+<li>重設密碼之連結須為一次性
+<ul>
+<li>若該連結已用於重設密碼，之後點開該連結無法再度重設密碼</li>
+</ul>
+</li>
+<li>重設連結需有時效性</li>
+<li>要可以辨識出「現在是哪一個使用者要重設密碼」</li>
+</ul>
+<h2 id="實作">實作</h2>
+<ol>
+<li>向 DB 查詢使用者輸入的 Email 是否為已經註冊過的 Email，若已註冊，則使用<code>jsonwebtoken</code>將該使用者的 Email 與 hash-password encode 為一組金鑰</li>
+<li>搭配<code>nodemailer</code>發送一封包含重設密碼 URL 的信件給該使用者，URL 中包含步驟一產生的金鑰</li>
+</ol>
+<ul>
+<li>使用<code>nodemailer</code>的<code>gmail service</code>時若出現錯誤訊息<code>Invalid login: 535-5.7.8 Username and Password not accepted</code>，則至 Google Account 中允許<code>Less secure app access</code></li>
+<li>解決方式參考：<a href="https://stackoverflow.com/questions/59188483/error-invalid-login-535-5-7-8-username-and-password-not-accepted">Error: Invalid login: 535-5.7.8 Username and Password not accepted</a></li>
+</ul>
+<ol>
+<li>使用者點選信件中的重設密碼 URL 後，後端檢驗該 request 夾帶的金鑰內容</li>
+</ol>
+<ul>
+<li>將金鑰 decode，若 decode 失敗則代表金鑰本身無效（被竄改、惡意測試等），將使用者導回重設密碼的頁面</li>
+<li>decode 後確認該 Email 是否存在 DB 中</li>
+<li>decode 後確認 hash-password 的值是否與目前 DB 中該 Email 的 hash-password 一致
+<ul>
+<li>一致：代表該使用者還未重設密碼</li>
+<li>不一致：代表密碼已經被重設過了</li>
+<li>以上讓金鑰成為一次性使用的實作方式借鑑：<a href="https://stackoverflow.com/questions/43719615/jwt-and-one-time-tokens">JWT and one-time tokens?</a></li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>若以上檢驗皆無問題，則讓使用者重設密碼；密碼重設後將使用者引導回登入頁面，並提示使用者密碼已更新成功</li>
+</ol>
+<h2 id="原始碼">原始碼</h2>
+<script src="https://gist.github.com/tzynwang/dce39172362a8690084407ae0dd08121.js"></script>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li>npm packages:
+<ul>
+<li><a href="https://www.npmjs.com/package/jsonwebtoken">jsonwebtoken</a></li>
+<li><a href="https://www.npmjs.com/package/nodemailer">nodemailer</a></li>
+</ul>
+</li>
+<li><a href="https://stackoverflow.com/questions/43719615/jwt-and-one-time-tokens">JWT and one-time tokens?</a></li>
+<li><a href="https://www.jbspeakr.cc/howto-single-use-jwt/">Single-Use Tokens w/ JWT</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

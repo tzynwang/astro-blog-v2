@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>Contribution workflow note&amp;#58; document update</title>
+    <meta name="title" content="Contribution workflow note&#38;#58; document update">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/hexo-contribution-workflow/">
+    <meta property="og:title" content="Contribution workflow note&#38;#58; document update">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/hexo-contribution-workflow/">
+    <meta property="twitter:title" content="Contribution workflow note&#38;#58; document update">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">Contribution workflow note&amp;#58; document update</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-02-14 09:53</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  hexo
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#preparing-works" class="astro-QTOKGA5Y">Preparing works</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#environment" class="astro-QTOKGA5Y">Environment</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#workflow" class="astro-QTOKGA5Y">Workflow</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#result" class="astro-QTOKGA5Y">Result</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#reference" class="astro-QTOKGA5Y">Reference</a>
+            </li>
+      </ul>
+    </div>
+    <p>This a note for participating hexo’s contribution (for improving the documentation in English and traditional Chinese).
+參與了 hexo 說明文件的改善協作，記錄一下整個流程。
+不過 pr 因為提出的改善建議已經過時（<a href="https://github.com/hexojs/hexo/issues/4267#issuecomment-778646141">hexo 4.2.1 已支援 Noje.js 14</a>）所以並沒有被接受 🤣</p>
+<h2 id="preparing-works">Preparing works</h2>
+<ul>
+<li>Read the <a href="https://hexo.io/docs/contributing">hexo’s official guide for contributing</a></li>
+<li>Understand what is “Fork” in git workflow: <a href="https://docs.github.com/en/github/getting-started-with-github/fork-a-repo">GitHub Docs: Fork a repo</a></li>
+<li>Understand how to create a branch in CLI: <a href="https://www.datree.io/resources/git-create-branch">Git create branch [a Git commands tutorial]</a></li>
+</ul>
+<h2 id="environment">Environment</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">hexo: 5.3.0</span></span>
+<span class="line"><span style="color: #e1e4e8">hexo-cli: 4.2.0</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="workflow">Workflow</h2>
+<ol>
+<li>Fork <a href="https://github.com/hexojs/hexo">hexojs/site</a>
+<img src="fork-hexo-site.png" alt="Click &#x22;Fork&#x22; button"></li>
+<li>Open cmd.exe, move to <code>C:\Projects\hexo_contributing</code> by entering <code>cd C:\Projects\hexo_contributing</code> (since I want to store the hexojs/site repo in this location on my computer).</li>
+<li>Enter <code>git init</code> to <a href="https://git-scm.com/docs/git-init">create a empty Git repository</a> in this folder.</li>
+<li>Follow the instruction on hexo’s contribution document:</li>
+</ol>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">git clone https://github.com/tzynwang/site.git</span></span>
+<span class="line"><span style="color: #e1e4e8">cd site</span></span>
+<span class="line"><span style="color: #e1e4e8">npm install</span></span></code></pre>
+<ol>
+<li>Dive into the <code>\site\source</code> folder. Update the contents in English and traditional Chinese documents</li>
+<li>Run <code>hexo server</code> to have a live previwing, checking the pages I’d updated and make sure nothing was mess-up</li>
+<li>Create a branch call “update-node-js-version-suggestion” by entering <code>git checkout -b update-node-js-version-suggestion</code> in cmd.exe</li>
+<li>Push the modification from local to GitHub by <code>git push https://github.com/tzynwang/site.git update-node-js-version-suggestion</code></li>
+<li>Create a pull request on GitHub page, describe what changes I’d applied to the documents.</li>
+</ol>
+<h2 id="result">Result</h2>
+<p><a href="https://github.com/hexojs/hexo/issues/4267#issuecomment-778646141">Receive a comment</a> which indicated the improvement is out of date (my bad), thus remove the pr from GitHub. Here’s the flow:</p>
+<ol>
+<li>Click the <a href="https://github.com/hexojs/hexo/pulls">“Pull requests” tab in hexojs/site</a>, click the pr I’d sent
+<img src="close-pr-00.png" alt="Navigate to the Pull request tab in hexojs/site repository"></li>
+<li>Scroll to the page bottom, add the comment to describe the reason of closing the pr. Click the button “Close with comment”
+<img src="close-pr-01.png" alt="Comment the reason for closing the pull-request before closing it"></li>
+<li>Click the button “Delete branch” (since it has no useage now)
+<img src="close-pr-02.png" alt="Delete the branch from GitHub repository"></li>
+<li>The branch has been deleted
+<img src="close-pr-03.png" alt="The screenshot after deleting a branch">
+Done 😌</li>
+</ol>
+<h2 id="reference">Reference</h2>
+<p>About how to use indicator characters (<code>:</code>) in yaml file and bracket (<code>[]</code>) in markdown file:</p>
+<ul>
+<li><a href="https://riptutorial.com/yaml/example/25838/escaping-characters">yaml Escaping Characters</a></li>
+<li><a href="https://stackoverflow.com/a/19086251/15028185">How to escape indicator characters (i.e. : or - ) in YAML</a></li>
+<li><a href="https://stackoverflow.com/a/43011868/15028185">How to escape backslash bracket ([) in Markdown?</a></li>
+</ul>
+<p>About cancel, delete, remove a GitHub pull request:</p>
+<ul>
+<li><a href="https://stackoverflow.com/a/10142727/15028185">How to cancel a pull request on github?</a></li>
+<li><a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/closing-a-pull-request">GitHub Docs: Closing a pull request</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

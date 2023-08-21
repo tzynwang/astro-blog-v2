@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>為什麼使用innerHTML對元素新增內容後，該元素「子代」的事件監聽器失效？</title>
+    <meta name="title" content="為什麼使用innerHTML對元素新增內容後，該元素「子代」的事件監聽器失效？">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/innerHTML-destroy-event-listener/">
+    <meta property="og:title" content="為什麼使用innerHTML對元素新增內容後，該元素「子代」的事件監聽器失效？">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/innerHTML-destroy-event-listener/">
+    <meta property="twitter:title" content="為什麼使用innerHTML對元素新增內容後，該元素「子代」的事件監聽器失效？">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">為什麼使用innerHTML對元素新增內容後，該元素「子代」的事件監聽器失效？</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-05-25 18:32</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  HTML
+</span><span class="astro-2IYMVI75">
+  JavaScript
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#問題描述" class="astro-QTOKGA5Y">問題描述</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#原因" class="astro-QTOKGA5Y">原因</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#解決方式" class="astro-QTOKGA5Y">解決方式</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#createelement搭配-appendchild" class="astro-QTOKGA5Y">createElement()搭配 appendChild()</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#insertadjacenthtml" class="astro-QTOKGA5Y">insertAdjacentHTML()</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="問題描述">問題描述</h2>
+<ol>
+<li>對<code>&#x3C;button id="alert">alert('hello world')&#x3C;/button></code>加上事件監聽器，使其被點擊後會出現 alert 訊息</li>
+<li>透過<code>innerHTML</code>對<code>&#x3C;div id="target"></code>新增一個<code>&#x3C;span></code>標籤（不對<code>&#x3C;button id="alert"></code>進行任何處理），但<strong>新增完畢</strong>後，點擊<code>&#x3C;button id="alert"></code>卻<strong>無法出現 alert 訊息了</strong></li>
+<li>示範用原始碼如下：</li>
+</ol>
+<p class="codepen" data-height="265" data-theme-id="dark" data-default-tab="js,result" data-user="Charlie7779" data-slug-hash="JjWJdBW" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="innerHTML destroying descendants&#x27; event listeners">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/JjWJdBW">
+  innerHTML destroying descendants' event listeners</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h2 id="原因">原因</h2>
+<ul>
+<li><code>innerHTML</code>實際上是「移除原本的內容後，以新的內容取代之」</li>
+<li>就算是新增，也會觸發上述的「移除 ─ 新增」機制，綁定好的事件監聽器的子代元素也會一起被移除</li>
+</ul>
+<blockquote>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML#value">MDN</a>: Setting the value of innerHTML <strong>removes all of the element’s descendants</strong> and replaces them with nodes constructed by parsing the HTML given in the string htmlString.</p>
+</blockquote>
+<ul>
+<li>在示範用的程式碼中，點擊<code>&#x3C;button id="replace"></code>對<code>&#x3C;div id="target"></code>新增一個<code>&#x3C;span></code>後，原先綁定了事件監聽器的<code>&#x3C;button id="alert"></code>已被移除，並被一個新的<code>&#x3C;button id="alert"></code>取代</li>
+<li>新的<code>&#x3C;button id="alert"></code>沒有任何事件監聽器，故點擊後不會出現 alert 訊息</li>
+</ul>
+<h2 id="解決方式">解決方式</h2>
+<h3 id="createelement搭配-appendchild">createElement()搭配 appendChild()</h3>
+<p class="codepen" data-height="265" data-theme-id="dark" data-default-tab="js,result" data-user="Charlie7779" data-slug-hash="jOBwbEE" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="appendChild">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/jOBwbEE">
+  appendChild</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<ul>
+<li>透過<code>let span = document.createElement("span")</code>建立一個<code>&#x3C;span></code>元素</li>
+<li>使用<code>textContent</code>設定<code>span</code>的文字內容</li>
+<li>執行<code>target.appendChild(span)</code>將<code>span</code>加為<code>target</code>的子代元素</li>
+</ul>
+<blockquote>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild">MDN</a>: The <code>Node.appendChild()</code> method <strong>adds a node to the end of the list of children</strong> of a specified parent node.</p>
+</blockquote>
+<h3 id="insertadjacenthtml">insertAdjacentHTML()</h3>
+<p class="codepen" data-height="265" data-theme-id="dark" data-default-tab="js,result" data-user="Charlie7779" data-slug-hash="GRWEpoP" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="insertAdjacentHTML()">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/GRWEpoP">
+  insertAdjacentHTML()</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<p>關於<code>element.insertAdjacentHTML(position, text)</code>：</p>
+<ul>
+<li><code>position</code>參數以下四選一：
+<ul>
+<li><code>beforebegin</code>：在<code>element</code>前插入<code>text</code></li>
+<li><code>afterbegin</code>：在<code>element</code>內部、第一個 childNode 前插入<code>text</code></li>
+<li><code>beforeend</code>：在<code>element</code>內部、最後的 childNode 後插入<code>text</code></li>
+<li><code>afterend</code>：在<code>element</code>後插入<code>text</code></li>
+</ul>
+</li>
+<li><code>text</code>：會被轉換為 HTML 節點，可使用 template literal</li>
+</ul>
+<p class="codepen" data-height="265" data-theme-id="dark" data-default-tab="js,result" data-user="Charlie7779" data-slug-hash="eYvRpvv" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="insertAdjacentHTML() -- position">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/eYvRpvv">
+  insertAdjacentHTML() -- position</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML">MDN: Element.insertAdjacentHTML()</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild">MDN: Node.appendChild()</a></li>
+<li><a href="https://stackoverflow.com/questions/595808/is-it-possible-to-append-to-innerhtml-without-destroying-descendants-event-list">StackOverFlow: Is it possible to append to innerHTML without destroying descendants’ event listeners?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>JavaScript 快速筆記：Event.currentTarget</title>
+    <meta name="title" content="JavaScript 快速筆記：Event.currentTarget">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/js-event-current-target/">
+    <meta property="og:title" content="JavaScript 快速筆記：Event.currentTarget">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/js-event-current-target/">
+    <meta property="twitter:title" content="JavaScript 快速筆記：Event.currentTarget">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">JavaScript 快速筆記：Event.currentTarget</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-08-17 22:22</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  JavaScript
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#bonus-track-eventstopimmediatepropagation" class="astro-QTOKGA5Y">bonus track: Event.stopImmediatePropagation</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在觀摩 <a href="https://github.com/mui/material-ui/blob/master/packages/mui-material/src/Dialog/Dialog.js">material-ui Dialog 原始碼</a>的時候發現過去沒用過的 property <code>Event.currentTarget</code>，記錄一下與 <code>Event.target</code> 的差異</p>
+<h2 id="筆記">筆記</h2>
+<ul>
+<li>Event.currentTarget：實際帶有 eventListener 的 DOM 元素
+<ul>
+<li>MDN: <code>Event.currentTarget</code> always refers to the element to which <strong>the event handler has been attached</strong>, as opposed to <code>Event.target</code>, which identifies the element on which the event occurred and which may be its descendant.</li>
+</ul>
+</li>
+<li>Event.target：事件真正的起始點
+<ul>
+<li>MDN: the reference to the object onto <strong>which the event was dispatched</strong></li>
+</ul>
+</li>
+</ul>
+<iframe src="https://codesandbox.io/embed/nice-shadow-ftlbqb?fontsize=14&#x26;hidenavigation=1&#x26;theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="nice-shadow-ftlbqb" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+<p>DEMO CODE 解說：</p>
+<ul>
+<li>分別在 inner box 與 outer wrapper 綁上 click 監聽（32-33 行），並透過 <code>stopPropagation</code> 阻止事件向親層冒泡（14 行）</li>
+<li>點擊 inner box 時，事件停留在 inner 層，<code>e.target</code> 與 <code>e.currentTarget</code> 皆會是 inner box</li>
+<li>點擊 middle wrapper 時，點擊事件本身（<code>e.target</code>）發生在 middle wrapper，但冒泡到 outer wrapper 層，被 outer wrapper 的事件監聽捕捉到，<code>e.currentTarget</code> 會是帶有監聽器的 outer wrapper
+<ul>
+<li>雖然在 function setTarget 中加入 <code>stopPropagation</code>，但在 middle wrapper 發生的事件，首先要先浮到 outer wrapper 被捕捉，才會有後續的 <code>stopPropagation</code>；middle wrapper 本身沒有任何事件監聽，事件不會在這一層被取消</li>
+</ul>
+</li>
+<li>點擊 outer wrapper 的邏輯與點擊 inner box 雷同，<code>e.target</code> 與 <code>e.currentTarget</code> 都會是 outer wrapper</li>
+</ul>
+<h3 id="bonus-track-eventstopimmediatepropagation">bonus track: Event.stopImmediatePropagation</h3>
+<p>搜尋相關資料時連帶找到 <code>Event.stopImmediatePropagation()</code>，與 <code>stopPropagation</code> 的差異在：如果一個 DOM 元素被加上複數個同樣事件類型但不同 handler function 的監聽器，那麼各個 handler function 會根據其在程式碼的順序由上到下依序執行，此時如果在 handler function 中呼叫 <code>stopImmediatePropagation</code> 則剩下來的 handler function 都不會被觸發</p>
+<blockquote>
+<p>MDN: If several listeners are attached to the same element for the same event type, they are <strong>called in the order in which they were added</strong>. If <code>stopImmediatePropagation()</code> is invoked during one such call, no remaining listeners will be called.</p>
+</blockquote>
+<iframe src="https://codesandbox.io/embed/jolly-bhabha-5zfi6b?fontsize=14&#x26;hidenavigation=1&#x26;theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="jolly-bhabha-5zfi6b" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+<p>於上述 DEMO CODE 中的 <code>funcTwo</code> 呼叫了 <code>e.stopImmediatePropagation()</code>，故 <code>funcThree</code> 與 <code>funcFour</code> 都沒有被執行，useState 變數 <code>result</code> 中只有前兩個 functions 執行完的結果</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget">MDN: Event.currentTarget</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/target">MDN: Event.target</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation">MDN: Event.stopImmediatePropagation()</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

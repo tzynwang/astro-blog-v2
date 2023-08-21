@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>開發筆記：設定 dayjs timezone</title>
+    <meta name="title" content="開發筆記：設定 dayjs timezone">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/dayjs-timezone/">
+    <meta property="og:title" content="開發筆記：設定 dayjs timezone">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/dayjs-timezone/">
+    <meta property="twitter:title" content="開發筆記：設定 dayjs timezone">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">開發筆記：設定 dayjs timezone</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-05-13 14:55</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  JavaScript
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#程式碼" class="astro-QTOKGA5Y">程式碼</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#關於時區名稱" class="astro-QTOKGA5Y">關於時區名稱</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#補充javascript-date-提供的字串輸出比較" class="astro-QTOKGA5Y">補充：JavaScript Date 提供的字串輸出比較</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在本機執行單元測試時，搭配 dayjs 且有使用到 <code>.toISOString()</code> 的功能都是表現正常。但把程式碼推到 gitLab 跑 deploy ci 後，卻發現測試變紅燈，檢查後發現是時區問題。</p>
+<p>這篇筆記會說明如何設定 dayjs 的時區資訊，以及如何查詢時區名稱。</p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">dayjs: 1.11.7</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="程式碼">程式碼</h3>
+<p>範例如下：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> dayjs </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'dayjs'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> utc </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'dayjs/plugin/utc'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> timezone </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'dayjs/plugin/timezone'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">LOCAL_TIME_ZONE</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'Asia/Taipei'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">dayjs.</span><span style="color: #B392F0">extend</span><span style="color: #E1E4E8">(utc);</span></span>
+<span class="line"><span style="color: #E1E4E8">dayjs.</span><span style="color: #B392F0">extend</span><span style="color: #E1E4E8">(timezone);</span></span>
+<span class="line"><span style="color: #E1E4E8">dayjs.tz.</span><span style="color: #B392F0">setDefault</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">LOCAL_TIME_ZONE</span><span style="color: #E1E4E8">); </span><span style="color: #6A737D">// 指定預設時區為 Asia/Taipei</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">t1</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">dayjs</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'2023-5-13 22:07'</span><span style="color: #E1E4E8">).</span><span style="color: #B392F0">toISOString</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"><span style="color: #6A737D">// 2023-05-13T14:07:00.000Z</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">t2</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">dayjs</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'2023-5-13'</span><span style="color: #E1E4E8">).</span><span style="color: #B392F0">toISOString</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"><span style="color: #6A737D">// 2023-05-12T16:00:00.000Z</span></span></code></pre>
+<p>注意事項：</p>
+<ol>
+<li>使用 <code>timezone</code> plugin 一定要引入 <code>dayjs/plugin/utc</code> 與 <code>dayjs/plugin/timezone</code>，缺一不可</li>
+<li>在每一個需要呼叫 <code>dayjs.tz()</code> 與 <code>dayjs.utc()</code> 的檔案內都要進行 <code>dayjs.extend(utc)</code> 與 <code>dayjs.extend(timezone)</code></li>
+</ol>
+<h3 id="關於時區名稱">關於時區名稱</h3>
+<p>可在 <a href="https://www.iana.org/time-zones">IANA: Time Zone Database</a> 下載。以檔案 <code>tzdata2023c.tar.gz</code> 為例，將下載回來的檔案解壓縮後，透過 chrome 開啟 <code>zone.tab</code> 即可瀏覽完整的時區資料。</p>
+<h3 id="補充javascript-date-提供的字串輸出比較">補充：JavaScript Date 提供的字串輸出比較</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">event</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">new</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Date</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(event.</span><span style="color: #B392F0">toUTCString</span><span style="color: #E1E4E8">());</span></span>
+<span class="line"><span style="color: #6A737D">// "Sat, 13 May 2023 07:39:44 GMT"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(event.</span><span style="color: #B392F0">toISOString</span><span style="color: #E1E4E8">());</span></span>
+<span class="line"><span style="color: #6A737D">// "2023-05-13T07:39:44.987Z"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(event.</span><span style="color: #B392F0">toString</span><span style="color: #E1E4E8">());</span></span>
+<span class="line"><span style="color: #6A737D">// "Sat May 13 2023 15:39:44 GMT+0800 (Taipei Standard Time)"</span></span></code></pre>
+<ul>
+<li><code>.toUTCString()</code>: 回傳 UTC 字串，功能與 <code>toGMTString()</code> 一致</li>
+<li><code>.toISOString()</code>: 回傳 ISO 8601 格式的字串，使用的時區為 UTC 0</li>
+<li><code>.toString()</code>: 回傳本地時間字串</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://day.js.org/docs/en/plugin/timezone">Day.js Plugins > Timezone</a></li>
+<li><a href="https://www.iana.org/time-zones">IANA: Time Zone Database</a></li>
+<li><a href="https://stackoverflow.com/questions/38399465/how-to-get-list-of-all-timezones-in-javascript">stackOverFlow: How to get list of all timezones in javascript</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

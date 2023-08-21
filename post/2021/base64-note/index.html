@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「Base64」相關筆記</title>
+    <meta name="title" content="「Base64」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/base64-note/">
+    <meta property="og:title" content="「Base64」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/base64-note/">
+    <meta property="twitter:title" content="「Base64」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「Base64」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-07-05 11:18</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Data exchange format
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#base64-是什麼" class="astro-QTOKGA5Y">base64 是什麼？</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#base64-要解決什麼問題" class="astro-QTOKGA5Y">base64 要解決什麼問題？</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#轉換範例" class="astro-QTOKGA5Y">轉換範例</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#補充" class="astro-QTOKGA5Y">補充</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>發現自己還沒有辦法流暢地解釋「Base64 到底是什麼？」，此篇為查找相關資料後整理的筆記</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="base64-是什麼">base64 是什麼？</h3>
+<ul>
+<li>Wiki: In programming, Base64 is a group of <strong>binary-to-text encoding schemes</strong> that represent binary data (more specifically, a sequence of <strong>8-bit bytes</strong>) in an <strong>ASCII string format</strong> by translating the data into a radix-64 representation.
+<ul>
+<li>A binary-to-text encoding is <strong>encoding of data in plain text</strong>.</li>
+<li>（引用自維基百科）Encoding、編碼是一種「資訊從一種形式轉換為另一種形式」的過程；解碼則是編碼的逆過程。</li>
+</ul>
+</li>
+<li>維基百科：一種基於 64 個可列印字元來<strong>表示二進位資料</strong>的表示方法。</li>
+<li>From <a href="https://elmah.io/tools/base64-image-encoder/">elmah.io</a>: Base64 is an encoding algorithm that <strong>converts any characters, binary data, and even images or sound files into a readable string</strong>, which can be saved or transported over the network without data loss. The characters generated from Base64 encoding consist of Latin letters, digits, plus, and slash.</li>
+</ul>
+<blockquote>
+<p>小結論：base64 是一種編碼方式，可以把二進位資料轉換成純文字；透過 base64 編碼後得到的純文字串，可以再解碼變回二進位資料。</p>
+</blockquote>
+<h3 id="base64-要解決什麼問題">base64 要解決什麼問題？</h3>
+<ul>
+<li>
+<p>Wiki:</p>
+<ul>
+<li>Base64 is designed <strong>to carry data</strong> stored in binary formats <strong>across channels that only reliably support text content</strong>.</li>
+<li>Base64 is particularly prevalent on the World Wide Web where its uses include the ability <strong>to embed image files</strong> (or other binary assets) <strong>inside textual assets</strong> such as <strong>HTML</strong> and <strong>CSS files</strong>.</li>
+<li>Base64 is also widely used for <strong>sending e-mail attachments</strong>. This is required because SMTP (in its <strong>original form</strong>) was designed to transport <strong>7-bit ASCII characters only</strong>.</li>
+</ul>
+</li>
+<li>
+<p>Text-based protocols (according to <a href="https://en.wikipedia.org/wiki/Binary_protocol">Wiki</a>):</p>
+<ul>
+<li>IRC, old versions of SMTP, HTTP/1.1</li>
+</ul>
+</li>
+<li>
+<p><a href="https://elmah.io/tools/base64-image-encoder/">elmah.io</a>:</p>
+<ul>
+<li>Base64 is most commonly used as a MIME (Multipurpose Internet Mail Extensions) transfer encoding for email.</li>
+<li>Base64 <strong>images</strong> are primarily used to embed image data within other formats like HTML, CSS, or JSON. By including image data within an HTML document, <strong>the browser doesn’t need to make an additional web request</strong> to fetch the file, since the image is already embedded in the HTML document. A Base64 representation of an image is larger than a separate image and the string gets very long for large images.</li>
+</ul>
+</li>
+</ul>
+<h3 id="轉換範例">轉換範例</h3>
+<p><img src="/2021/base64-note/base64example.png" alt="Base64轉換示意圖，取自中文維基百科"></p>
+<ol>
+<li>字母 M、a、n 先個別轉換為 ASCII 編碼，得到十進位數字 77、97 與 110</li>
+<li>再將這三個十進位數字各自轉為二進位數字後，得到<code>01001101</code>、<code>01100001</code>與<code>01101110</code>，合併為<code>010011010110000101101110</code>，總計為 24 位元的資料</li>
+<li>將<code>010011010110000101101110</code>分拆為 4 組各為 6 位元的資料：<code>010011</code>、<code>101011</code>、<code>000101</code>與<code>101110</code></li>
+<li>上述 4 組二進位數字轉回十進位，再對照 ASCII，得到英文單字 T、W、F、u</li>
+<li>單字<code>Man</code>透過 base64 編碼後，得到字串<code>TWFu</code></li>
+</ol>
+<h3 id="補充">補充</h3>
+<ul>
+<li>Wiki: This encoding causes <strong>an overhead of 33–36%</strong> (33% by the encoding itself; up to 3% more by the inserted line breaks). 進行 base64 編碼後，檔案大小會上升</li>
+<li>Wiki: The data URI scheme can use Base64 to represent file contents. For instance, background images and fonts can be specified in a CSS stylesheet file as <code>data: URIs</code>, instead of being supplied in separate files.
+<ul>
+<li>參考<a href="https://css-tricks.com/data-uris/">CSS-Tricks</a>：</li>
+</ul>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">/* CSS */</span></span>
+<span class="line"><span style="color: #85E89D">li</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">background</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">url</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7</span><span style="color: #E1E4E8">)</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">no-repeat</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">left</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">center</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">padding</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">5</span><span style="color: #F97583">px</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">0</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">5</span><span style="color: #F97583">px</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">25</span><span style="color: #F97583">px</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">&#x3C;!-- HTML img element --></span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;</span><span style="color: #85E89D">img</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">src</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7"</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">alt</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"star"</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">width</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"16"</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">height</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"16"</span></span>
+<span class="line"><span style="color: #E1E4E8">/></span></span></code></pre>
+</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Base64">Wikipedia: Base64</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/Base64">維基百科：Base64（基底 64）</a></li>
+<li><a href="https://youtu.be/8qkxeZmKmOY">YouTube: What is Base64?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>CSS 筆記：Logical properties 中的 margin-inline-end</title>
+    <meta name="title" content="CSS 筆記：Logical properties 中的 margin-inline-end">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/css-margin-inline-end/">
+    <meta property="og:title" content="CSS 筆記：Logical properties 中的 margin-inline-end">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/css-margin-inline-end/">
+    <meta property="twitter:title" content="CSS 筆記：Logical properties 中的 margin-inline-end">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">CSS 筆記：Logical properties 中的 margin-inline-end</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-07-12 19:43</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#範例" class="astro-QTOKGA5Y">範例</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#logical-properties" class="astro-QTOKGA5Y">Logical properties</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#inline-dimension" class="astro-QTOKGA5Y">Inline dimension</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="範例">範例</h2>
+<p><img src="/2022/css-margin-inline-end/demo-0.png" alt="margin-inline-end example 1"></p>
+<p><img src="/2022/css-margin-inline-end/demo-1.png" alt="margin-inline-end example 2"></p>
+<ul>
+<li>使用 <code>margin-inline-end</code> 可以達成「文字與後方標籤保持距離，且確保標籤會緊跟在文字末端」</li>
+<li>如果使用 <code>display: flex</code> 搭配 <code>gap</code> 無法做出「標籤緊跟在文字末端」的效果，因 <code>display: flex</code> 會把文字（儘管沒有透過 span 元素包起來）與標籤群分割為兩個不同的節點，標籤群便無法尾隨在文字區塊後方。</li>
+</ul>
+<p class="codepen" data-height="300" data-default-tab="html,result" data-slug-hash="eYMzrqG" data-user="Charlie7779" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/eYMzrqG">
+  margin-inline-end</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h2 id="筆記">筆記</h2>
+<h3 id="logical-properties">Logical properties</h3>
+<blockquote>
+<p>MDN: The margin-inline-end CSS property defines the <strong>logical inline end margin</strong> of an element, which maps to a physical margin depending on the element’s writing mode, directionality, and text orientation.</p>
+</blockquote>
+<blockquote>
+<p>web.dev: A <strong>logical property</strong> is one that references a side, corner or axis of the box model in context of the applicable language direction. It’s akin to referencing someone’s strong arm, rather than assuming it’s their right arm. “Right” is a physical arm reference, “strong” is a logical arm reference, contextual to the individual.</p>
+</blockquote>
+<h3 id="inline-dimension">Inline dimension</h3>
+<blockquote>
+<p>The dimension parallel to the <strong>flow of text within a line</strong>, i.e., the horizontal dimension in horizontal writing modes, and the vertical dimension in vertical writing modes. For standard English text, it is the horizontal dimension.</p>
+</blockquote>
+<ul>
+<li>以英文為例，被 <code>margin-inline</code> 這類 logical properties 控制的是某元素<strong>水平方向</strong>的間距</li>
+<li>但如果是中文（或日文）等直書文字，被 <code>margin-inline</code> 控制的會是<strong>垂直方向</strong>的間距</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/margin-inline-end">MDN: margin-inline-end</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Logical_Properties">MDN: CSS Logical Properties and Values</a></li>
+<li><a href="https://web.dev/logical-property-shorthands/">web.dev: Logical layout enhancements with flow-relative shorthands</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

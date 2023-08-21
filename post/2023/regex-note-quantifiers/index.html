@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>正規表達式筆記：量詞（quantifiers）</title>
+    <meta name="title" content="正規表達式筆記：量詞（quantifiers）">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/regex-note-quantifiers/">
+    <meta property="og:title" content="正規表達式筆記：量詞（quantifiers）">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/regex-note-quantifiers/">
+    <meta property="twitter:title" content="正規表達式筆記：量詞（quantifiers）">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">正規表達式筆記：量詞（quantifiers）</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-05-01 12:49</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Regular expressions
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#各種量詞與文法" class="astro-QTOKGA5Y">各種量詞與文法</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#mdn-範例解讀" class="astro-QTOKGA5Y">MDN 範例解讀</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在使用正規表達式比對字串時，可搭配量詞（quantifiers）來設定比對內容長度。此篇筆記大部分是參考 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Quantifiers">MDN: Regular expressions > Quantifiers</a> 整理出來的內容。</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="各種量詞與文法">各種量詞與文法</h3>
+<p><code>x*</code>：比對 <code>x</code> ，允許 <code>x</code> 的數量為「零至無限多」。以 <code>app*</code> 為例，會在 <code>apple</code> 中挑出 <code>app</code>、在 <code>ape</code> 中挑出 <code>ap</code>。</p>
+<p><code>x+</code>：比對 <code>x</code> ，允許 <code>x</code> 的數量為「一至無限多」。以 <code>app*</code> 為例，會在 <code>apple</code> 中挑出 <code>app</code>、但在 <code>ape</code> 中不會挑出任何符合模式的字串。</p>
+<p><code>x?</code>：比對 <code>x</code> ，允許 <code>x</code> 的數量為「零」或「一」。以 <code>e?le?</code> 為例，會挑出 <code>angel</code> 中的 <code>el</code>、挑出 <code>angle</code> 中的 <code>le</code>。</p>
+<p><code>x{n}</code>：當 <code>n</code> 為正整數時，比對 <code>x</code> 並允許出現的數量為「正好 <code>n</code> 個」。以 <code>p{2}</code> 為例，會挑出 <code>apple</code> 中的 <code>pp</code>、但在 <code>ape</code> 中不會挑出任何符合模式的字串。</p>
+<p><code>x{n,}</code>：當 <code>n</code> 為正整數時，比對 <code>x</code> 並允許出現的數量為「至少（含） <code>n</code> 個」。以 <code>p{2,}</code> 為例，會挑出 <code>apple</code> 中的 <code>pp</code>、挑出 <code>appple</code> 中的 <code>ppp</code>。</p>
+<p><code>x{n,m}</code>：當 <code>n</code> 與 <code>m</code> 為正整數且 <code>m > n</code> 時，比對 <code>x</code> 並允許出現的數量為「至少 <code>n</code> 個，最多 <code>m</code> 個，且超過 <code>m</code> 的數量不會被挑中」。以範例 <code>p{2,4}</code> 來說：</p>
+<ul>
+<li><code>apple</code> 會挑出 <code>pp</code></li>
+<li><code>appple</code> 會挑出 <code>ppp</code></li>
+<li><code>apppple</code> 會挑出 <code>pppp</code></li>
+<li><code>appppple</code> 總共有五個 <code>p</code>，但僅會挑出 <code>pppp</code></li>
+</ul>
+<hr>
+<p>額外規則：將 <code>?</code> 接續在上述各種量詞後面時（比如 <code>x*?</code> 、 <code>x+?</code> 或 <code>x??</code>），會取消量詞的 greedy 效果。量詞在沒有額外搭配 <code>?</code> 時會「盡可能選取所有符合規則的字符」，但如果量詞搭配了 <code>?</code>，原本的「找到全部（greedy）」會變成「有找到就停止（non-greedy, lazy）」。</p>
+<blockquote>
+<p>MDN: By default quantifiers like <code>*</code> and <code>+</code> are “greedy”, meaning that they try <strong>to match as much of the string as possible</strong>. The <code>?</code> character after the quantifier makes the quantifier “non-greedy”: meaning that it will <strong>stop as soon as it finds a match</strong>.</p>
+</blockquote>
+<p>舉例：</p>
+<ul>
+<li>以 <code>p+</code> 與 <code>p+?</code> 來說，<code>p+</code> 會挑出 <code>apple</code> 中的 <code>pp</code>，但換成 <code>p+?</code> 後，只會挑出 <code>apple</code> 中的「第一個 <code>p</code> 字符」</li>
+<li>以字串 <code>&#x3C;foo> &#x3C;bar> new &#x3C;/bar> &#x3C;/foo></code> 來說，使用 <code>&#x3C;.*></code> 會挑中「一整個字串」，因 <code>&#x3C;</code> 與 <code>></code> 中間允許「零至無限多」的「行終止符（line terminator）以外的字元」；但當表達式換成 <code>&#x3C;.*?></code> 後，僅會有 <code>&#x3C;foo></code> 被挑中。</li>
+</ul>
+<p>注意 lazy 效果與 global flag 是兩回事，如果將 <code>/&#x3C;.*?>/</code> 改為 <code>/&#x3C;.*?>/g</code> 的話，整個 <code>&#x3C;foo> &#x3C;bar> new &#x3C;/bar> &#x3C;/foo></code> 字串中會有 <code>&#x3C;foo></code> 、 <code>&#x3C;bar></code> 、 <code>&#x3C;/bar></code> 與 <code>&#x3C;/foo></code> 被挑中。</p>
+<h3 id="mdn-範例解讀">MDN 範例解讀</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">wordEndingWithAs</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #DBEDFF"> </span><span style="color: #9ECBFF">/</span><span style="color: #79B8FF">\w</span><span style="color: #F97583">+</span><span style="color: #DBEDFF">a</span><span style="color: #F97583">+\b</span><span style="color: #9ECBFF">/</span><span style="color: #E1E4E8">;</span></span></code></pre>
+<ul>
+<li><code>\w+</code> 代表「一至無限多個」的「拉丁英數與底線符號」</li>
+<li><code>a+</code> 代表「一至無限多個」的 <code>a</code></li>
+<li><code>\b</code> 代表「邊際」（word boundary）</li>
+</ul>
+<p>總結：尋找「任意拉丁英數與底線符號」開頭、中間帶有「一至無限個 <code>a</code> 字母」且「以字母 <code>a</code> 結尾」的內容</p>
+<hr>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">singleLetterWord</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #DBEDFF"> </span><span style="color: #9ECBFF">/</span><span style="color: #F97583">\b</span><span style="color: #79B8FF">\w</span><span style="color: #F97583">\b</span><span style="color: #9ECBFF">/</span><span style="color: #F97583">g</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">notSoLongWord</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #DBEDFF"> </span><span style="color: #9ECBFF">/</span><span style="color: #F97583">\b</span><span style="color: #79B8FF">\w</span><span style="color: #F97583">{2,6}\b</span><span style="color: #9ECBFF">/</span><span style="color: #F97583">g</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">longWord</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #DBEDFF"> </span><span style="color: #9ECBFF">/</span><span style="color: #F97583">\b</span><span style="color: #79B8FF">\w</span><span style="color: #F97583">{13,}\b</span><span style="color: #9ECBFF">/</span><span style="color: #F97583">g</span><span style="color: #E1E4E8">;</span></span></code></pre>
+<ul>
+<li><code>singleLetterWord</code> 為「長度為 1 的單字」</li>
+<li><code>notSoLongWord</code> 為「長度介於 2 至 6 個字母」的單字</li>
+<li><code>longWord</code> 為「至少包含 13 個字母」的單字</li>
+</ul>
+<hr>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">regexpEnding</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #DBEDFF"> </span><span style="color: #9ECBFF">/</span><span style="color: #79B8FF">\w</span><span style="color: #F97583">+</span><span style="color: #DBEDFF">ou</span><span style="color: #F97583">?</span><span style="color: #DBEDFF">r</span><span style="color: #9ECBFF">/</span><span style="color: #F97583">g</span><span style="color: #E1E4E8">;</span></span></code></pre>
+<ul>
+<li><code>\w+</code> 代表「一至無限多個」的「拉丁英數與底線符號」</li>
+<li><code>ou?r</code> 代表字母 <code>o</code> 後面可有、可沒有字母 <code>u</code></li>
+<li>撞到字母 <code>r</code> 時，就結束抓取（因為 <code>r</code> 後方沒有再接其他條件）</li>
+</ul>
+<p>以上述條件來說，會抓取 <code>for</code> 與 <code>four</code> 這兩個完整的單字、不會抓取 <code>fou</code> 、會抓取 <code>fourty</code> 中的 <code>four</code> 部分。</p>
+<hr>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">greedyRegexp</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #DBEDFF"> </span><span style="color: #9ECBFF">/</span><span style="color: #79B8FF">[\w ]</span><span style="color: #F97583">+</span><span style="color: #9ECBFF">/</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">nonGreedyRegexp</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #DBEDFF"> </span><span style="color: #9ECBFF">/</span><span style="color: #79B8FF">[\w ]</span><span style="color: #F97583">+?</span><span style="color: #9ECBFF">/</span><span style="color: #E1E4E8">;</span></span></code></pre>
+<ul>
+<li><code>[\w ]+</code> 代表要尋找「拉丁英數與底線符號」以及「空白鍵」，搭配 <code>+</code> 讓字符數量可為「一至無限多個」</li>
+<li>加上 <code>?</code> 後，會在「找到第一個符合條件的字串」後，就視為「找到」</li>
+</ul>
+<p>以字串 <code>You must be getting somewhere near the center of the earth.</code> 來說：</p>
+<ul>
+<li>條件 <code>greedyRegexp</code> 會找到一整串除了結尾句號以外的內容，即是 <code>You must be getting somewhere near the center of the earth</code></li>
+<li>條件 <code>nonGreedyRegexp</code> 會在找到開頭的 <code>Y</code> 之後就視為「找到」，並回傳這個單獨的 <code>Y</code></li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Quantifiers">MDN: Regular expressions > Quantifiers</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

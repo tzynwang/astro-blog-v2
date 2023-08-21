@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「React Error Boundaries」實作筆記</title>
+    <meta name="title" content="「React Error Boundaries」實作筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-error-boundaries/">
+    <meta property="og:title" content="「React Error Boundaries」實作筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-error-boundaries/">
+    <meta property="twitter:title" content="「React Error Boundaries」實作筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「React Error Boundaries」實作筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-01-29 22:17</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#error-boundary-元件的特徵" class="astro-QTOKGA5Y">Error Boundary 元件的特徵</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#static-getderivedstatefromerrorerror" class="astro-QTOKGA5Y">static getDerivedStateFromError(error)</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#componentdidcatcherror-info" class="astro-QTOKGA5Y">componentDidCatch(error, info)</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#程式碼" class="astro-QTOKGA5Y">程式碼</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>使用 Error Boundary 元件捕捉 React App 內出現的錯誤
+本次實作參考 React 官方文件，使用 Error Boundary 元件包覆 layout 中的各個區塊，即使個別區塊出錯也不會導致整個 App 無法運行：<a href="https://tzynwang.github.io/react-error-boundary/">https://tzynwang.github.io/react-error-boundary/</a></p>
+<p><img src="/2022/react-error-boundaries/screenshot.png" alt="error boundary"></p>
+<h2 id="筆記">筆記</h2>
+<blockquote>
+<p>As of React 16, errors that were <strong>not caught by any error boundary</strong> will result in <strong>unmounting of the whole React component tree</strong>.</p>
+</blockquote>
+<p>錯誤若沒有被 Error Boundary 元件捕捉，會導致整個 React App 的掛載行為被取消</p>
+<h3 id="error-boundary-元件的特徵">Error Boundary 元件的特徵</h3>
+<ul>
+<li>A class component becomes an error boundary if it defines either (or both) of the lifecycle methods <code>static getDerivedStateFromError()</code> or <code>componentDidCatch()</code>. 注意只有 class component 可以實作 <code>static getDerivedStateFromError()</code> 或 <code>componentDidCatch()</code> 這兩種 lifecycle method（因 hooks 尚未支援），故目前還沒辦法透過 functional component 來實作 Error Boundary</li>
+<li>Both lifecycle (<code>static getDerivedStateFromError()</code>, <code>componentDidCatch()</code>) are invoked after an error has been thrown by a descendant component.</li>
+<li>Error boundaries do not catch errors for:
+<ul>
+<li>Event handlers: React doesn’t need error boundaries to recover from errors in event handlers. Unlike the render method and lifecycle methods, the <strong>event handlers don’t happen during rendering</strong>. So if they throw, <strong>React still knows what to display</strong> on the screen. 即使 Event handlers 出現錯誤，畫面也不受影響（React 依舊知道需要渲染什麼內容），所以不被 Error Boundary 元件捕捉也沒有關係</li>
+<li>Asynchronous code (e.g. <code>setTimeout</code> or <code>requestAnimationFrame</code> callbacks)</li>
+<li>Server side rendering</li>
+<li><strong>Errors thrown in the error boundary itself</strong> (rather than its children)</li>
+</ul>
+</li>
+</ul>
+<h3 id="static-getderivedstatefromerrorerror">static getDerivedStateFromError(error)</h3>
+<ul>
+<li><code>static getDerivedStateFromError(error)</code> receives the error that was thrown as a parameter and should <strong>return a value to update state</strong>. 回傳的值會直接被 <code>setState</code> 拿去更新 <code>this.state</code></li>
+<li><code>getDerivedStateFromError()</code> is called during the <strong>render phase</strong>, so <strong>side-effects are not permitted</strong>. For those use cases, use <code>componentDidCatch()</code> instead.</li>
+</ul>
+<h3 id="componentdidcatcherror-info">componentDidCatch(error, info)</h3>
+<ul>
+<li><code>componentDidCatch(error, info)</code> receives two parameters:
+<ul>
+<li>error: The error that was thrown.</li>
+<li>info: An object with a componentStack key containing information about which component threw the error.</li>
+</ul>
+</li>
+<li><code>componentDidCatch()</code> is called during the <strong>commit phase</strong>, so <strong>side-effects are permitted</strong>.</li>
+<li>In the event of an error, you can render a fallback UI with <code>componentDidCatch()</code> by calling <code>setState</code>, but this will be deprecated in a future release. Use <code>static getDerivedStateFromError()</code> to handle fallback rendering instead.</li>
+</ul>
+<h3 id="程式碼">程式碼</h3>
+<script src="https://gist.github.com/tzynwang/427f0181a0b6b1e749b0778457137286.js"></script>
+<p>完整：<a href="https://github.com/tzynwang/react-error-boundary/tree/master/src/components">https://github.com/tzynwang/react-error-boundary/tree/master/src/components</a></p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://reactjs.org/docs/error-boundaries.html">React: Error Boundaries</a></li>
+<li><a href="https://github.com/facebook/react/blob/575791925697c7e23966e6934b577e69aef736f3/packages/react-devtools-shared/src/devtools/views/ErrorBoundary/ErrorBoundary.js">react/packages/react-devtools-shared/src/devtools/views/ErrorBoundary/ErrorBoundary.js</a></li>
+<li><a href="https://stackoverflow.com/questions/52962851/whats-the-difference-between-getderivedstatefromerror-and-componentdidcatch">StackOverFlow: what’s the difference between getDerivedStateFromError and componentDidCatch</a></li>
+<li><a href="https://stackoverflow.com/questions/59625425/understanding-error-capturestacktrace-and-stack-trace-persistance">StackOverFlow: Understanding Error.captureStackTrace and stack trace persistance?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

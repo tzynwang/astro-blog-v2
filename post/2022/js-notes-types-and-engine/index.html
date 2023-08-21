@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第28週 學習筆記：不只是型別</title>
+    <meta name="title" content="2022 第28週 學習筆記：不只是型別">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/js-notes-types-and-engine/">
+    <meta property="og:title" content="2022 第28週 學習筆記：不只是型別">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/js-notes-types-and-engine/">
+    <meta property="twitter:title" content="2022 第28週 學習筆記：不只是型別">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第28週 學習筆記：不只是型別</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-07-16 14:49</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  JavaScript
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#typeof-null" class="astro-QTOKGA5Y">typeof null</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#typeof-number" class="astro-QTOKGA5Y">typeof number</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#sensible-initial-value" class="astro-QTOKGA5Y">sensible initial value</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>此篇為影片 <a href="https://youtu.be/0I0d8LkDqyc">JS Engine fundamentals [AgentConf]</a> 的相關筆記</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0I0d8LkDqyc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<h2 id="筆記">筆記</h2>
+<h3 id="typeof-null">typeof null</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(</span><span style="color: #F97583">typeof</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">null</span><span style="color: #E1E4E8">); </span><span style="color: #6A737D">// 'object'</span></span></code></pre>
+<p>參考 ECMAScript 定義：</p>
+<ul>
+<li><code>undefined</code>: Any variable that <strong>has not been assigned a value</strong> has the value <code>undefined</code>.</li>
+<li><code>null</code>: Primitive value that represents the <strong>intentional absence of any object value</strong>.</li>
+</ul>
+<p>再搭配 <a href="https://v8.dev/blog/react-cliff">v8.dev</a> 的解說：</p>
+<ul>
+<li><code>undefined</code> means “no value”.</li>
+<li><code>null</code> means “no object value”.</li>
+</ul>
+<p>參考 <a href="https://stackoverflow.com/a/18808300/15028185">stackOverFlow 的討論串</a>：</p>
+<ul>
+<li>The reasoning behind this is that <code>null</code>, in contrast with <code>undefined</code>, was (and still is) often used where objects appear. In other words, <code>null</code> is often used to signify <strong>an empty reference to an object</strong>.</li>
+</ul>
+<p>結論：</p>
+<ul>
+<li><code>null</code> 的意義乃「沒有值的物件」</li>
+<li>根據 <a href="https://v8.dev/blog/react-cliff">v8.dev</a> 的圖說，首先是代表「完全沒有值的 <code>undefined</code> 」，接著才是代表「沒有值的物件 <code>null</code>」</li>
+<li>大絕：ECMAScript 本身就規範了 <code>typeof</code> 在檢驗到 <code>null</code> 時要回傳 <code>object</code> ，參考 <a href="https://tc39.es/ecma262/multipage/ecmascript-language-expressions.html#sec-typeof-operator">13.5.3 The typeof Operator</a></li>
+</ul>
+<h3 id="typeof-number">typeof number</h3>
+<p>定義：</p>
+<ul>
+<li>MDN: The JavaScript <code>Number</code> type is a <strong>double-precision 64-bit binary format IEEE 754 value</strong>, like double in Java or C#.</li>
+<li>v8.dev: ECMAScript standardizes numbers as <strong>64-bit floating-point values</strong>, also known as double precision floating-point or <strong>Float64</strong>.
+<ul>
+<li>However, that doesn’t mean that JavaScript engines store numbers in Float64 representation all the time — doing so would be terribly inefficient!</li>
+<li>Engines can choose other internal representations, as long as the observable behavior matches Float64 exactly.</li>
+<li>JavaScript engines can choose an <strong>optimal in-memory representation</strong> for such numbers to optimize code (that accesses array elements by index).</li>
+</ul>
+</li>
+<li>所有在 JS 世界裡面看到的數字（包括 <code>42</code> 這樣的整數）都是 Float64 格式，但 JS 引擎在實作上可以選擇「不」以 Float64 格式來將數字保存在記憶體中</li>
+</ul>
+<p>實際上：</p>
+<ul>
+<li>JS 引擎（至少 v8 有如此特性）在處理<strong>只有整數的運算</strong>時會比處理浮點數來的快
+<ul>
+<li>v8.dev: If both operands are <strong>represented as integers</strong>, the CPU can compute the result very efficiently. V8 has additional fast-paths for the cases where the divisor is a power of two. For values represented as floats, the computation is much <strong>more complex and takes a lot longer</strong>.</li>
+<li>For small integers in the 31-bit signed integer range, V8 uses a special representation called <code>Smi</code>. Anything that is not a <code>Smi</code> is represented as a <code>HeapObject</code>, which is <strong>the address of some entity in memory</strong>.</li>
+</ul>
+</li>
+<li>即使都是 <code>number</code> 型態的資料，在實際操作上也可能會有不同的處理方式（參照 v8 引擎的 <code>Smi</code> 與 <code>HeapObject</code> 這兩種實作方式）</li>
+</ul>
+<h3 id="sensible-initial-value">sensible initial value</h3>
+<p>建議使用前後連貫的值來建立物件：</p>
+<ul>
+<li>舉例：若需要一個物件來保存浮點數，可以在建立該物件時給予一組預設的 <code>Number.MIN_VALUE</code> （而非預設為 <code>0</code> 再賦予浮點數值）</li>
+<li>MDN: <code>Number.MIN_VALUE</code> is the smallest positive number that <strong>can be represented within float precision</strong>.</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://v8.dev/blog/react-cliff">v8.dev: The story of a V8 performance cliff in React</a></li>
+<li><a href="https://youtu.be/0I0d8LkDqyc">YouTube: JS Engine fundamentals [AgentConf]</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null">MDN: null</a></li>
+<li><a href="https://tc39.es/ecma262/multipage/overview.html#sec-null-value">tc39.es: 4.4.15 null value</a></li>
+<li><a href="https://tc39.es/ecma262/multipage/ecmascript-data-types-and-values.html#sec-ecmascript-language-types-undefined-type">tc39.es: 6.1.1 The Undefined Type</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">MDN: Number</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MIN_VALUE">MDN: Number.MIN_VALUE</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

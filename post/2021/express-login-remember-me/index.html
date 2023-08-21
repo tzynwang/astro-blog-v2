@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>作業功能擴充：讓老爸的私房錢「可以記住使用者的登入狀態」</title>
+    <meta name="title" content="作業功能擴充：讓老爸的私房錢「可以記住使用者的登入狀態」">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/express-login-remember-me/">
+    <meta property="og:title" content="作業功能擴充：讓老爸的私房錢「可以記住使用者的登入狀態」">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/express-login-remember-me/">
+    <meta property="twitter:title" content="作業功能擴充：讓老爸的私房錢「可以記住使用者的登入狀態」">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">作業功能擴充：讓老爸的私房錢「可以記住使用者的登入狀態」</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-07-10 15:13</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Express
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#stateless-protocol" class="astro-QTOKGA5Y">Stateless Protocol</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#關於-sessions" class="astro-QTOKGA5Y">關於 sessions</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#關於-cookies" class="astro-QTOKGA5Y">關於 cookies</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#實作" class="astro-QTOKGA5Y">實作</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#產出-sessions" class="astro-QTOKGA5Y">產出 sessions</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#保存-sessions-至資料庫中" class="astro-QTOKGA5Y">保存 sessions 至資料庫中</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>實作的部分因為直接使用套件<a href="https://www.npmjs.com/package/connect-mongo"><code>connect-mongo</code></a>幫忙處理，所以沒什麼難度
+本篇重點放在理解 session、cookie，以及 express.js 伺服器如何保管 session</p>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">connect-mongo: 4.4.1</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="stateless-protocol">Stateless Protocol</h3>
+<ul>
+<li>HTTP 是一種 stateless protocol
+<ul>
+<li>每一筆從瀏覽器發出的 request 對伺服器來說都是互無關係的</li>
+<li>可將 request 理解為銀行客戶，而伺服器是完全臉盲的行員；不管客戶來幾次，該行員就是無法主動認出「啊，這是我的客戶」，只要客戶離開櫃台，行員就會完全忘記該客戶是誰</li>
+</ul>
+</li>
+<li>Stateless Protocol 的優點：
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Stateless_protocol">Wikipedia</a>: Stateless protocols improve the properties of visibility, reliability, and scalability.</li>
+<li>Visibility is improved because a monitoring system does not have to look beyond a single request in order to determine its full nature. 不須處理上下文</li>
+<li>Reliability is improved because it eases the task of recovering from partial failures. 若有錯誤發生，只需要復原出錯的部分即可</li>
+<li>Scalability is improved because not having to store session state between requests allows the server to quickly free resources and further simplifies implementation. 不須額外效能來記憶狀態</li>
+</ul>
+</li>
+<li>問題：如果今天要打造一個「能維持使用者登入狀態」的 Web APP，勢必需要其他技術協助</li>
+</ul>
+<h3 id="關於-sessions">關於 sessions</h3>
+<ul>
+<li>
+<p>sessions<strong>不是</strong>Chrome DevTools 打開來切換到 Application 分頁看到的 session storage</p>
+</li>
+<li>
+<p>sessions 儲存在伺服器端，不存在使用者的瀏覽器中</p>
+<ul>
+<li>而 sessions 實際究竟儲存在 Express.js 伺服器的「哪裡」則是根據開發者的設定決定</li>
+<li>參考「<a href="https://stackoverflow.com/questions/23821302/where-does-express-js-save-session-details">Where does express js save session details?</a>」，在沒有任何設定的情況下，Express.js 伺服器會把 sessions 儲存在 RAM 中，所以重啟伺服器後，已登入的使用者也會被踢回登入畫面</li>
+<li>而如果把 sessions 保存在 Redis 或 MongoDB 等資料庫裡面的話，重啟 Web APP 的伺服器也不會失去 sessions 資料，已登入的使用者會繼續維持登入狀態</li>
+</ul>
+</li>
+<li>
+<p><a href="https://github.com/expressjs/session#express-session">express-session</a></p>
+<ul>
+<li>參考「<a href="https://mianlabs.com/2018/05/09/understanding-sessions-and-local-authentication-in-express-with-passport-and-mongodb/">Understanding Sessions and Local Authentication in Express with Passport and MongoDb</a>」</li>
+<li>An <strong>Express.js middleware</strong> used for <strong>persisting sessions across stateless HTTP requests</strong>.</li>
+<li>Sessions are used for <strong>storing data about a user</strong> and presenting dynamic data based on a user’s identity. They rely upon <strong>saving session data to a cookie</strong> that is sent to the user’s browser and then received back in future user requests.</li>
+<li>This module expands the Express.js <code>request</code> object with the <code>session</code> property (among other things), which itself is an object that can be used by other middleware.</li>
+<li>By default it uses a <code>MemoryStore</code>, an in-memory key-value database not intended for production use, to store the session data. But you can and should plug in another memory store middleware when deploying a serious product.</li>
+</ul>
+</li>
+</ul>
+<h3 id="關於-cookies">關於 cookies</h3>
+<ul>
+<li>保存在使用者的瀏覽器中，開啟 Chrome 瀏覽器的 DevTools 切換到 Application 分頁，即可看到 cookies</li>
+<li>cookies 內容是可以隨意被使用者修改的（儘管修改 cookie 極可能讓該 cookie 直接失效）</li>
+<li>cookies 夾帶在瀏覽器對伺服器發出的 request header 中
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#creating_cookies">MDN</a>: After receiving an HTTP request, a server can send one or more <strong>Set-Cookie headers</strong> with the response. The cookie is usually stored by the browser, and then the cookie is sent with requests made to the same server inside a <strong>Cookie HTTP header</strong>.</li>
+<li>An <strong>expiration date or duration can be specified</strong>, after which the cookie is no longer sent. cookies 是可以設定有效期限的</li>
+<li>Additional restrictions to a specific domain and path can be set, <strong>limiting where the cookie is sent</strong>. 可以限制 cookies 僅能被送到哪些 domain 或 path</li>
+</ul>
+</li>
+</ul>
+<h2 id="實作">實作</h2>
+<h3 id="產出-sessions">產出 sessions</h3>
+<script src="https://gist.github.com/tzynwang/e4f818e749c6215ad3a205686fd336f6.js"></script>
+<ul>
+<li>第 8 行：根據使用者輸入的 email，從資料庫中取出相對應的使用者資料來比對密碼</li>
+<li>第 16 行：將<code>user.id</code>的值賦予<code>req.session.passport.user</code>
+<ul>
+<li><a href="https://github.com/jwalton/passport-api-docs#passportserializeuserfnuser-done--fnreq-user-done">passport.serializeUser(fn(user, done) | fn(req, user, done))</a>: Passport will call this to serialize the user to the session whenever you login a user with <code>req.login()</code>, or whenever a user is authenticated via <code>passport.authenticate()</code>. The function you pass in should call <code>done(null, serializedUser)</code>.</li>
+<li>What this is going to do is set <code>req.session.passport.user = serializedUser</code>. Traditionally you’d make <code>serializedUser</code> some sort of string, like a user ID which you can fetch from your DB.</li>
+<li><a href="http://toon.io/understanding-passportjs-authentication-flow/">Understanding passport.js authentication flow</a>: <code>passport.serializeUser</code> can access the user object we passed back to the middleware. Its job is to determine <strong>what data from the user object should be stored in the session</strong>. The result of the serializeUser method is attached to the session as <code>req.session.passport.user = { // our serialized user object // }</code>. The result is also attached to the request as <code>req.user</code>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="保存-sessions-至資料庫中">保存 sessions 至資料庫中</h3>
+<script src="https://gist.github.com/tzynwang/8856fbc612447732fea60e63ab053351.js"></script>
+<p>使用測試帳號登入後，即可在資料庫中看到 sessions 被保存下來：</p>
+<p><img src="/2021/express-login-remember-me/sessionsInDB.png" alt="session in DB"></p>
+<p>因 sessions 被另外保存到資料庫中，日後即使 Web APP 的伺服器重啟，也不會遺失使用者的登入狀態</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://github.com/jwalton/passport-api-docs#passport-the-hidden-manual">Passport: The Hidden Manual</a></li>
+<li>StackOverFlow
+<ul>
+<li><a href="https://stackoverflow.com/questions/3804209/what-are-sessions-how-do-they-work">What are sessions? How do they work?</a></li>
+<li><a href="https://stackoverflow.com/questions/6253633/cookies-vs-sessions">Cookies vs. sessions</a></li>
+<li><a href="https://stackoverflow.com/questions/359434/differences-between-cookies-and-sessions?noredirect=1&#x26;lq=1">Differences between cookies and sessions?</a></li>
+</ul>
+</li>
+<li>Blogs
+<ul>
+<li><a href="https://lucidar.me/en/web-dev/sessions-or-cookies/">Sessions or cookies?</a></li>
+<li><a href="https://mianlabs.com/2018/05/09/understanding-sessions-and-local-authentication-in-express-with-passport-and-mongodb/">Understanding Sessions and Local Authentication in Express with Passport and MongoDb</a></li>
+</ul>
+</li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>TypeScript 觀摩筆記：React.PropsWithChildren 與 React.FC</title>
+    <meta name="title" content="TypeScript 觀摩筆記：React.PropsWithChildren 與 React.FC">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-component-props-children/">
+    <meta property="og:title" content="TypeScript 觀摩筆記：React.PropsWithChildren 與 React.FC">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-component-props-children/">
+    <meta property="twitter:title" content="TypeScript 觀摩筆記：React.PropsWithChildren 與 React.FC">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">TypeScript 觀摩筆記：React.PropsWithChildren 與 React.FC</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-09-09 20:22</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span><span class="astro-2IYMVI75">
+  TypeScript
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#reactpropswithchildren" class="astro-QTOKGA5Y">React.PropsWithChildren</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#reactfc" class="astro-QTOKGA5Y">React.FC</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在準備鐵人賽寫作時觀摩了一些 component libs 以及各路前輩的原始碼，發現除了直接在元件 props interface 中列出 <code>children: React.ReactNode</code> 外，Type definitions for React 17.0 提供了另外兩種「當元件包含 children 時」的型別定義寫法：<code>React.FC&#x3C;T></code> 與 <code>React.PropsWithChildren&#x3C;T></code></p>
+<iframe src="https://codesandbox.io/embed/react-propswithchildren-60j1vv?fontsize=14&#x26;hidenavigation=1&#x26;theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="React.PropsWithChildren" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+<h2 id="筆記">筆記</h2>
+<h3 id="reactpropswithchildren">React.PropsWithChildren<t></t></h3>
+<p><code>children</code> 由 <code>React.PropsWithChildren</code> 提供（且定義為 optional），children 以外的型別定義內容直接傳入 <code>T</code> 即可</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> React, { memo } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'react'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">type</span><span style="color: #E1E4E8"> { Property } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'csstype'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">type</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">BaseButton</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">color</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Property</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">Color</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">} </span><span style="color: #F97583">&#x26;</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">ButtonHTMLAttributes</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">HTMLButtonElement</span><span style="color: #E1E4E8">>;</span></span>
+<span class="line"><span style="color: #F97583">type</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">ButtonProps</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">PropsWithChildren</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">BaseButton</span><span style="color: #E1E4E8">>;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Button</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">props</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">ButtonProps</span><span style="color: #E1E4E8">)</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">ReactElement</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/* States */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> { </span><span style="color: #79B8FF">color</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">children</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">type</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'button'</span><span style="color: #E1E4E8">, </span><span style="color: #F97583">...</span><span style="color: #79B8FF">rest</span><span style="color: #E1E4E8"> } </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> props;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/* Main */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;</span><span style="color: #85E89D">button</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">style</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{{ color }} </span><span style="color: #B392F0">type</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{type} {</span><span style="color: #F97583">...</span><span style="color: #E1E4E8">rest}></span></span>
+<span class="line"><span style="color: #E1E4E8">      {children}</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;/</span><span style="color: #85E89D">button</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  );</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">default</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">memo</span><span style="color: #E1E4E8">(Button);</span></span></code></pre>
+<h3 id="reactfc">React.FC<t></t></h3>
+<p>參考 DefinitelyTyped 的型別定義文件可得知 <code>type FC&#x3C;P = {}> = FunctionComponent&#x3C;P></code>，兩者可互換</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> React </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'react'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">type</span><span style="color: #E1E4E8"> { Property } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'csstype'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">type</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">ButtonProps</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">color</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Property</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">Color</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">} </span><span style="color: #F97583">&#x26;</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">ButtonHTMLAttributes</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">HTMLButtonElement</span><span style="color: #E1E4E8">>;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Button</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">FC</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">ButtonProps</span><span style="color: #E1E4E8">> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> (</span><span style="color: #FFAB70">props</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">ButtonProps</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/* States */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> { </span><span style="color: #79B8FF">color</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">type</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'button'</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">children</span><span style="color: #E1E4E8">, </span><span style="color: #F97583">...</span><span style="color: #79B8FF">rest</span><span style="color: #E1E4E8"> } </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> props;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/* Main */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;</span><span style="color: #85E89D">button</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">style</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{{ color }} </span><span style="color: #B392F0">type</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{type} {</span><span style="color: #F97583">...</span><span style="color: #E1E4E8">rest}></span></span>
+<span class="line"><span style="color: #E1E4E8">      {children}</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;/</span><span style="color: #85E89D">button</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  );</span></span>
+<span class="line"><span style="color: #E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">default</span><span style="color: #E1E4E8"> Button;</span></span></code></pre>
+<p>注意事項：</p>
+<ul>
+<li>無法使用 declaration 的形式來宣告元件</li>
+<li>無法傳入 generic type（參考 <a href="https://github.com/facebook/create-react-app/pull/8177">Remove React.FC from Typescript template #8177</a>）</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://github.com/DefinitelyTyped/DefinitelyTyped/blob/d076add9f29db350a19bd94c37b197729cc02f87/types/react/index.d.ts">DefinitelyTyped/types/react/index.d.ts</a></li>
+<li><a href="https://stackoverflow.com/questions/59988667/typescript-react-fcprops-confusion">stackOverFlow: TypeScript React.FC<props> confusion</props></a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

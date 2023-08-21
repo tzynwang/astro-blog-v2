@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>閱讀筆記：The Programmer&#39;s Brain Chapter 9 Avoiding bad code and cognitive load -- Two frameworks</title>
+    <meta name="title" content="閱讀筆記：The Programmer's Brain Chapter 9 Avoiding bad code and cognitive load -- Two frameworks">
+    <meta name="description" content="本書認為程式碼引起困惑的理由主要可分為「結構不良」與「命名不良」兩大類型。">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/the-programmers-brain-ch9-avoiding-bad-code-and-cognitive-load/">
+    <meta property="og:title" content="閱讀筆記：The Programmer's Brain Chapter 9 Avoiding bad code and cognitive load -- Two frameworks">
+    <meta property="og:description" content="本書認為程式碼引起困惑的理由主要可分為「結構不良」與「命名不良」兩大類型。">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/the-programmers-brain-ch9-avoiding-bad-code-and-cognitive-load/">
+    <meta property="twitter:title" content="閱讀筆記：The Programmer's Brain Chapter 9 Avoiding bad code and cognitive load -- Two frameworks">
+    <meta property="twitter:description" content="本書認為程式碼引起困惑的理由主要可分為「結構不良」與「命名不良」兩大類型。">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">閱讀筆記：The Programmer&#39;s Brain Chapter 9 Avoiding bad code and cognitive load -- Two frameworks</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-08-17 19:52</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  General
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#不良結構的影響" class="astro-QTOKGA5Y">不良結構的影響</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#不良名稱的影響" class="astro-QTOKGA5Y">不良名稱的影響</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>此篇文章是 Good Code, Bad Code: Think like a software engineer 第九章（Avoiding bad code and cognitive load）的閱讀筆記。</p>
+<p>本書認為程式碼引起困惑的理由主要可分為以下兩種：</p>
+<ol>
+<li>結構不良（structural anti-pattern）引起的困惑，比如一段程式碼太長，進而導致理解不易</li>
+<li>命名不良（conceptual anti-pattern, linguistic anti-pattern）引起的困惑，比如一個功能的名稱與其實際執行後產生的結果不符（多做、少做、或做了跟命名比起來根本相反的事情）</li>
+</ol>
+<p>此章節並沒有提供處理程式碼引起困惑的手段（重構方法），而是在講解<strong>為何不良的結構或命名會造成認知負荷（cognitive load）</strong>。</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="不良結構的影響">不良結構的影響</h3>
+<p>因為工作記憶（working memory）的容量僅有 4 到 6 槽（slot）的容量，過長的 parameter list 或是 switch statement 會讓讀者很難記住一整段程式碼到底負責了多少內容。</p>
+<blockquote>
+<p>Knowing what we know about the working memory, we can understand why long parameter lists and complex switch statements are hard to read: both smells are related to an <strong>overloaded working memory</strong>.</p>
+</blockquote>
+<p>太冗長的功能（比如超過 10 行，且也沒有透過註解或排版進行分段的功能）會讓讀者無法有效進行分塊（chunking），這讓讀者必須花費時間把所有的程式碼都讀完，才能得知自己需要的訊息。如果一大段功能可以被有效拆解、命名為數個有意義的小功能，讀者可以靠這些小功能的名稱來快速理解這些程式碼想要完成的任務。</p>
+<blockquote>
+<p>A benefit of dividing functionality over separate functions, classes, and methods is that <strong>their names serve as documentation</strong>. …This is why code smells related to large blocks of code, including God classes and long methods, are harmful: <strong>there are not enough defining characteristics to quickly comprehend the code</strong>, and we have to fall back on reading code line by line.</p>
+</blockquote>
+<p>而如果兩個不同的功能包含大量重複、僅在細節有一點點差距的內容，這會讓讀者在第一眼產生錯誤的分塊，容易產生誤會。以下圖為例，兩個功能僅差在最後回傳的內容是 <code>j++</code> 或是 <code>j+2</code> ，沒有細看的讀者可能會以為 <code>foo</code> 與 <code>goo</code> 是「只有名稱不同的同一種功能」。而這個誤解可能會持續很長一段時間才會被發現。</p>
+<p><img src="/2023/the-programmers-brain-ch9-avoiding-bad-code-and-cognitive-load/figure_9-2.png" alt="code clone"></p>
+<blockquote>
+<p>We have saw earlier in this book that such <strong>misconceptions can linger in your mind for a long time</strong>. You might need several exposures to the fact that <code>goo</code> is not the same as <code>foo</code> to really realize your mistake.</p>
+</blockquote>
+<h3 id="不良名稱的影響">不良名稱的影響</h3>
+<p>一個功能的名稱如果與其實際的效果有所出入，即代表這個不良命名提供給讀者的其實是錯誤的訊息。且人類會根據名稱來搜尋長期記憶中是否有類似的資訊可以協助理解目前正在閱讀的內容，而錯誤的名稱會讓搜尋結果無助於理解眼前的事物。</p>
+<p>誤導性的名稱也會讓讀者對一段程式碼進行錯誤的分塊。</p>
+<blockquote>
+<p>When reading a conflicting name, <strong>the wrong information will be presented to you</strong>. …your LTM finds wrong facts while trying to support your thinking. Linguistic anti-pattern can also lead to wrong chunking because your brain assumes a meaning of code that is not actually implemented.</p>
+</blockquote>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.manning.com/books/the-programmers-brain">Manning: The Programmer’s Brain</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

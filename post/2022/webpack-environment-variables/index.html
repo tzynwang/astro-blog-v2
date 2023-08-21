@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第15週 學習筆記：從零開始透過 webpack.config 讀取環境變數</title>
+    <meta name="title" content="2022 第15週 學習筆記：從零開始透過 webpack.config 讀取環境變數">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/webpack-environment-variables/">
+    <meta property="og:title" content="2022 第15週 學習筆記：從零開始透過 webpack.config 讀取環境變數">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/webpack-environment-variables/">
+    <meta property="twitter:title" content="2022 第15週 學習筆記：從零開始透過 webpack.config 讀取環境變數">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第15週 學習筆記：從零開始透過 webpack.config 讀取環境變數</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-04-13 19:21</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  webpack
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#環境建置" class="astro-QTOKGA5Y">環境建置</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#babel-設定" class="astro-QTOKGA5Y">babel 設定</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#webpackconfig-設定" class="astro-QTOKGA5Y">webpack.config 設定</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#webpackdefineplugin-與-jsonstringify" class="astro-QTOKGA5Y">webpack.DefinePlugin 與 JSON.stringify</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>發現自己並沒有完全弄清楚 create-react-app 提供的 webpack.config 究竟在<strong>前端專案讀取環境變數</strong>一事中提供了哪些協助，故此篇筆記旨在記錄如何從零開始實作「在前端專案讀取 <code>.env</code> 檔案中的環境變數」此需求</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="環境建置">環境建置</h3>
+<ul>
+<li>安裝完 <code>react</code> 與 <code>react-dom</code> 後，加裝以下輔助工具：
+<ul>
+<li>提供型別定義與檢查：<code>typescript</code>, <code>@types/react</code>, <code>@types/react-dom</code></li>
+<li>將 ts(x) 檔案編譯為瀏覽器可以讀取的 <code>.js</code> 檔案：<code>webpack</code>, <code>webpack-cli</code>, <code>html-webpack-plugin</code></li>
+<li>使用 webpack 的 devServer：<code>webpack-dev-server</code></li>
+<li>輔助 webpack 進行編譯的工具：<code>babel-loader</code>, <code>@babel/core</code>, <code>@babel/preset-env</code>, <code>@babel/preset-react</code>, <code>@babel/preset-typescript</code></li>
+<li>方便讀取 <code>.env</code> 檔案：<code>dotenv</code></li>
+</ul>
+</li>
+<li>因 <code>webpack.config.js</code> 沒有直接放置在根目錄下，而是放在 <code>./config</code> 資料夾中，故透過 <code>npm run dev</code> 啟動 webpack 時需加上 <code>--config config/webpack.config.js</code> 來指定檔案路徑</li>
+</ul>
+<script src="https://gist.github.com/tzynwang/53bb9ecb5c26ecf815f0cebd7e5b6065.js"></script>
+<h3 id="babel-設定">babel 設定</h3>
+<script src="https://gist.github.com/tzynwang/0291449fa4efd6985b2e69f4bce2ad0b.js"></script>
+<h3 id="webpackconfig-設定">webpack.config 設定</h3>
+<script src="https://gist.github.com/tzynwang/ecf56bc9e3f77d82381a04c16b73275e.js"></script>
+<ul>
+<li>第 7 行：透過 <code>dotenv</code> 讀取位於資料夾根目錄的 <code>.env</code> 內容</li>
+<li>第 12~23 行：將 .tsx 檔案透過 babel-loader 編譯為 .js 檔案</li>
+<li>第 25 行：透過 <code>webpack.DefinePlugin</code> 來置換 <code>process.env</code> 內容
+<ul>
+<li>亦即當開發者試圖在 React 元件中讀取 <code>process.env</code> 時，實際上讀取到的其實是被 <code>webpack.DefinePlugin</code> 替換（replace）後的資料</li>
+<li>沒有加上此步驟，而是直接在 React 元件中試圖取得 <code>process.env</code> 時，會報錯：<code>Uncaught ReferenceError: process is not defined</code></li>
+<li>理由：如錯誤訊息所示，前端（瀏覽器）環境中並沒有 <code>process</code> 這個物件
+<blockquote>
+<p>You can’t use the process.env global variable Node provides (to get access to the variables created inside the .env file) in the browser.</p>
+</blockquote>
+</li>
+<li>執行 <code>JSON.stringify(env)</code> 是為了避免在前端讀取字串類型的 <code>process.env</code> 資料時出錯；可參考下一大段 gist 範例
+<blockquote>
+<p>Note that because the plugin does a direct text replacement, the value given to it must include actual quotes inside of the string itself. Typically, this is done either with either alternate quotes, such as ‘“production”’, or by using JSON.stringify(‘production’).</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>第 26~28 行：使用 <code>public/index.html</code> 作為 React App 的 template</li>
+<li>第 30~33 行：使用 webpack 的 devServer</li>
+<li>第 34~37 行：指定打包後的輸出路徑與檔案名稱</li>
+<li>完成，已經可以直接在 React 元件中透過 <code>process.env</code> 讀取到 <code>.env</code> 中的內容了</li>
+</ul>
+<h3 id="webpackdefineplugin-與-jsonstringify">webpack.DefinePlugin 與 JSON.stringify</h3>
+<script src="https://gist.github.com/tzynwang/e733716554303e8de9e8faa16a7be758.js"></script>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://trekinbami.medium.com/using-environment-variables-in-react-6b0a99d83cf5">Using environment variables in React</a></li>
+<li><a href="https://dev.to/henriqueinonhe/frontend-environment-variables-what-why-and-how-1c1">Frontend Environment Variables – What, Why and How</a></li>
+<li><a href="https://www.freecodecamp.org/news/how-to-use-environment-variables-in-vanillajs/">How to Use Environment Variables in VanillaJS</a></li>
+<li><a href="https://stackoverflow.com/questions/30239060/uncaught-referenceerror-process-is-not-defined">Uncaught ReferenceError: process is not defined</a></li>
+<li><a href="https://stackoverflow.com/questions/39564802/why-does-webpacks-defineplugin-require-us-to-wrap-everything-in-json-stringify">Why does Webpack’s DefinePlugin require us to wrap everything in JSON.stringify?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

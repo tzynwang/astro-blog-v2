@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第4週 實作筆記：React App 與 webpack</title>
+    <meta name="title" content="2022 第4週 實作筆記：React App 與 webpack">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-webpack-config/">
+    <meta property="og:title" content="2022 第4週 實作筆記：React App 與 webpack">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-webpack-config/">
+    <meta property="twitter:title" content="2022 第4週 實作筆記：React App 與 webpack">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第4週 實作筆記：React App 與 webpack</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-01-28 20:22</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span><span class="astro-2IYMVI75">
+  TypeScript
+</span><span class="astro-2IYMVI75">
+  webpack
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#packages" class="astro-QTOKGA5Y">packages</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#自定義-import-path" class="astro-QTOKGA5Y">自定義 import path</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#hot-reload" class="astro-QTOKGA5Y">hot reload</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#packagejson-script-設定" class="astro-QTOKGA5Y">package.json script 設定</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#原始碼" class="astro-QTOKGA5Y">原始碼</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>記錄如何在 React App 中使用 webpack 5 達成以下需求：</p>
+<ul>
+<li>配合 <code>typescript</code></li>
+<li>可使用閱讀性較高的自定義 <code>import path</code></li>
+<li>支援 hot reload：修改 React App 內容並存檔後，需直接反應在 <code>localhost</code> 畫面上</li>
+</ul>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">webpack: 5.67.0</span></span>
+<span class="line"><span style="color: #e1e4e8">webpack-cli: 4.9.2</span></span>
+<span class="line"><span style="color: #e1e4e8">webpack-dev-server: 4.7.3</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="packages">packages</h3>
+<p><code>npm i --save-dev @babel/core @babel/plugin-proposal-class-properties @babel/preset-env @babel/preset-react @babel/preset-typescript babel-loader css-loader html-webpack-plugin webpack webpack-cli webpack-dev-server</code></p>
+<h3 id="自定義-import-path">自定義 import path</h3>
+<p>有兩處需處理，參考原始碼 <code>webpack.config.js</code> （38 行）與 <code>tsconfig.json</code>（3~6 行）
+實作後即可在 <code>src</code> 資料夾中的任何檔案內使用 <code>@Component/</code> 直接引用任何位在 <code>src/components/</code> 內的元件，不再需要考慮資料夾的相對位置；範例如下：</p>
+<script src="https://gist.github.com/tzynwang/d4b70145dbac5aeb09ee5624a3a1d26e.js"></script>
+<h3 id="hot-reload">hot reload</h3>
+<p>參考 <code>webpack.config.js</code> （10-12 行）</p>
+<h3 id="packagejson-script-設定">package.json script 設定</h3>
+<p>如下，指定 <code>webpack.config.js</code> 路徑；之後直接在終端輸入 <code>npm run dev</code> 即可啟動 React App，並支援 hot reload</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #9ECBFF">"dev"</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">"webpack serve --config config/webpack.config.js"</span></span></code></pre>
+<h2 id="原始碼">原始碼</h2>
+<script src="https://gist.github.com/tzynwang/9b0424e60e77adcba5c363df7747c47a.js"></script>
+<script src="https://gist.github.com/tzynwang/d3bc04f7a854f7844b8e9f2338c24e46.js"></script>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.freecodecamp.org/news/learn-webpack-for-react-a36d4cac5060/">How to use Webpack with React: an in-depth tutorial</a></li>
+<li><a href="https://www.typescriptlang.org/tsconfig#paths">TSConfig Reference: Paths</a></li>
+<li><a href="https://webpack.js.org/loaders/css-loader/">webpack: css-loader</a></li>
+<li><a href="https://webpack.js.org/configuration/resolve/#resolvealias">webpack: resolve.alias</a></li>
+<li><a href="https://webpack.js.org/configuration/dev-server/#devserverhot">webpack: devServer.hot</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

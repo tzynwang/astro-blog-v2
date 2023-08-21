@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第43週 學習筆記：.gitlab-ci.yml</title>
+    <meta name="title" content="2022 第43週 學習筆記：.gitlab-ci.yml">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/gitlab-ci-yml-note/">
+    <meta property="og:title" content="2022 第43週 學習筆記：.gitlab-ci.yml">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/gitlab-ci-yml-note/">
+    <meta property="twitter:title" content="2022 第43週 學習筆記：.gitlab-ci.yml">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第43週 學習筆記：.gitlab-ci.yml</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-10-28 18:02</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  gitlab
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#關鍵字" class="astro-QTOKGA5Y">關鍵字</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#基礎語法" class="astro-QTOKGA5Y">基礎語法</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#其他常見關鍵字" class="astro-QTOKGA5Y">其他常見關鍵字</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>關於 <code>.gitlab-ci.yml</code> 基本語法與規則的自用筆記，以目前工作上有用到的內容為主。</p>
+<h2 id="筆記">筆記</h2>
+<blockquote>
+<p>大前提：檔案必定命名為 <code>.gitlab-ci.yml</code> 且放置在 repo 根目錄中</p>
+</blockquote>
+<h3 id="關鍵字">關鍵字</h3>
+<ul>
+<li><a href="https://docs.gitlab.com/runner/">GitLab Runner</a>: is an <strong>application</strong> that works with GitLab CI/CD to <strong>run jobs in a pipeline</strong>.</li>
+<li><a href="https://docs.gitlab.com/ee/ci/pipelines/">CI/CD Pipelines</a>: are the top-level component of continuous integration, delivery, and deployment. Pipelines comprise:
+<ul>
+<li>Jobs, which define <strong>what to do</strong>. For example, jobs that compile or test code.</li>
+<li>Stages, which define <strong>when to run the jobs</strong>. For example, stages that run tests after stages that compile the code.</li>
+</ul>
+</li>
+<li><a href="https://docs.gitlab.com/ee/ci/jobs/">Jobs</a>: Pipeline configuration begins with jobs. Jobs are the most fundamental element of a <code>.gitlab-ci.yml</code> file.</li>
+</ul>
+<h3 id="基礎語法">基礎語法</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #85E89D">stages</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  - </span><span style="color: #9ECBFF">build</span></span>
+<span class="line"><span style="color: #E1E4E8">  - </span><span style="color: #9ECBFF">test</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #85E89D">build-code-job</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">stage</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">build</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    - </span><span style="color: #9ECBFF">echo "Check the ruby version, then build some Ruby project files:"</span></span>
+<span class="line"><span style="color: #E1E4E8">    - </span><span style="color: #9ECBFF">ruby -v</span></span>
+<span class="line"><span style="color: #E1E4E8">    - </span><span style="color: #9ECBFF">rake</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #85E89D">test-code-job1</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">stage</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">test</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    - </span><span style="color: #9ECBFF">echo "If the files are built successfully, test some files with one command:"</span></span>
+<span class="line"><span style="color: #E1E4E8">    - </span><span style="color: #9ECBFF">rake test1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #85E89D">test-code-job2</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">stage</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">test</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    - </span><span style="color: #9ECBFF">echo "If the files are built successfully, test other files with a different command:"</span></span>
+<span class="line"><span style="color: #E1E4E8">    - </span><span style="color: #9ECBFF">rake test2</span></span></code></pre>
+<ul>
+<li>stages: 定義好的 stage 會從上到下依序發生</li>
+<li>jobs: 範例中的 <code>build-code-job</code>、<code>test-code-job1</code> 與 <code>test-code-job2</code>
+<ul>
+<li>會先執行設定在 <code>stage: build</code> 的 <code>build-code-job</code>，如果此 job 順利結束，則 <code>stage test</code> 中的 <code>test-code-job1</code> 與 <code>test-code-job2</code> 會同時開始執行（沒有先後之分）</li>
+</ul>
+</li>
+<li>script: 在此區塊設定要在 runner 中執行的指令</li>
+</ul>
+<h3 id="其他常見關鍵字">其他常見關鍵字</h3>
+<p><a href="https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html">artifacts</a>: Jobs can output an archive of files and directories. This output is known as a job artifact. They are available for download in the GitLab UI if the size is smaller than the the maximum artifact size. By default, jobs in later stages <strong>automatically download all the artifacts created by jobs in earlier stages</strong>.</p>
+<p>簡單來說就是 gitlab-ci 的檔案機制，且後發的 jobs 預設會下載先行 jobs 產生的 artifacts
+下方範例翻成白話文即是：在 job pdf 中，透過指令 <code>xelatex mycv.tex</code> 產生 pdf 檔案，並產生出來的檔案 <code>mycv.pdf</code> 一週後過期</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #85E89D">pdf</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">xelatex mycv.tex</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">artifacts</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #85E89D">paths</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">      - </span><span style="color: #9ECBFF">mycv.pdf</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #85E89D">expire_in</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">1 week</span></span></code></pre>
+<p>dependencies: 指定 artifacts 來源</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #85E89D">build osx</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">stage</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">build</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">make build:osx</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">artifacts</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #85E89D">paths</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">      - </span><span style="color: #9ECBFF">binaries/</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #85E89D">build linux</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">stage</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">build</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">make build:linux</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">artifacts</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #85E89D">paths</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">      - </span><span style="color: #9ECBFF">binaries/</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #85E89D">test osx</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">stage</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">test</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">make test:osx</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">dependencies</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    - </span><span style="color: #9ECBFF">build osx</span><span style="color: #E1E4E8"> </span><span style="color: #6A737D"># 在這個 job 取用 build osx 產生的檔案</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #85E89D">test linux</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">stage</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">test</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">make test:linux</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">dependencies</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    - </span><span style="color: #9ECBFF">build linux</span><span style="color: #E1E4E8"> </span><span style="color: #6A737D"># 在這個 job 取用 build linux 產生的檔案</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #85E89D">deploy</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">stage</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">deploy</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">make deploy</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">environment</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">production</span></span></code></pre>
+<p>extends: 功能如關鍵字本身的描述，可在此定義可複用的內容，並讓其他 jobs 引用</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D"># 以下這個組合</span></span>
+<span class="line"><span style="color: #85E89D">.tests</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">rake test</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">stage</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">test</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">only</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #85E89D">refs</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">      - </span><span style="color: #9ECBFF">branches</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #85E89D">rspec</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">extends</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">.tests</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">rake rspec</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">only</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #85E89D">variables</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">      - </span><span style="color: #9ECBFF">$RSPEC</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D"># 最終的結果等同於</span></span>
+<span class="line"><span style="color: #85E89D">rspec</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">rake rspec</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">stage</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">test</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">only</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #85E89D">refs</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">      - </span><span style="color: #9ECBFF">branches</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #85E89D">variables</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">      - </span><span style="color: #9ECBFF">$RSPEC</span></span></code></pre>
+<p>image: 指定 jobs 的執行環境，注意僅能在 <code>default</code> 或 <code>job</code> 中指名要使用的 Docker image</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #85E89D">default</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">image</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">ruby:3.0</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #85E89D">rspec</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">bundle exec rspec</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #85E89D">rspec 2.7</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">image</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">registry.example.com/my-group/my-project/ruby:2.7</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">bundle exec rspec</span></span></code></pre>
+<p>variables: 定義在 <code>.gitlab-ci.yml</code> 最上方為全域變數，定義在 jobs 中則只有該 job 可以使用</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #85E89D">variables</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">TEST_VAR</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">"All jobs can use this variable's value"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #85E89D">job1</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">variables</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #85E89D">TEST_VAR_JOB</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">"Only job1 can use this variable's value"</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">script</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    - </span><span style="color: #9ECBFF">echo "$TEST_VAR" and "$TEST_VAR_JOB"</span></span></code></pre>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://docs.gitlab.com/ee/ci/yaml/gitlab_ci_yaml.html">GitLab Docs: The .gitlab-ci.yml file</a></li>
+<li><a href="https://docs.gitlab.com/ee/ci/yaml/">GitLab Docs: .gitlab-ci.yml keyword reference</a></li>
+<li><a href="https://youtu.be/qP8kir2GUgo">YouTube: GitLab CI CD Tutorial for Beginners [Crash Course]</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

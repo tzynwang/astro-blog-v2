@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>Git workflow</title>
+    <meta name="title" content="Git workflow">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/git-workflow/">
+    <meta property="og:title" content="Git workflow">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/git-workflow/">
+    <meta property="twitter:title" content="Git workflow">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">Git workflow</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-02-19 11:03</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  git
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#summary-of-this-post" class="astro-QTOKGA5Y">Summary of this post</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#environment" class="astro-QTOKGA5Y">Environment</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#workflow-git-clone-first" class="astro-QTOKGA5Y">Workflow: git clone first</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#workflow-local-work-first" class="astro-QTOKGA5Y">Workflow: local work first</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#reference" class="astro-QTOKGA5Y">Reference</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="summary-of-this-post">Summary of this post</h2>
+<p>A note for 2 types of the git workflow:</p>
+<ol>
+<li>Create a GitHub repository first, then clone it to local to work</li>
+<li>Work on local first, then create a GitHub repository to push local work to it</li>
+</ol>
+<p>先<code>git clone</code>一個空的 repository 再開始本機作業會省事一點。</p>
+<h2 id="environment">Environment</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">git: 2.30.0.windows.2</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="workflow-git-clone-first">Workflow: git clone first</h2>
+<ol>
+<li>Create a repository on GitHub</li>
+<li>Copy the repository URL <code>https://github.com/&#x3C;username>/&#x3C;repository-name>.git</code></li>
+<li>Launch cmd.exe, move to the preferred location, run <code>git clone &#x3C;repository URL></code></li>
+<li>Move to the folder by <code>cd &#x3C;repository-name></code></li>
+<li>Complete the work in local folder, run <code>git add .</code> and <code>git commit</code></li>
+<li>Run <code>git push</code> to push the local work to the GitHub repository</li>
+</ol>
+<p>Note: no need to config the <code>remote</code> and <code>branch</code> manually, <code>git clone</code> will take care these.
+先<code>git clone</code>一個空的 repository 可以省略手動設定 remote 跟 branch 的步驟。</p>
+<h2 id="workflow-local-work-first">Workflow: local work first</h2>
+<ol>
+<li>Complete the work locally</li>
+<li>Create a repository on GitHub</li>
+<li>Run <code>git init</code> in the local working folder</li>
+<li>Run the following command to add remote URL: <code>git remote add &#x3C;short-name-for-repository> &#x3C;url-for-repository></code>
+For example: <code>git remote add origin https://github.com/tzynwang/hello.git</code></li>
+<li>Run <code>git add .</code> and <code>git commit</code></li>
+<li>Run <code>git push --set-upstream origin master</code> to push local content to GitHub repository</li>
+</ol>
+<p>Note: need to config <code>git remote</code> and <code>git push --set-upstream</code> manually
+如果先在本機執行作業前沒有先<code>git clone</code>一個空的 repository，那麼<code>git init</code>後必須手動執行<code>git remote add</code>，第一次<code>git push</code>時也須加上<code>--set-upstream origin master</code></p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes">Git Basics - Working with Remotes</a></li>
+<li><a href="https://github.com/git-guides/git-remote">Git Guides: Git Remote</a></li>
+<li><a href="https://github.com/git-guides/git-push">Git Guides: Git Push</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

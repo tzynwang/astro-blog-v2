@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「Edit Files With Workspaces」相關筆記</title>
+    <meta name="title" content="「Edit Files With Workspaces」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/edit-files-with-workspaces/">
+    <meta property="og:title" content="「Edit Files With Workspaces」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/edit-files-with-workspaces/">
+    <meta property="twitter:title" content="「Edit Files With Workspaces」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「Edit Files With Workspaces」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-03-11 14:03</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  DevTools
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#流程與筆記" class="astro-QTOKGA5Y">流程與筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#注意事項" class="astro-QTOKGA5Y">注意事項</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>這篇文章是在處理 ALPHA Camp 學期 1 S3 A11 作業「試用開發者工具」時，嘗試搭配 DevTools，避免作業過程中意外重新整理網頁，造成作業進度遺失的問題。</p>
+<p>DevTools 確實可以解決上述問題。
+但為了要讓 DevTools 可以隨時儲存我的修改進度，需要先將作業範例檔案 git clone 回本機，然後再透過 DevTools 開啟作業資料夾，給予 DevTools 權限來記錄我對作業進行的修改。</p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">Google Chrome: 89.0.4389.82 (Official Build) (x86_64)</span></span>
+<span class="line"><span style="color: #e1e4e8">ox: macOS Big Suf Version 11.1</span></span></code></pre>
+<h2 id="流程與筆記">流程與筆記</h2>
+<ol>
+<li>
+<p>觀察 ALPHA Camp 提供的作業連結（<a href="https://alphacamp.github.io/css-facebook/">https://alphacamp.github.io/css-facebook/</a>），推測作業範例應該是用 GitHub Pages 發布的，嘗試搜尋「ALPHA Camp github」，運氣不錯，作業的 repo 是公開的</p>
+</li>
+<li>
+<p>把作業範例 git clone 回本機</p>
+</li>
+<li>
+<p>用 VSCode 開啟作業範例，使用 VSCode 的擴充套件「<a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer">Live Server</a>」讓 index.html 在 localhost:5500 動起來</p>
+</li>
+<li>
+<p>參考官方文件的說明（<a href="https://developers.google.com/web/tools/chrome-devtools/workspaces#devtools">「Set up DevTools」</a>），開啟 DevTools 後，點選功能分頁中的「Sources」</p>
+</li>
+<li>
+<p>進入子選項「Filesystem」，點選「+ Add folder to workspace」，選擇作業所在的資料夾
+備註：在流程第二步，我選擇將作業 clone 回桌面的 css-facebook 資料夾，故在這一步，我要在 DevTools 中選擇開啟位在桌面的 css-facebook 資料夾</p>
+</li>
+<li>
+<p>在 DevTools 跳出權限請求視窗時，選擇給予 DevTools 權限來修改本機檔案</p>
+</li>
+<li>
+<p>在沒有開錯資料夾、沒有出現其他問題的情況下，Filesystem 區域會出現資料夾 css-facebook，點開資料夾會看到 index.html 與 style.css 兩個檔案，並 style.css 的檔案圖示右下角會有綠點</p>
+<p><img src="/2021/edit-files-with-workspaces/file-mapping-success.png" alt="demo"></p>
+</li>
+<li>
+<p>綠點代表現在透過 DevTools 對網頁做的 CSS 更動都會儲存到 style.css 中，這樣即使改到一半重新整理網頁，先前的 CSS 修改也不會消失</p>
+</li>
+</ol>
+<h3 id="注意事項">注意事項</h3>
+<p>在 DevTools 的 Elements 標籤下修改的 HTML 內容不會被保存下來，想要保存對 HTML 的變更，請移動到 Sources 標籤去修改 index.html</p>
+<p><img src="/2021/edit-files-with-workspaces/why-it-isnt-saved.png" alt="demo"></p>
+<p>問：為什麼我在 Elements 修改網頁的內文不像修改 CSS 會被保存下來？
+答：因為在 Elements 標籤下做的修改都是改到 DOM，不是改到 HTML。
+瀏覽器取得 HTML 後，解析、並搭配 CSS 與 JS 來決定最後呈現給使用者看的內容會長什麼樣子，使用者看到、並用 Elements 操作（修改）的東西是 DOM。
+而這些 DOM 最終為什麼會以這些樣子呈現在網頁上，是綜合了 HTML、CSS 與 JS 互相搭配的結果，DevTools 很難知道它到底該把使用者對 DOM 做的修改內容記錄到 HTML、CSS 或是 JS 檔案中。</p>
+<p>更詳細的解說可參考：<a href="https://developers.google.com/web/tools/chrome-devtools/workspaces#why">Save an HTML change to disk: Why it doesn’t work</a></p>
+<h2 id="參考文件">參考文件</h2>
+<p><a href="https://developers.google.com/web/tools/chrome-devtools/workspaces">Edit Files With Workspaces</a></p>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

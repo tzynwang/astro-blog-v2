@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2021 第51週 學習記錄：實作複數條件搜尋</title>
+    <meta name="title" content="2021 第51週 學習記錄：實作複數條件搜尋">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/work-log-w51/">
+    <meta property="og:title" content="2021 第51週 學習記錄：實作複數條件搜尋">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/work-log-w51/">
+    <meta property="twitter:title" content="2021 第51週 學習記錄：實作複數條件搜尋">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2021 第51週 學習記錄：實作複數條件搜尋</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-12-25 16:01</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#情境描述" class="astro-QTOKGA5Y">情境描述</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#實作筆記" class="astro-QTOKGA5Y">實作筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#保存搜尋條件的資料結構" class="astro-QTOKGA5Y">保存搜尋條件的資料結構</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#debounce-化" class="astro-QTOKGA5Y">debounce 化</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#打-api-的時間點" class="astro-QTOKGA5Y">打 API 的時間點</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p><img src="/2021/work-log-w51/multiple-condition-search.png" alt="multiple condition search"></p>
+<p>本週筆記內容：使用物件結構來處理有複數種搜尋條件，而且須允許 debounce 的情境
+完整程式碼：<a href="https://github.com/tzynwang/react-mui/tree/feature/object-state">https://github.com/tzynwang/react-mui/tree/feature/object-state</a></p>
+<h2 id="情境描述">情境描述</h2>
+<ul>
+<li>測試用 API 支援以下三種有效搜尋條件：每一頁的顯示數量（results）、國籍（nat）與性別（gender）</li>
+<li>需使用 <code>debounce</code> 來避免搜尋連打的情境發生</li>
+</ul>
+<h2 id="實作筆記">實作筆記</h2>
+<h3 id="保存搜尋條件的資料結構">保存搜尋條件的資料結構</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">TABS</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Gender</span><span style="color: #E1E4E8">[] </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> [</span><span style="color: #9ECBFF">'female'</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'male'</span><span style="color: #E1E4E8">];</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">DEFAULT_PAGE</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">5</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">DATA_PER_PAGE</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> [</span><span style="color: #79B8FF">5</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">7</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">10</span><span style="color: #E1E4E8">];</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">CONDITION</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">QueryCondition</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  global: {</span></span>
+<span class="line"><span style="color: #E1E4E8">    results: </span><span style="color: #79B8FF">DEFAULT_PAGE</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    gender: </span><span style="color: #79B8FF">TABS</span><span style="color: #E1E4E8">[</span><span style="color: #79B8FF">0</span><span style="color: #E1E4E8">],</span></span>
+<span class="line"><span style="color: #E1E4E8">    nat: </span><span style="color: #9ECBFF">''</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  },</span></span>
+<span class="line"><span style="color: #E1E4E8">  local: {</span></span>
+<span class="line"><span style="color: #E1E4E8">    nat: </span><span style="color: #9ECBFF">''</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  },</span></span>
+<span class="line"><span style="color: #E1E4E8">};</span></span></code></pre>
+<ul>
+<li>分割成 <code>global</code> 與 <code>local</code> 兩種狀態，在 <code>muiTextField</code> 觸發 <code>onChange</code> 事件時僅會修改 <code>local</code> 部分的資料</li>
+<li>當使用者點擊不同 <code>MuiTab</code> 或修改每一頁顯示的資料數量時，直接修改 <code>global</code> 部分的資料</li>
+</ul>
+<h3 id="debounce-化">debounce 化</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">handleSearch</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> () </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">setQueryCondition</span><span style="color: #E1E4E8">((</span><span style="color: #FFAB70">prev</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> ({</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">...</span><span style="color: #E1E4E8">prev,</span></span>
+<span class="line"><span style="color: #E1E4E8">    global: {</span></span>
+<span class="line"><span style="color: #E1E4E8">      results: prev.global.results,</span></span>
+<span class="line"><span style="color: #E1E4E8">      gender: prev.global.gender,</span></span>
+<span class="line"><span style="color: #E1E4E8">      nat: queryCondition.local.nat,</span></span>
+<span class="line"><span style="color: #E1E4E8">    },</span></span>
+<span class="line"><span style="color: #E1E4E8">  }));</span></span>
+<span class="line"><span style="color: #E1E4E8">};</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">debouncedHandleSearch</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">debounce</span><span style="color: #E1E4E8">(handleSearch, </span><span style="color: #79B8FF">400</span><span style="color: #E1E4E8">);</span></span></code></pre>
+<ul>
+<li>上述原始碼白話文：只有要準備執行搜尋的時候，才將 <code>local.nat</code> 的值更新到 <code>global.nat</code> 上</li>
+<li>綁在搜尋按鈕 <code>onClick</code> 與 muiTextFiled <code>onKeyDown</code> 上的是 <code>debouncedHandleSearch</code></li>
+</ul>
+<h3 id="打-api-的時間點">打 API 的時間點</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #B392F0">useEffect</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">async</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">fetchUser</span><span style="color: #E1E4E8">() {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">params</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> { </span><span style="color: #F97583">...</span><span style="color: #E1E4E8">queryCondition.global };</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">res</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">await</span><span style="color: #E1E4E8"> axios.</span><span style="color: #B392F0">get</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #79B8FF">undefined</span><span style="color: #E1E4E8">, </span><span style="color: #B392F0">AxiosResponse</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">FetchUserListRes</span><span style="color: #E1E4E8">>>(</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #9ECBFF">'https://randomuser.me/api/'</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">      { params }</span></span>
+<span class="line"><span style="color: #E1E4E8">    );</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #B392F0">setUserList</span><span style="color: #E1E4E8">(res.data.results);</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">fetchUser</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"><span style="color: #E1E4E8">}, [queryCondition.global]);</span></span></code></pre>
+<ul>
+<li>訂閱的是 <code>queryCondition.global</code> 的變化狀態</li>
+<li>因為使用者點擊搜尋按鈕或對 <code>muiTextField</code> 按下 <code>Enter</code> 的 <code>handleFunctions</code> 皆有進行過 debounce 處理，故可避免搜尋連打的情況出現</li>
+<li>可以在維持 <code>nat</code> 搜尋條件下進行性別或每頁資料數量的調整</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="http://demo.nimius.net/debounce_throttle/">demo: debounce, throttle</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

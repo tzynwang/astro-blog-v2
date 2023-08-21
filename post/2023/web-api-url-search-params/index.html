@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>快速筆記：使用 URL 與 URLSearchParams 建構子處理網址</title>
+    <meta name="title" content="快速筆記：使用 URL 與 URLSearchParams 建構子處理網址">
+    <meta name="description" content="此篇筆記會記錄如何使用 web api `URL` 與 `URLSearchParams` 來處理網址。">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/web-api-url-search-params/">
+    <meta property="og:title" content="快速筆記：使用 URL 與 URLSearchParams 建構子處理網址">
+    <meta property="og:description" content="此篇筆記會記錄如何使用 web api `URL` 與 `URLSearchParams` 來處理網址。">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/web-api-url-search-params/">
+    <meta property="twitter:title" content="快速筆記：使用 URL 與 URLSearchParams 建構子處理網址">
+    <meta property="twitter:description" content="此篇筆記會記錄如何使用 web api `URL` 與 `URLSearchParams` 來處理網址。">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">快速筆記：使用 URL 與 URLSearchParams 建構子處理網址</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-08-09 19:52</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Web api
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>目前負責的專案在路由設計上採用 query string （例：<code>/product?category=A</code>）而非 path params （例：<code>/product/category/A</code>）來處理分頁，此篇筆記會記錄如何使用 web api <code>URL</code> 與 <code>URLSearchParams</code> 來處理網址。</p>
+<h2 id="筆記">筆記</h2>
+<p>以下功能會回傳 url 中的 params 物件，傳入 <code>initialValue</code> 主要是為了滿足型別需求。</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">getUrlSearchParams</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">T</span><span style="color: #E1E4E8">>(</span><span style="color: #FFAB70">initialValue</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">T</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">url</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">new</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">URL</span><span style="color: #E1E4E8">(window.location.href);</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">paramsEntries</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> Array.</span><span style="color: #B392F0">from</span><span style="color: #E1E4E8">(url.searchParams.</span><span style="color: #B392F0">entries</span><span style="color: #E1E4E8">());</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> paramsEntries.</span><span style="color: #B392F0">reduce</span><span style="color: #E1E4E8">((</span><span style="color: #FFAB70">prev</span><span style="color: #E1E4E8">, </span><span style="color: #FFAB70">curr</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> [</span><span style="color: #79B8FF">key</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">value</span><span style="color: #E1E4E8">] </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> curr;</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> { </span><span style="color: #F97583">...</span><span style="color: #E1E4E8">prev, [key]: value };</span></span>
+<span class="line"><span style="color: #E1E4E8">  }, initialValue);</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D">// 以 https://example.com/product?category=A 為例，會取出 params = { category: 'A' }</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">params</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">getUrlSearchParams</span><span style="color: #E1E4E8">({ category: </span><span style="color: #9ECBFF">''</span><span style="color: #E1E4E8"> });</span></span></code></pre>
+<p>以下功能會產生一組「開啟 Gmail 並預先填好收件人與信件主旨」的 url 連結：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">getMailUrl</span><span style="color: #E1E4E8">() {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">baseUrl</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'https://mail.google.com/mail/u/0/'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">params</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">new</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">URLSearchParams</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"><span style="color: #E1E4E8">  params.</span><span style="color: #B392F0">append</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'fs'</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'1'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">  params.</span><span style="color: #B392F0">append</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'tf'</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'cm'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">  params.</span><span style="color: #B392F0">append</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'source'</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'mailto'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">  params.</span><span style="color: #B392F0">append</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'to'</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'mail@example.com'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">  params.</span><span style="color: #B392F0">append</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'su'</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'這裡寫主旨'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">url</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">new</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">URL</span><span style="color: #E1E4E8">(baseUrl);</span></span>
+<span class="line"><span style="color: #E1E4E8">  url.search </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> params.</span><span style="color: #B392F0">toString</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> url.href;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/URL">MDN: URL</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams">MDN: URLSearchParams</a></li>
+<li><a href="https://stackoverflow.com/questions/2027131/compose-e-mail-via-url-params-googlemail">stackOverFlow: Compose e-mail via URL-params (googlemail)</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

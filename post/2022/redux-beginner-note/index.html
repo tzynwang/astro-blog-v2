@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第8週 學習筆記：redux 基礎與 Immer producer</title>
+    <meta name="title" content="2022 第8週 學習筆記：redux 基礎與 Immer producer">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/redux-beginner-note/">
+    <meta property="og:title" content="2022 第8週 學習筆記：redux 基礎與 Immer producer">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/redux-beginner-note/">
+    <meta property="twitter:title" content="2022 第8週 學習筆記：redux 基礎與 Immer producer">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第8週 學習筆記：redux 基礎與 Immer producer</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-02-26 18:52</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span><span class="astro-2IYMVI75">
+  Redux
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#redux" class="astro-QTOKGA5Y">Redux</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#immer" class="astro-QTOKGA5Y">Immer</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>本篇筆記記錄 Redux 中 state、action 與 reducer 這三類基礎概念，以及如何搭配 immer 的 <code>produce(state, (draft) => void))</code> 來建立 reducers</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="redux">Redux</h3>
+<ul>
+<li>state: 資料，透過 dispatch action 來建立一份當下 state 的拷貝，修改並回傳的是該份拷貝</li>
+<li>action: 包含 action type 與 action payload 的 plain object；type 描述該 action 要達成的事情，payload 類似參數</li>
+<li>reducer: 結合 state 與 action，根據 action type 來對 state 進行不同種類的加工，並回傳處理後的 state；<code>(state, action) => new state</code></li>
+<li>store: 透過傳入 reducer 來建立 Redux store；可以使用 <code>.dispatch()</code> 與 <code>.getState()</code> 兩種 methods</li>
+</ul>
+<script src="https://gist.github.com/tzynwang/de8f671f810964b7f70d68abd43f2d7e.js"></script>
+<ul>
+<li><code>.getState()</code>: returns the current state value.</li>
+<li><code>.dispatch()</code>: the only way to update the state is to call <code>store.dispatch()</code> and <strong>pass in an action object</strong>. The store will run its reducer function and save the new state value inside, and we can call <code>getState()</code> to retrieve the updated value.</li>
+</ul>
+<h3 id="immer">Immer</h3>
+<ul>
+<li>gist 23-30: <code>produce(currentState, recipe: (draftState) => void): nextState</code>
+<ul>
+<li>第一個參數 <code>currentState</code> 是現在的 state，拷貝後根據 reducer 匹配是否有對應的 action，修改拷貝的版本（<code>draftState</code>）</li>
+<li>第二組參數 <code>recipe</code> 傳入匿名函式，函式參數為拷貝後的 <code>currentState</code></li>
+<li>最終會回傳一個新的狀態 <code>nextState</code></li>
+</ul>
+</li>
+<li>結合 <code>produce()</code> 後依舊符合 Redux 對 reducer 的定義：最終會回傳一個新版本的 state（<code>(state, action) => new state</code>）</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://immerjs.github.io/immer/produce/">Immer: produce</a></li>
+<li><a href="https://immerjs.github.io/immer/example-setstate#redux--immer">Immer: Redux + Immer</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

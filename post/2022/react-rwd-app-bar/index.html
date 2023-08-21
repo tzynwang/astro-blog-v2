@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第17週 實作筆記：RWD 側欄</title>
+    <meta name="title" content="2022 第17週 實作筆記：RWD 側欄">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-rwd-app-bar/">
+    <meta property="og:title" content="2022 第17週 實作筆記：RWD 側欄">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-rwd-app-bar/">
+    <meta property="twitter:title" content="2022 第17週 實作筆記：RWD 側欄">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第17週 實作筆記：RWD 側欄</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-04-29 22:23</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  MaterialUI
+</span><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#設計說明" class="astro-QTOKGA5Y">設計說明</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#開發思路" class="astro-QTOKGA5Y">開發思路</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#css-筆記" class="astro-QTOKGA5Y">CSS 筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#material-ui-相關" class="astro-QTOKGA5Y">Material UI 相關</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>參考了 Material UI 的 Drawer 設計刻出 RWD App Bar</p>
+<p><img src="/2022/react-rwd-app-bar/demo-mobile.png" alt="手機版面"></p>
+<p><img src="/2022/react-rwd-app-bar/demo-tablet.png" alt="平板版面"></p>
+<p><img src="/2022/react-rwd-app-bar/demo-desktop.png" alt="桌機版面"></p>
+<p>展示：<a href="https://tzynwang.github.io/rwd-app-bar/">https://tzynwang.github.io/rwd-app-bar/</a>
+原始碼：<a href="https://github.com/tzynwang/rwd-app-bar/tree/feature/rwd-bar">https://github.com/tzynwang/rwd-app-bar/tree/feature/rwd-bar</a></p>
+<h2 id="筆記">筆記</h2>
+<h3 id="設計說明">設計說明</h3>
+<ul>
+<li>參考日前經手專案的版面設計，文字規格如下：
+<ul>
+<li>手機版面：頂部左側（menu icon）點開後出現一般選項清單，右側（avatar）點開後出現使用者相關選項的清單；在手機版面下，清單要蓋滿頂部以外的版面空間</li>
+<li>平板版面：預設清單收合在左側，點擊後展開，並上方出現 logo；而 avatar 移動至畫面右上角</li>
+<li>大版面：清單固定在展開狀態，移除收合清單的按鈕（平板版面清單右上角）</li>
+</ul>
+</li>
+</ul>
+<h3 id="開發思路">開發思路</h3>
+<ul>
+<li>分拆為以下兩個元件：
+<ul>
+<li>Bar：包含 BarHeader 與 BarBody 兩個部位
+<ul>
+<li>BarHeader 僅會出現在手機版面最上方</li>
+<li>BarBody（一般選項清單）：包含 News、Archives、Tags 與 Contact Us 這四個選項，透過 CSS 設定在大小版面呈現不同效果，並在平板、桌機版面追加 logo Row</li>
+</ul>
+</li>
+<li>AvatarWithMenu：如其名，包含 Avatar 與 Menu，兩者同捆為一個元件傳入 BarHeader，或搭配 Material UI 的 <code>useMediaQuery</code> 在平板、桌機版面的情況下出現於畫面右上角
+<ul>
+<li>Menu（使用者相關選項的清單）：包含 Setting 與 Log Out，手機版時呈現滿版，平板與桌機版面則固定在 avatar 下方位置</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="css-筆記">CSS 筆記</h3>
+<ul>
+<li>使用 <code>transform: translate()</code> 搭配 <code>transition</code> 做出位移動畫效果</li>
+<li>平板版面的「收合」狀態是透過 <code>width: 60px</code> 搭配 <code>overflow: hidden</code> 與 <code>white-space: nowrap</code> 組合出來的</li>
+</ul>
+<h3 id="material-ui-相關">Material UI 相關</h3>
+<script src="https://gist.github.com/tzynwang/1e640db6c3d9709b88141076c2c32c1b.js"></script>
+<p>透過 <code>&#x3C;CssBaseline /></code> 與 <code>createTheme</code> 修改 MUI default theme 的 <code>typography</code> 內容來調整專案的整體字型</p>
+<script src="https://gist.github.com/tzynwang/fc6878f235ef58d87d02ea5025884626.js"></script>
+<p>使用 Mui <code>styled()</code> 時可傳入自定義 <code>props</code>，此 Logo 元件可透過 <code>props: black</code> 來控制字體顏色</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://mui.com/material-ui/react-drawer/#main-content">MUI: Drawer</a></li>
+<li><a href="https://mui.com/system/styled/#api">MUI API: styled</a></li>
+<li><a href="https://stackoverflow.com/questions/68814908/can-you-pass-custom-props-to-material-ui-v5-styled-components">Can you pass custom props to Material-UI v5 <code>styled()</code> components?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

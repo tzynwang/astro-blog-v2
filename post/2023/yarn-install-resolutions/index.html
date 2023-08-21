@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>yarn install --production=false 與 package.json 中的 resolutions</title>
+    <meta name="title" content="yarn install --production=false 與 package.json 中的 resolutions">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/yarn-install-resolutions/">
+    <meta property="og:title" content="yarn install --production=false 與 package.json 中的 resolutions">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/yarn-install-resolutions/">
+    <meta property="twitter:title" content="yarn install --production=false 與 package.json 中的 resolutions">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">yarn install --production=false 與 package.json 中的 resolutions</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-02-21 20:11</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Package Manager
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#執行-yarn-install-時沒有安裝-packagejson-中的-devdependencies" class="astro-QTOKGA5Y">執行 yarn install 時沒有安裝 package.json 中的 devDependencies</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#透過-packagejson-resolutions-指定套件版本" class="astro-QTOKGA5Y">透過 package.json resolutions 指定套件版本</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在安裝專案套件時因 <code>.env</code> 中的 <code>NODE_ENV=production</code> 踩了坑，解法是在透過 yarn 安裝套件時加上 <code>--production=false</code> 避免問題。另外此篇筆記也記錄一下 package.json 中 <code>resolutions</code> 欄位的作用。</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="執行-yarn-install-時沒有安裝-packagejson-中的-devdependencies">執行 <code>yarn install</code> 時沒有安裝 package.json 中的 <code>devDependencies</code></h3>
+<p>情境：有時為了測試打包腳本，會將 <code>.env</code> 中的 <code>NODE_ENV</code> 值設定為 <code>production</code> 以便模擬正式打包環境，打包腳本測完了卻忘記把 <code>NODE_ENV</code> 改回 <code>development</code>。在這個情境下執行 <code>yarn install</code> 的話，會發現 package.json 中的 <code>devDependencies</code> 都沒有被安裝。</p>
+<p>解決方式：透過 yarn 安裝套件時執行 <code>yarn install --production=false</code> 即可在 <code>NODE_ENV=production</code> 的狀況下依舊安裝 <code>devDependencies</code>。</p>
+<blockquote>
+<p><a href="https://classic.yarnpkg.com/en/docs/cli/install#toc-yarn-install-production-true-false">yarn official doc</a>: Yarn will not install any package listed in <code>devDependencies</code> if the <code>NODE_ENV</code> environment variable is set to <code>production</code>. Use this flag to instruct Yarn to ignore NODE_ENV and take its production-or-not status from this flag instead.</p>
+</blockquote>
+<h3 id="透過-packagejson-resolutions-指定套件版本">透過 package.json <code>resolutions</code> 指定套件版本</h3>
+<p>情境：目前專案使用的其中一個 <code>套件Ａ</code> 依賴 <code>套件Ｂ</code>，但 <code>套件Ａ</code> 指定使用的 <code>套件Ｂ</code> 版本過舊，該過舊版本的 <code>套件Ｂ</code> 造成專案必須額外安裝一些目前已經不再必要的 JavaScript syntax polyfill 套件。開發者想直接指定使用較新版本的 <code>套件Ｂ</code>。</p>
+<p>解決方式：在 package.json 中新增一欄位 <code>resolutions</code> 來指定套件版本：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">{</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">"resolutions"</span><span style="color: #E1E4E8">: {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">"package-b"</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">"^3.2.0"</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<p>補充說明：上方註明套件版本需為 <code>^3.2.0</code> 的意思是「容許該套件的版本大於等於 <code>3.2.0</code>，但必須小於 <code>4.0.0</code>」。</p>
+<blockquote>
+<p><a href="https://docs.npmjs.com/cli/v6/using-npm/semver#caret-ranges-123-025-004">npm official doc</a>: Allows changes that do not modify the left-most non-zero digit in the <code>[major, minor, patch]</code> tuple.</p>
+</blockquote>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://github.com/yarnpkg/yarn/issues/2739">yarnpkg/yarn: *bug* Yarn will not install devDependencies when NODE_ENV=production</a></li>
+<li><a href="https://classic.yarnpkg.com/en/docs/selective-version-resolutions/">Yarn: Selective dependency resolutions</a></li>
+<li><a href="https://classic.yarnpkg.com/en/docs/cli/install#toc-yarn-install-production-true-false">Yarn: <code>yarn install --production[=true|false]</code></a></li>
+<li><a href="https://docs.npmjs.com/cli/v6/using-npm/semver#caret-ranges-123-025-004">npm Docs: semver — Caret Ranges</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

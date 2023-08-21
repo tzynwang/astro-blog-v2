@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>Add 404 page</title>
+    <meta name="title" content="Add 404 page">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/hexo-add-404/">
+    <meta property="og:title" content="Add 404 page">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/hexo-add-404/">
+    <meta property="twitter:title" content="Add 404 page">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">Add 404 page</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-02-16 09:36</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  hexo
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#summary-of-this-post" class="astro-QTOKGA5Y">Summary of this post</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#environment" class="astro-QTOKGA5Y">Environment</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#workflow" class="astro-QTOKGA5Y">Workflow</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#reference" class="astro-QTOKGA5Y">Reference</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="summary-of-this-post">Summary of this post</h2>
+<p>The workflow of adding a 404 handling page for the hexo blog.</p>
+<p><img src="/2021/hexo-add-404/404-page-for-hexo-blog.jpg" alt="The 404 page"></p>
+<h2 id="environment">Environment</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">hexo: 5.3.0</span></span>
+<span class="line"><span style="color: #e1e4e8">hexo-cli: 4.2.0</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="workflow">Workflow</h2>
+<ol>
+<li>
+<p>Create a 404.md file in the <code>source</code> folder</p>
+<p><img src="/2021/hexo-add-404/location-of-404-page.jpg" alt="The screenshot to display file location of 404.md file for the hexo blog"></p>
+</li>
+<li>
+<p>Add page content for the 404.md file:</p>
+<ul>
+<li><code>permalink: /404.html</code> in line 3 is <strong>required</strong>.</li>
+<li>Fill in the correct URL (<code>https://&#x3C;your GitHub username>.github.io/</code>) for redirection in line 9 and line 19</li>
+<li>The value of <code>countTime</code> in line 12 can be updated to the preferred waiting time. I just leave the waiting time as 5 seconds without changing it.</li>
+</ul>
+</li>
+</ol>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">---</span></span>
+<span class="line"><span style="color: #85E89D">layout</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">'@Components/pages/SinglePostLayout.astro'</span></span>
+<span class="line"><span style="color: #85E89D">title</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">404</span></span>
+<span class="line"><span style="color: #85E89D">permalink</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">/404.html</span></span>
+<span class="line"><span style="color: #E1E4E8">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #79B8FF; font-weight: bold">## Page not exists</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">The page you are looking for does not exist.</span></span>
+<span class="line"><span style="color: #E1E4E8">Will bring you back to the homepage in &#x3C;span id="timeout">5&#x3C;/span> second(s).</span></span>
+<span class="line"><span style="color: #E1E4E8">Or [click this link](https://&#x3C;your GitHub username>.github.io/) to go back to the homepage immediately.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;script></span></span>
+<span class="line"><span style="color: #E1E4E8">let countTime = 5;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">function count() {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span></span>
+<span class="line"><span style="color: #E1E4E8">  document.getElementById('timeout').textContent = countTime;</span></span>
+<span class="line"><span style="color: #E1E4E8">  countTime -= 1;</span></span>
+<span class="line"><span style="color: #E1E4E8">  if(countTime === 0){</span></span>
+<span class="line"><span style="color: #E1E4E8">    location.href = "https://&#x3C;your GitHub username>.github.io/";</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">  setTimeout(() => {</span></span>
+<span class="line"><span style="color: #E1E4E8">    count();</span></span>
+<span class="line"><span style="color: #E1E4E8">  }, 1000);</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">count();</span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;/script></span></span></code></pre>
+<ol>
+<li>Save the file. Run <code>hexo generate</code> and <code>hexo deploy</code> to push the 404 handle page to the repository. Done ☕</li>
+</ol>
+<h2 id="reference">Reference</h2>
+<ul>
+<li>For the copy:
+<a href="https://codepen.io/kdbkapsere/pen/oNXLbqQ">404 Page by Kasper De Bruyne</a></li>
+<li>For the <code>404.md</code> file location and the instruction of deployment:
+<a href="https://github.com/ppoffice/hexo-theme-icarus/issues/66#issuecomment-165919312">https://github.com/ppoffice/hexo-theme-icarus/issues/66#issuecomment-165919312</a></li>
+<li>For the JavaScript of auto-redirect:
+<a href="https://ithelp.ithome.com.tw/articles/10249685">(23) 試著學 Hexo - SEO 篇 - 新增你的 404 頁面</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

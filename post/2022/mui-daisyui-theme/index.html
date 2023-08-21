@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第21週 實作筆記： MaterialUI theme 一鍵換皮</title>
+    <meta name="title" content="2022 第21週 實作筆記： MaterialUI theme 一鍵換皮">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/mui-daisyui-theme/">
+    <meta property="og:title" content="2022 第21週 實作筆記： MaterialUI theme 一鍵換皮">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/mui-daisyui-theme/">
+    <meta property="twitter:title" content="2022 第21週 實作筆記： MaterialUI theme 一鍵換皮">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第21週 實作筆記： MaterialUI theme 一鍵換皮</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-05-29 10:55</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  MaterialUI
+</span><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#reactcreatecontext" class="astro-QTOKGA5Y">React.createContext</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#modelstheme" class="astro-QTOKGA5Y">@Models/Theme</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#componentsapp" class="astro-QTOKGA5Y">@Components/App</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#關於-deepmerge" class="astro-QTOKGA5Y">關於 deepMerge()</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#備註" class="astro-QTOKGA5Y">備註</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>使用 React Context 來達成一鍵切換主題的效果</p>
+<p><img src="/2022/mui-daisyui-theme/demo.png" alt="react context theme change"></p>
+<p>展示：<a href="https://tzynwang.github.io/mui-daisy-theme-demo-20220529/">https://tzynwang.github.io/mui-daisy-theme-demo-20220529/</a>
+原始碼：<a href="https://github.com/tzynwang/mui-components/tree/demo/20220529">https://github.com/tzynwang/mui-components/tree/demo/20220529</a>
+色票組合：使用 <a href="https://daisyui.com/docs/colors/">daisyUI: Colors</a> 中的 <code>coffee</code> 、 <code>cupcake</code> 與 <code>retro</code></p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">@mui/material: 5.8.1</span></span>
+<span class="line"><span style="color: #e1e4e8">@mui/styles: 5.8.0</span></span>
+<span class="line"><span style="color: #e1e4e8">daisyui: 2.15.1</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="reactcreatecontext">React.createContext</h3>
+<ul>
+<li>透過 <code>React.createContext</code> 建立 <code>ThemeContext</code> 物件，並 <code>value={{ themeName, setThemeName }}</code></li>
+<li>在元件 <code>ThemeToggle</code> 中透過 <code>React.useContext(ThemeContext)</code> 取得 <code>context</code> 物件，即可在使用者選擇不同主題時更新 <code>ThemeKey</code></li>
+</ul>
+<h3 id="modelstheme">@Models/Theme</h3>
+<ul>
+<li>在建立 Theme 物件（ <code>new Theme()</code> ）時，根據 <code>THEME_KEYS</code> 載入對應的主題設定檔，並透過 MaterialUI 的 <code>createTheme</code> 建立 <code>MuiTheme</code> 物件</li>
+</ul>
+<h3 id="componentsapp">@Components/App</h3>
+<ul>
+<li>使用 useEffect 監聽目前的 <code>themeName</code> ，並透過 <code>Theme.getTheme(themeName)</code> 取得對應的 <code>MuiTheme</code> 物件提供給 MaterialUI 的 <code>ThemeProvider</code></li>
+</ul>
+<h2 id="關於-deepmerge">關於 deepMerge()</h2>
+<ul>
+<li>
+<p>官方型別定義如右： <code>deepmerge&#x3C;T>(target: T, source: unknown, options?: DeepmergeOptions): T</code></p>
+</li>
+<li>
+<p>原始碼如下，可得知 <code>source</code> 的樣式設定會覆蓋掉 <code>target</code> 的內容，最終回傳被覆蓋後的 <code>target</code> ：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">deepmerge</span><span style="color: #E1E4E8">(</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">target</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">source</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">options</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    clone: </span><span style="color: #79B8FF">true</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">output</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> options.clone </span><span style="color: #F97583">?</span><span style="color: #E1E4E8"> (</span><span style="color: #79B8FF">0</span><span style="color: #E1E4E8">, _extends2.default)({}, target) </span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> target;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (</span><span style="color: #B392F0">isPlainObject</span><span style="color: #E1E4E8">(target) </span><span style="color: #F97583">&#x26;&#x26;</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">isPlainObject</span><span style="color: #E1E4E8">(source)) {</span></span>
+<span class="line"><span style="color: #E1E4E8">    Object.</span><span style="color: #B392F0">keys</span><span style="color: #E1E4E8">(source).</span><span style="color: #B392F0">forEach</span><span style="color: #E1E4E8">((</span><span style="color: #FFAB70">key</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #6A737D">// Avoid prototype pollution</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (key </span><span style="color: #F97583">===</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'__proto__'</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #F97583">return</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">      }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #B392F0">isPlainObject</span><span style="color: #E1E4E8">(source[key]) </span><span style="color: #F97583">&#x26;&#x26;</span></span>
+<span class="line"><span style="color: #E1E4E8">        key </span><span style="color: #F97583">in</span><span style="color: #E1E4E8"> target </span><span style="color: #F97583">&#x26;&#x26;</span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #B392F0">isPlainObject</span><span style="color: #E1E4E8">(target[key])</span></span>
+<span class="line"><span style="color: #E1E4E8">      ) {</span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #6A737D">// Since `output` is a clone of `target` and we have narrowed `target` in this block we can cast to the same type.</span></span>
+<span class="line"><span style="color: #E1E4E8">        output[key] </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">deepmerge</span><span style="color: #E1E4E8">(target[key], source[key], options);</span></span>
+<span class="line"><span style="color: #E1E4E8">      } </span><span style="color: #F97583">else</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">        output[key] </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> source[key];</span></span>
+<span class="line"><span style="color: #E1E4E8">      }</span></span>
+<span class="line"><span style="color: #E1E4E8">    });</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> output;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+</li>
+</ul>
+<h3 id="備註">備註</h3>
+<ul>
+<li>自定義的 <code>MuiTheme</code> 需由開發者自行定義 <code>mode: light</code> 與 <code>mode: dark</code> 下的顏色樣式，切換自定義 MuiTheme 的 <code>palette.mode</code> 不會自動計算出對應的 <code>palette</code></li>
+<li>參考 <a href="https://mui.com/material-ui/customization/dark-mode/#dark-mode-with-a-custom-palette">MaterialUI 官方文件說明</a>： If you have a custom palette, you need to make sure that you have the correct values based on the mode. The next section explain how to do this.</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://reactjs.org/docs/context.html">React Official: Context</a></li>
+<li><a href="https://reactjs.org/docs/hooks-reference.html#usecontext">React Official: useContext</a></li>
+<li><a href="https://mui.com/material-ui/customization/dark-mode/">MaterialUI: Dark Mode</a></li>
+<li><a href="https://stackoverflow.com/questions/45251664/typescript-derive-union-type-from-tuple-array-values">Typescript derive union type from tuple/array values</a></li>
+<li><a href="https://stackoverflow.com/questions/53050011/remove-null-or-undefined-from-properties-of-a-type">remove null or undefined from properties of a type</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

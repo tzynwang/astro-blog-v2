@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2021 第50週 學習記錄：MuiTabs、React.useEffect</title>
+    <meta name="title" content="2021 第50週 學習記錄：MuiTabs、React.useEffect">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/work-log-w50/">
+    <meta property="og:title" content="2021 第50週 學習記錄：MuiTabs、React.useEffect">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/work-log-w50/">
+    <meta property="twitter:title" content="2021 第50週 學習記錄：MuiTabs、React.useEffect">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2021 第50週 學習記錄：MuiTabs、React.useEffect</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-12-14 22:46</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span><span class="astro-2IYMVI75">
+  MaterialUI
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#使用變數或-enum-管理起始值預設值" class="astro-QTOKGA5Y">使用變數或 enum 管理起始值、預設值</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#換頁時維持勾選狀態" class="astro-QTOKGA5Y">換頁時維持勾選狀態</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#調整-muicheckbox-框線粗細" class="astro-QTOKGA5Y">調整 MuiCheckBox 框線粗細</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#muitabs-動態顯示對應內容" class="astro-QTOKGA5Y">MuiTabs 動態顯示對應內容</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#reactuseeffect-with-condition" class="astro-QTOKGA5Y">React.useEffect with condition</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>本週最大發現： <code>React.useEffect</code> 也有訂閱的功能；<code>useEffect</code> 也是支援傳入 dependency 變數的
+其餘筆記包含如何使用 MuiTabs 搭配 MuiTab</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="使用變數或-enum-管理起始值預設值">使用變數或 enum 管理起始值、預設值</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// 比如以下</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">CONDITION</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  page: </span><span style="color: #79B8FF">0</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  query: </span><span style="color: #9ECBFF">''</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">enum</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">STEP</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">ORDER</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'order'</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">SUMMARY</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'summary'</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<ul>
+<li><code>CONDITION</code> 不但是 <code>ustState</code> 會運用到的起始值，同時也是作為後端 API 的 query 物件</li>
+<li>將購物車的分頁使用 <code>enum STEP</code> 來保存，增加步驟的可讀性，而並非只是透過數字來控制畫面上購物車內容的切換</li>
+</ul>
+<h3 id="換頁時維持勾選狀態">換頁時維持勾選狀態</h3>
+<ul>
+<li>將已經勾選起來的項目的 id 儲存為 useState 資料：<code>const [checkedItem, setCheckedItem] = useState&#x3C;string[]>([]);</code></li>
+<li>將 <code>checkedItem</code> 作為 <code>props</code> 傳入 <code>TablePagination</code> 元件，比對 <code>sourceList</code> 陣列中的項目其 <code>id</code> 是否存在 <code>checkedItem</code> 中，若有，則 <code>CheckBox</code> 設定為打勾狀態</li>
+<li>如此即可在換頁時維持項目的勾選狀態，因為換頁時更換的是 <code>sourceList</code> 資料，不影響 <code>checkedItem</code> 的內容，只要檢查 <code>sourceList</code> 中的項目是否存在 <code>checkedItem</code> 即可知道該項目是否已經被勾選過</li>
+</ul>
+<h3 id="調整-muicheckbox-框線粗細">調整 MuiCheckBox 框線粗細</h3>
+<ul>
+<li>實際上 <code>MuiCheckBox</code> 預設在未勾選、勾選狀態下會分別顯示 <code>&#x3C;CheckBoxOutlineBlankIcon /></code> 與 <code>&#x3C;CheckBoxIcon /></code> 這兩種外觀，未勾選狀態下的「框線粗細」實際上是中間透明的 svg 正方形圖案，無法透過 css 直接調整</li>
+<li>可透過修改 <code>MuiCheckBox</code> 的 <code>icon</code> 與 <code>checkedIcon</code> 來調整未勾選、勾選狀態下的外觀，或乾脆直接客製化整個元件</li>
+</ul>
+<h3 id="muitabs-動態顯示對應內容">MuiTabs 動態顯示對應內容</h3>
+<script src="https://gist.github.com/tzynwang/2e092e1929341a8b6b19793ff76f1894.js"></script>
+<ul>
+<li>邏輯如上，在 MuiTabs <code>onChange</code> 時修改其 <code>value</code>（<code>tabsValue</code>），其他元件再透過 <code>useMemo()</code> 訂閱 <code>tabsValue</code> 來動態產生對應使用者點選不同 tab 時應該顯示的內容</li>
+</ul>
+<p><img src="/2021/work-log-w50/MuiTabs.png" alt="demo"></p>
+<h3 id="reactuseeffect-with-condition">React.useEffect with condition</h3>
+<blockquote>
+<p>Think of <code>setState()</code> as a request rather than an immediate command to update the component. For better perceived performance, React may delay it, and then update several components in a single pass. <strong>React does not guarantee that the state changes are applied immediately.</strong> <code>setState()</code> does not always immediately update the component. It may batch or defer the update until later.</p>
+</blockquote>
+<ul>
+<li>重點：<code>setState()</code> 並不是 synchronous function， 執行完 <code>setState()</code> 並不保證該 <code>state</code> 的值立刻就會更新為最新的狀態</li>
+<li>如果需要在某個 <code>state</code> 更新後去執行其他操作（例：根據使用者勾選的資料類別，向後端請求「只有該類別」的資料），可以透過 <code>useEffect()</code> 去訂閱該 <code>state</code></li>
+<li><code>useEffect()</code> 接受傳入第二組參數（以下示範的 <code>[props.source]</code>），作為第一個參數傳入的 function 會在「第二個陣列參數中的資料（被訂閱的資料）改變後」才執行
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #B392F0">useEffect</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">subscription</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> props.source.</span><span style="color: #B392F0">subscribe</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> () </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    subscription.</span><span style="color: #B392F0">unsubscribe</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"><span style="color: #E1E4E8">  };</span></span>
+<span class="line"><span style="color: #E1E4E8">}, [props.source]);</span></span></code></pre>
+</li>
+<li>解說：僅有在 <code>props.source</code> 改變時，才執行 <code>useEffect()</code> 中作為第一個參數傳入的 function</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://mui.com/api/checkbox/#main-content">MuiCheckBox API</a></li>
+<li><a href="https://mui.com/components/checkboxes/#customization">MuiCheckBox: Customization</a></li>
+<li><a href="https://reactjs.org/docs/react-component.html#setstate">React: setState()</a></li>
+<li><a href="https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect">React: Conditionally firing an effect</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

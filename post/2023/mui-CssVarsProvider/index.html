@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>使用 CssVarsProvider 來取得 MaterialUI 樣式的 CSS 變數</title>
+    <meta name="title" content="使用 CssVarsProvider 來取得 MaterialUI 樣式的 CSS 變數">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/mui-CssVarsProvider/">
+    <meta property="og:title" content="使用 CssVarsProvider 來取得 MaterialUI 樣式的 CSS 變數">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/mui-CssVarsProvider/">
+    <meta property="twitter:title" content="使用 CssVarsProvider 來取得 MaterialUI 樣式的 CSS 變數">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">使用 CssVarsProvider 來取得 MaterialUI 樣式的 CSS 變數</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-02-05 13:51</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  MaterialUI
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#情境範例" class="astro-QTOKGA5Y">情境範例</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#cssvarsprovider" class="astro-QTOKGA5Y">CssVarsProvider</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#usecolorscheme" class="astro-QTOKGA5Y">useColorScheme</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在一些情況下可能會選擇透過透過 CSS 變數 <code>var()</code> 來指定樣式，而 MaterialUI 的 <code>CssVarsProvider</code> 元件可讓開發者取得 CSS 變數版本的 MaterialUI 樣式設定（<a href="https://mui.com/material-ui/customization/default-theme/">theme object</a>），且可搭配 <code>useColorScheme</code> 來指定取得 light 或 dark 模式的樣式。</p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">@mui/material: 5.11.7</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="情境範例">情境範例</h3>
+<p>比如我想直接借用 MaterialUI 預設的 dark mode 色票，且想透過 CSS Module 集中管理樣式資訊，此時即可直接透過 <code>var()</code> 將 MaterialUI 設定好的顏色變數傳入 <code>index.module.css</code> 中：</p>
+<iframe src="https://codesandbox.io/embed/mui-cssvarsprovider-xkr9h8?fontsize=14&#x26;hidenavigation=1&#x26;module=%2Fsrc%2Findex.module.css&#x26;theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="mui-CssVarsProvider" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+<h3 id="cssvarsprovider">CssVarsProvider</h3>
+<p>透過 <code>import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';</code> 來匯入 <code>CssVarsProvider</code> 元件，使用方式基本如下：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">*</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">as</span><span style="color: #E1E4E8"> React </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'react'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> { render } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'react-dom'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> { Experimental_CssVarsProvider </span><span style="color: #F97583">as</span><span style="color: #E1E4E8"> CssVarsProvider } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'@mui/material/styles'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> CssBaseline </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'@mui/material/CssBaseline'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> ToggleButton </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./ToggleButton'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> scopedStyle </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./index.module.css'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./styles.css'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">App</span><span style="color: #E1E4E8">() {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/* Main */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;</span><span style="color: #79B8FF">CssVarsProvider</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">      &#x3C;</span><span style="color: #79B8FF">CssBaseline</span><span style="color: #E1E4E8"> /></span></span>
+<span class="line"><span style="color: #E1E4E8">      &#x3C;</span><span style="color: #85E89D">div</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">className</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"App"</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">        &#x3C;</span><span style="color: #79B8FF">ToggleButton</span><span style="color: #E1E4E8"> /></span></span>
+<span class="line"><span style="color: #E1E4E8">        &#x3C;</span><span style="color: #85E89D">ul</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">className</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{scopedStyle.muiPrimaryMain}></span></span>
+<span class="line"><span style="color: #E1E4E8">            --mui-palette-primary-main</span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;/</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">className</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{scopedStyle.muiSecondaryMain}></span></span>
+<span class="line"><span style="color: #E1E4E8">            --mui-palette-secondary-main</span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;/</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">className</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{scopedStyle.muiErrorMain}>--mui-palette-error-main&#x3C;/</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">className</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{scopedStyle.muiWarningMain}></span></span>
+<span class="line"><span style="color: #E1E4E8">            --mui-palette-warning-main</span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;/</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">className</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{scopedStyle.muiInfoMain}>--mui-palette-info-main&#x3C;/</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">className</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{scopedStyle.muiSuccessMain}></span></span>
+<span class="line"><span style="color: #E1E4E8">            --mui-palette-success-main</span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;/</span><span style="color: #85E89D">li</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">        &#x3C;/</span><span style="color: #85E89D">ul</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">      &#x3C;/</span><span style="color: #85E89D">div</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;/</span><span style="color: #79B8FF">CssVarsProvider</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  );</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">rootElement</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> document.</span><span style="color: #B392F0">getElementById</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'root'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #B392F0">render</span><span style="color: #E1E4E8">(&#x3C;</span><span style="color: #79B8FF">App</span><span style="color: #E1E4E8"> />, rootElement);</span></span></code></pre>
+<p><code>CssVarsProvider</code> 會把 MaterialUI 的樣式設定透過 css 變數的形式注入到 React app 中，預設的樣式選取器是 <code>:root</code>，可以透過 <code>props.colorSchemeSelector</code> 來執行客製。下方範例即是將 CSS 變數群注入到 <code>#root</code> 選取器之下：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">&#x3C;</span><span style="color: #79B8FF">CssVarsProvider</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">colorSchemeSelector</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"#root"</span><span style="color: #E1E4E8">>{</span><span style="color: #6A737D">/* 略 */</span><span style="color: #E1E4E8">}&#x3C;/</span><span style="color: #79B8FF">CssVarsProvider</span><span style="color: #E1E4E8">></span></span></code></pre>
+<p>如果想要預設載入 dark mode 的 MaterialUI 樣式，可透過 <code>props.defaultMode</code> 來設定：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">&#x3C;</span><span style="color: #79B8FF">CssVarsProvider</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">defaultMode</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"dark"</span><span style="color: #E1E4E8">>{</span><span style="color: #6A737D">/* 略 */</span><span style="color: #E1E4E8">}&#x3C;/</span><span style="color: #79B8FF">CssVarsProvider</span><span style="color: #E1E4E8">></span></span></code></pre>
+<p>其他可使用的元件 <code>props</code> 可參考 <code>/material-ui/packages/mui-system/src/cssVars/createCssVarsProvider.d.ts</code>。</p>
+<p>注意事項：使用 <code>CssVarsProvider</code> 的話，就不需要再為 app 加上 <code>import { ThemeProvider } from '@mui/material/styles';</code> 了。從原始碼的最終回傳結果可看到 <code>ThemeProvider</code> 是一起被打包丟出來的，不需要再手動引用。</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// 套件檔案路徑: /material-ui/packages/mui-system/src/cssVars/createCssVarsProvider.js</span></span>
+<span class="line"><span style="color: #6A737D">// 部分內容略，僅貼出回傳相關段落</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">element</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #79B8FF">React.Fragment</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">    {shouldGenerateStyleSheet </span><span style="color: #F97583">&#x26;&#x26;</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">      &#x3C;</span><span style="color: #79B8FF">React.Fragment</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">        &#x3C;</span><span style="color: #79B8FF">GlobalStyles</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">styles</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{{ [colorSchemeSelector]: rootCss }} /></span></span>
+<span class="line"><span style="color: #E1E4E8">        &#x3C;</span><span style="color: #79B8FF">GlobalStyles</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">styles</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{defaultColorSchemeStyleSheet} /></span></span>
+<span class="line"><span style="color: #E1E4E8">        &#x3C;</span><span style="color: #79B8FF">GlobalStyles</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">styles</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{otherColorSchemesStyleSheet} /></span></span>
+<span class="line"><span style="color: #E1E4E8">      &#x3C;/</span><span style="color: #79B8FF">React.Fragment</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">    )}</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;</span><span style="color: #79B8FF">ThemeProvider</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">theme</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{resolveTheme </span><span style="color: #F97583">?</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">resolveTheme</span><span style="color: #E1E4E8">(theme) </span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> theme}></span></span>
+<span class="line"><span style="color: #E1E4E8">      {children}</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;/</span><span style="color: #79B8FF">ThemeProvider</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;/</span><span style="color: #79B8FF">React.Fragment</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (nested) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> element;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">return</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #79B8FF">ColorSchemeContext.Provider</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">value</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{contextValue}></span></span>
+<span class="line"><span style="color: #E1E4E8">    {element}</span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;/</span><span style="color: #79B8FF">ColorSchemeContext.Provider</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">);</span></span></code></pre>
+<h3 id="usecolorscheme">useColorScheme</h3>
+<p>搭配 <code>import { useColorScheme } from '@mui/material/styles';</code> 即可取得當下的 MaterialUI mode 資訊。也可透過 <code>setMode</code> 直接更新 mode 設定：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> React </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'react'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> { useColorScheme } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'@mui/material/styles'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> Button </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'@mui/material/Button'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">ToggleButton</span><span style="color: #E1E4E8">() {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> { </span><span style="color: #79B8FF">mode</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">setMode</span><span style="color: #E1E4E8"> } </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">useColorScheme</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">updateMuiMode</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> () </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (mode </span><span style="color: #F97583">===</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'light'</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #B392F0">setMode</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'dark'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">    } </span><span style="color: #F97583">else</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #B392F0">setMode</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'light'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">    }</span></span>
+<span class="line"><span style="color: #E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;</span><span style="color: #79B8FF">Button</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">onClick</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{updateMuiMode} </span><span style="color: #B392F0">variant</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"contained"</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">disableElevation</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">      current mode: {mode}</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;/</span><span style="color: #79B8FF">Button</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  );</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">default</span><span style="color: #E1E4E8"> ToggleButton;</span></span></code></pre>
+<p>而所有的 MaterialUI CSS 變數內容都可以透過瀏覽器的開發者工具來查詢：</p>
+<p><img src="/2023/mui-CssVarsProvider/mui-cssVarsProvider-var-list.png" alt="view mui var in dev tool"></p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://mui.com/material-ui/experimental-api/css-variables/">MaterialUI: Experimental API - css variables</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>30天挑戰：「漢堡按鈕動畫與cubic-bezier()」 相關筆記</title>
+    <meta name="title" content="30天挑戰：「漢堡按鈕動畫與cubic-bezier()」 相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/ithome2021-7-cubic-bezier/">
+    <meta property="og:title" content="30天挑戰：「漢堡按鈕動畫與cubic-bezier()」 相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/ithome2021-7-cubic-bezier/">
+    <meta property="twitter:title" content="30天挑戰：「漢堡按鈕動畫與cubic-bezier()」 相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">30天挑戰：「漢堡按鈕動畫與cubic-bezier()」 相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-08-17 10:11</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span><span class="astro-2IYMVI75">
+  2021鐵人賽
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#cubic-bezier" class="astro-QTOKGA5Y">cubic-bezier()</a>
+            </li><li class="toc-4 astro-QTOKGA5Y">
+              <a href="#w3s" class="astro-QTOKGA5Y">W3S</a>
+            </li><li class="toc-4 astro-QTOKGA5Y">
+              <a href="#mdn" class="astro-QTOKGA5Y">MDN</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#實作" class="astro-QTOKGA5Y">實作</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>僅透過<code>transition</code>與<code>cubic-bezier()</code>製作出漢堡選單在開闔之間的圖示動畫</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="cubic-bezier">cubic-bezier()</h3>
+<h4 id="w3s">W3S</h4>
+<ul>
+<li>A transition effect with <strong>variable speed from start to end</strong>.</li>
+<li>可設定 transition 效果在不同階段的速度</li>
+</ul>
+<h4 id="mdn">MDN</h4>
+<ul>
+<li>The <code>&#x3C;easing-function></code> denotes a mathematical function that describes the <strong>rate</strong> at which <strong>a numerical value changes</strong>.</li>
+<li>描述數值變換的速度</li>
+<li>The easing functions in the cubic-bezier subset of easing functions are often called “smooth” easing functions, because they can be used to <strong>smooth down the start and end of the interpolation</strong>.</li>
+<li>The calculated output can sometimes grow to be <strong>greater than 1.0 or smaller than 0.0</strong> during the course of an animation. This causes the value to <strong>go farther</strong> than the final state, and then return. In animations, for some properties, such as left or right, this creates a kind of <strong>“bouncing” effect</strong>.</li>
+<li>參考以下 gif，在<code>cubic-bezier(x1, y1, x2, y2)</code>的<code>y2</code>大於 1 的時候，移動範圍會先超出終點再回彈
+<img src="/2021/ithome2021-7-cubic-bezier/cubic-bezier-demo.gif" alt="cubic-bezier(.17, .85, .32, 1.28)"></li>
+<li><code>y1</code>小於 0 而<code>y2</code>大於 1 的情況下，即可在動畫開始與結束時都表現出彈性效果
+<img src="/2021/ithome2021-7-cubic-bezier/cubic-bezier-demo-2.gif" alt="y1與y2的值可大於1或小於0"></li>
+<li><code>x1</code> and <code>x2</code> must be in the range [0, 1] or the value is invalid.</li>
+</ul>
+<h2 id="實作">實作</h2>
+<p class="codepen" data-height="300" data-default-tab="css,result" data-slug-hash="wvdZqEv" data-user="Charlie7779" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/wvdZqEv">
+  hamburger cubic-bezier</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<ul>
+<li>漢堡線的<code>cubic-bezier()</code>數值設定為<code>cubic-bezier(0.175, 0.885, 0.32, 1.285)</code>，代表起步速度大，收尾前先超出終點、後回彈</li>
+<li>點選範例可觀察到漢堡線在 transition 結束前，都會先略為超出原始範圍、再返回，製作出彈性效果</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.w3schools.com/cssref/func_cubic-bezier.asp">W3Schools: CSS cubic-bezier() Function</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function">MDN: easing-function</a></li>
+<li><a href="https://youtu.be/TeXajQ62yZ8">YouTube: Cubic Bezier Curves</a></li>
+<li><a href="https://cubic-bezier.com/#.17,.67,.83,.67">cubic-bezier() 數值模擬器</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

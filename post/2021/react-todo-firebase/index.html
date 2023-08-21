@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「從零開始React Todo List with TypeScript」相關筆記</title>
+    <meta name="title" content="「從零開始React Todo List with TypeScript」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/react-todo-firebase/">
+    <meta property="og:title" content="「從零開始React Todo List with TypeScript」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/react-todo-firebase/">
+    <meta property="twitter:title" content="「從零開始React Todo List with TypeScript」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「從零開始React Todo List with TypeScript」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-11-12 14:52</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本" class="astro-QTOKGA5Y">版本</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#建立流程" class="astro-QTOKGA5Y">建立流程</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#chakra-lightdark-mode" class="astro-QTOKGA5Y">Chakra light/dark mode</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#react-部分" class="astro-QTOKGA5Y">React 部分</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#useref" class="astro-QTOKGA5Y">useRef</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#usememo" class="astro-QTOKGA5Y">useMemo</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#useeffect" class="astro-QTOKGA5Y">useEffect</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>從零開始使用 TypeScript 建立 React Todo APP，搭配 Firebase（資料 CRUD）與 Chakra UI（明暗模式）</p>
+<ul>
+<li>React: useState, useRef, useMemo, useEffect</li>
+<li>Chakra UI: ChakraProvider, ColorModeScript, useColorMode</li>
+</ul>
+<p>Firebase 免費流量一下就玩爆了，故未部署上 GitHub Page，repo 如右：<a href="https://github.com/tzynwang/react-todo">https://github.com/tzynwang/react-todo</a></p>
+<h2 id="版本">版本</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">react: 17.0.2</span></span>
+<span class="line"><span style="color: #e1e4e8">typescript: 4.4.4</span></span>
+<span class="line"><span style="color: #e1e4e8">firebase: 9.4.0</span></span>
+<span class="line"><span style="color: #e1e4e8">@chakra-ui/react: 1.6.12</span></span></code></pre>
+<h2 id="建立流程">建立流程</h2>
+<ol>
+<li><code>npx create-react-app &#x3C;app-name> --template typescript</code></li>
+<li>確認 tsconfig.json 的<code>strict</code>設定為<code>true</code></li>
+</ol>
+<ul>
+<li><a href="https://www.typescriptlang.org/tsconfig#strict">strict</a>: The <code>strict</code> flag enables a wide range of type checking behavior that results in stronger guarantees of program correctness. Turning this on is equivalent to <strong>enabling all of the strict mode family options</strong>.</li>
+<li><code>strictBindCallApply</code>, <code>strictFunctionTypes</code>, <code>strictNullChecks</code>, <code>strictPropertyInitialization</code>, <code>useUnknownInCatchVariables</code>, <code>alwaysStrict</code>, <code>noImplicitAny</code>, <code>noImplicitThis</code></li>
+</ul>
+<ol>
+<li>本次一併練習朋友推薦的 Chakra UI，安裝指令如右：<code>npm i @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4</code></li>
+<li>透過 React Icons 使用 Material Design icons，安裝指令如右：<code>npm install react-icons</code>，import statement 為<code>import { IconName } from "react-icons/md";</code></li>
+<li>追加 Firebase 來進行資料 CRUD 時的安裝指令如右（版本參考<a href="https://firebase.google.com/docs/firestore/quickstart#set_up_your_development_environment">官方文件</a>）：<code>npm install firebase@9.4.1 --save</code></li>
+</ol>
+<h2 id="chakra-lightdark-mode">Chakra light/dark mode</h2>
+<ul>
+<li>
+<p><code>ChakraProvider</code>與<code>ColorModeScript</code>放在<code>index.tsx</code>中</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// index.tsx</span></span>
+<span class="line"><span style="color: #6A737D">// 前略</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> { ChakraProvider, ColorModeScript } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'@chakra-ui/react'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> theme </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./theme'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">ReactDOM.</span><span style="color: #B392F0">render</span><span style="color: #E1E4E8">(</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">&#x3C;</span><span style="color: #E1E4E8">React.StrictMode</span><span style="color: #F97583">></span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">&#x3C;</span><span style="color: #E1E4E8">ChakraProvider theme</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{theme}</span><span style="color: #F97583">></span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #F97583">&#x3C;</span><span style="color: #E1E4E8">ColorModeScript initialColorMode</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{theme.config.initialColorMode} </span><span style="color: #F97583">/></span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #F97583">&#x3C;</span><span style="color: #E1E4E8">App </span><span style="color: #F97583">/></span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">&#x3C;/</span><span style="color: #E1E4E8">ChakraProvider</span><span style="color: #F97583">></span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">&#x3C;/</span><span style="color: #E1E4E8">React.StrictMode</span><span style="color: #F97583">></span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  document.</span><span style="color: #B392F0">getElementById</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'root'</span><span style="color: #E1E4E8">)</span></span>
+<span class="line"><span style="color: #E1E4E8">);</span></span></code></pre>
+</li>
+<li>
+<p><code>theme.ts</code>內容如下：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// theme.ts</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> { extendTheme, ThemeConfig } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'@chakra-ui/react'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">config</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">ThemeConfig</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  initialColorMode: </span><span style="color: #9ECBFF">'light'</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  useSystemColorMode: </span><span style="color: #79B8FF">false</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">};</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">theme</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">extendTheme</span><span style="color: #E1E4E8">({ config });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">default</span><span style="color: #E1E4E8"> theme;</span></span></code></pre>
+</li>
+<li>
+<p><code>App.tsx</code>中實作 light/dark mode 切換如下，直接 import <code>useColorMode</code>後呼叫<code>toggleColorMode</code>來執行 mode switch：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// App.tsx</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> { useColorMode } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'@chakra-ui/react'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">App</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> () </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// 前略</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> { </span><span style="color: #79B8FF">colorMode</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">toggleColorMode</span><span style="color: #E1E4E8"> } </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">useColorMode</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// 中略</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">&#x3C;</span><span style="color: #FFAB70">IconButton</span></span>
+<span class="line"><span style="color: #E1E4E8">      aria</span><span style="color: #F97583">-</span><span style="color: #E1E4E8">label</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"Switch theme"</span></span>
+<span class="line"><span style="color: #E1E4E8">      isRound</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{true}</span></span>
+<span class="line"><span style="color: #E1E4E8">      icon</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{colorMode </span><span style="color: #F97583">===</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'light'</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">?</span><span style="color: #E1E4E8"> &#x3C;</span><span style="color: #B392F0">MdModeNight</span><span style="color: #E1E4E8"> /> </span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> &#x3C;</span><span style="color: #B392F0">MdLightMode</span><span style="color: #E1E4E8"> />}</span></span>
+<span class="line"><span style="color: #E1E4E8">      onClick</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{toggleColorMode}</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">/></span></span>
+<span class="line"><span style="color: #E1E4E8">  );</span></span>
+<span class="line"><span style="color: #E1E4E8">};</span></span></code></pre>
+</li>
+<li>
+<p><a href="https://chakra-ui.com/docs/features/color-mode">Chakra Color Mode</a>: To get dark mode working correctly, you need to do two things:</p>
+<ol>
+<li><strong>Update your theme config</strong> to determine how Chakra should manage color mode updates.</li>
+<li><strong>Add the <code>ColorModeScript</code> to your application</strong>, and set the initial color mode your application should start with to either <code>light</code>, <code>dark</code> or <code>system</code>. It is <code>light</code> by default. For Create React App, you need to <strong>add the <code>ColorModeScript</code> to the <code>index.js</code> file</strong>.</li>
+</ol>
+</li>
+<li>
+<p><a href="https://chakra-ui.com/docs/features/color-mode#usecolormode">Chakra useColorMode</a>: <code>useColorMode</code> is a React hook that gives you <strong>access to the current color mode</strong>, and <strong>a function to toggle the color mode</strong>.</p>
+</li>
+</ul>
+<h2 id="react-部分">React 部分</h2>
+<h3 id="useref">useRef</h3>
+<ul>
+<li>
+<p>用來處理「使用者新增完一筆 todo 後，需自動 focus 回輸入框」的行為</p>
+</li>
+<li>
+<p>相關段落如下：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// App.tsx</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">inputEl</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">useRef</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #79B8FF">null</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">HTMLInputElement</span><span style="color: #E1E4E8">>(</span><span style="color: #79B8FF">null</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">handleTodos</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">async</span><span style="color: #E1E4E8"> () </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (userInput.</span><span style="color: #B392F0">trim</span><span style="color: #E1E4E8">().</span><span style="color: #79B8FF">length</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #B392F0">setTodos</span><span style="color: #E1E4E8">([</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #F97583">...</span><span style="color: #E1E4E8">todos,</span></span>
+<span class="line"><span style="color: #E1E4E8">      { id: </span><span style="color: #B392F0">uuidv4</span><span style="color: #E1E4E8">(), content: userInput, edit: </span><span style="color: #79B8FF">false</span><span style="color: #E1E4E8">, done: </span><span style="color: #79B8FF">false</span><span style="color: #E1E4E8"> },</span></span>
+<span class="line"><span style="color: #E1E4E8">    ]);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #B392F0">setUserInput</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">''</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (inputEl.current) inputEl.current.</span><span style="color: #B392F0">focus</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">await</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">addDoc</span><span style="color: #E1E4E8">(firebaseTodoRef, {</span></span>
+<span class="line"><span style="color: #E1E4E8">      content: userInput,</span></span>
+<span class="line"><span style="color: #E1E4E8">      edit: </span><span style="color: #79B8FF">false</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">      done: </span><span style="color: #79B8FF">false</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    });</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">return</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// 部分略</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">&#x3C;</span><span style="color: #FFAB70">TodoInput</span></span>
+<span class="line"><span style="color: #E1E4E8">    userInput</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{userInput}</span></span>
+<span class="line"><span style="color: #E1E4E8">    handleUserInput</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{handleUserInput}</span></span>
+<span class="line"><span style="color: #E1E4E8">    inputEl</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{inputEl}</span></span>
+<span class="line"><span style="color: #E1E4E8">    handleTodos</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{handleTodos}</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">/></span></span>
+<span class="line"><span style="color: #E1E4E8">);</span></span></code></pre>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// TodoInput.tsx</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  VStack,</span></span>
+<span class="line"><span style="color: #E1E4E8">  InputGroup,</span></span>
+<span class="line"><span style="color: #E1E4E8">  Input,</span></span>
+<span class="line"><span style="color: #E1E4E8">  InputRightElement,</span></span>
+<span class="line"><span style="color: #E1E4E8">  Button,</span></span>
+<span class="line"><span style="color: #E1E4E8">} </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'@chakra-ui/react'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">TodoInput</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> ({</span></span>
+<span class="line"><span style="color: #E1E4E8">  userInput,</span></span>
+<span class="line"><span style="color: #E1E4E8">  inputEl,</span></span>
+<span class="line"><span style="color: #E1E4E8">  handleUserInput,</span></span>
+<span class="line"><span style="color: #E1E4E8">  handleTodos,</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">userInput</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">inputEl</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">MutableRefObject</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">HTMLInputElement</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">null</span><span style="color: #E1E4E8">>;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">handleUserInput</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> (</span><span style="color: #FFAB70">e</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">ChangeEvent</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">HTMLInputElement</span><span style="color: #E1E4E8">>) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">void</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">handleTodos</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> () </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">void</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">&#x3C;</span><span style="color: #E1E4E8">VStack py</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{</span><span style="color: #79B8FF">6</span><span style="color: #E1E4E8">}</span><span style="color: #F97583">></span></span>
+<span class="line"><span style="color: #E1E4E8">      &#x3C;</span><span style="color: #B392F0">InputGroup</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #F97583">&#x3C;</span><span style="color: #FFAB70">Input</span></span>
+<span class="line"><span style="color: #E1E4E8">          placeholder</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"to do?"</span></span>
+<span class="line"><span style="color: #E1E4E8">          value</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{userInput}</span></span>
+<span class="line"><span style="color: #E1E4E8">          onChange</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{handleUserInput}</span></span>
+<span class="line"><span style="color: #E1E4E8">          ref</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{inputEl}</span></span>
+<span class="line"><span style="color: #E1E4E8">          </span><span style="color: #FFAB70">autoFocus</span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #F97583">/></span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #F97583">&#x3C;</span><span style="color: #E1E4E8">InputRightElement w</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"6rem"</span><span style="color: #F97583">></span></span>
+<span class="line"><span style="color: #E1E4E8">          </span><span style="color: #F97583">&#x3C;</span><span style="color: #E1E4E8">Button size</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"sm"</span><span style="color: #E1E4E8"> onClick</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{handleTodos}</span><span style="color: #F97583">></span></span>
+<span class="line"><span style="color: #E1E4E8">            Add </span><span style="color: #FFAB70">todo</span></span>
+<span class="line"><span style="color: #E1E4E8">          </span><span style="color: #F97583">&#x3C;/</span><span style="color: #E1E4E8">Button</span><span style="color: #F97583">></span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #F97583">&#x3C;/</span><span style="color: #E1E4E8">InputRightElement</span><span style="color: #F97583">></span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #F97583">&#x3C;/</span><span style="color: #E1E4E8">InputGroup</span><span style="color: #F97583">></span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">&#x3C;/</span><span style="color: #E1E4E8">VStack</span><span style="color: #F97583">></span></span>
+<span class="line"><span style="color: #E1E4E8">  );</span></span>
+<span class="line"><span style="color: #E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">default</span><span style="color: #E1E4E8"> TodoInput;</span></span></code></pre>
+</li>
+</ul>
+<h3 id="usememo">useMemo</h3>
+<ul>
+<li>
+<p><a href="https://reactjs.org/docs/hooks-reference.html#usememo">Official docs</a>:
+<code>const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);</code></p>
+<ul>
+<li>Returns a memoized value.</li>
+<li>Pass a “create” function and an array of dependencies. <code>useMemo</code> will only <strong>recompute the memoized value when one of the dependencies has changed</strong>. This optimization helps to avoid expensive calculations on every render.</li>
+</ul>
+</li>
+<li>
+<p>用來計算 todos 的陣列長度，判斷是否需顯示「全部做完」或「未有任何待辦事項」的相關提示訊息；感覺與 Vue 的 computed 類似</p>
+</li>
+<li>
+<p>相關段落如下：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// App.tsx</span></span>
+<span class="line"><span style="color: #6A737D">// number of pending todos</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">left</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">useMemo</span><span style="color: #E1E4E8">(</span></span>
+<span class="line"><span style="color: #E1E4E8">  () </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> todos.</span><span style="color: #B392F0">filter</span><span style="color: #E1E4E8">((</span><span style="color: #FFAB70">todo</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> todo.done </span><span style="color: #F97583">!==</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">true</span><span style="color: #E1E4E8">).</span><span style="color: #79B8FF">length</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  [todos]</span></span>
+<span class="line"><span style="color: #E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D">// number of total todos</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">qty</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">useMemo</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> todos.</span><span style="color: #79B8FF">length</span><span style="color: #E1E4E8">, [todos])</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">status</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">useMemo</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// all todos are done</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (</span><span style="color: #F97583">!</span><span style="color: #E1E4E8">left </span><span style="color: #F97583">&#x26;&#x26;</span><span style="color: #E1E4E8"> qty) {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'success'</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// no todos</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (</span><span style="color: #F97583">!</span><span style="color: #E1E4E8">qty) {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'warning'</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">}, [left, qty])</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">message</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">useMemo</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (</span><span style="color: #F97583">!</span><span style="color: #E1E4E8">left </span><span style="color: #F97583">&#x26;&#x26;</span><span style="color: #E1E4E8"> qty) {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'All todos are done!'</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (</span><span style="color: #F97583">!</span><span style="color: #E1E4E8">qty) {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'Nothing todo.'</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">}, [left, qty])</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">return</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #6A737D">// 部分略</span></span>
+<span class="line"><span style="color: #E1E4E8">  {</span><span style="color: #FFAB70">status</span><span style="color: #E1E4E8"> &#x26;&#x26; (</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;</span><span style="color: #FFAB70">Alert</span><span style="color: #E1E4E8"> </span><span style="color: #FFAB70">status</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{status} mb</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{</span><span style="color: #79B8FF">6</span><span style="color: #E1E4E8">}</span><span style="color: #F97583">></span></span>
+<span class="line"><span style="color: #E1E4E8">      &#x3C;</span><span style="color: #FFAB70">AlertIcon</span><span style="color: #E1E4E8"> /></span></span>
+<span class="line"><span style="color: #E1E4E8">      {</span><span style="color: #FFAB70">message</span><span style="color: #E1E4E8">}</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;/</span><span style="color: #FFAB70">Alert</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  )}</span></span>
+<span class="line"><span style="color: #E1E4E8">)</span></span></code></pre>
+</li>
+</ul>
+<h3 id="useeffect">useEffect</h3>
+<ul>
+<li>
+<p><a href="https://reactjs.org/docs/faq-ajax.html">React AJAX and APIs</a>: You should populate data with AJAX calls in the <code>componentDidMount</code> lifecycle method; equivalent with <code>useEffect</code></p>
+</li>
+<li>
+<p>在與 Firebase 連線處理 CRUD 後，於 useEffect 內抓取資料（與 Firebase 連線前直接透過 useState 解決）</p>
+</li>
+<li>
+<p>相關段落如下：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// App.tsx</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">firebaseTodoRef</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">collection</span><span style="color: #E1E4E8">(db, </span><span style="color: #9ECBFF">'todos'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #B392F0">useEffect</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">getFirebaseTodo</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">async</span><span style="color: #E1E4E8"> () </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">try</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">snapshots</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">await</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">getDocs</span><span style="color: #E1E4E8">(firebaseTodoRef);</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">results</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #FFAB70">id</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #FFAB70">content</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #FFAB70">edit</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">boolean</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #FFAB70">done</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">boolean</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">      }[] </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> snapshots.docs.</span><span style="color: #B392F0">map</span><span style="color: #E1E4E8">((</span><span style="color: #FFAB70">doc</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> ({</span></span>
+<span class="line"><span style="color: #E1E4E8">        id: doc.id,</span></span>
+<span class="line"><span style="color: #E1E4E8">        content: doc.</span><span style="color: #B392F0">data</span><span style="color: #E1E4E8">().content,</span></span>
+<span class="line"><span style="color: #E1E4E8">        edit: doc.</span><span style="color: #B392F0">data</span><span style="color: #E1E4E8">().edit,</span></span>
+<span class="line"><span style="color: #E1E4E8">        done: doc.</span><span style="color: #B392F0">data</span><span style="color: #E1E4E8">().done,</span></span>
+<span class="line"><span style="color: #E1E4E8">      }));</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #B392F0">setTodos</span><span style="color: #E1E4E8">(results);</span></span>
+<span class="line"><span style="color: #E1E4E8">    } </span><span style="color: #F97583">catch</span><span style="color: #E1E4E8"> (e) {</span></span>
+<span class="line"><span style="color: #E1E4E8">      console.</span><span style="color: #B392F0">error</span><span style="color: #E1E4E8">(e);</span></span>
+<span class="line"><span style="color: #E1E4E8">    }</span></span>
+<span class="line"><span style="color: #E1E4E8">  };</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">getFirebaseTodo</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"><span style="color: #E1E4E8">}, [firebaseTodoRef]);</span></span></code></pre>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// service/firebase.ts</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> { initializeApp } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'firebase/app'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> { getFirestore } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'firebase/firestore/lite'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">firebaseConfig</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  apiKey: </span><span style="color: #9ECBFF">'xxx'</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// skip the data parts...</span></span>
+<span class="line"><span style="color: #E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">app</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">initializeApp</span><span style="color: #E1E4E8">(firebaseConfig);</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">db</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">getFirestore</span><span style="color: #E1E4E8">(app);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">default</span><span style="color: #E1E4E8"> db;</span></span></code></pre>
+</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://reactjs.org/docs/hooks-reference.html">React Hooks API Reference</a></li>
+<li><a href="https://firebase.google.com/docs/firestore/quickstart">Get started with Cloud Firestore</a></li>
+<li><a href="https://www.youtube.com/watch?v=jCY6DH8F4oc&#x26;t=1420s">YouTube: CRUD Tutorial Using React + Firebase | Firebase 9 and Firestore Tutorial</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

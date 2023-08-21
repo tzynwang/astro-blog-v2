@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>Alpha Camp「2-3 middleware實作練習」技術記錄</title>
+    <meta name="title" content="Alpha Camp「2-3 middleware實作練習」技術記錄">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/express-middleware/">
+    <meta property="og:title" content="Alpha Camp「2-3 middleware實作練習」技術記錄">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/express-middleware/">
+    <meta property="twitter:title" content="Alpha Camp「2-3 middleware實作練習」技術記錄">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">Alpha Camp「2-3 middleware實作練習」技術記錄</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-05-23 12:53</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Express
+</span><span class="astro-2IYMVI75">
+  JavaScript
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#專案結構" class="astro-QTOKGA5Y">專案結構</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#appjs-內容" class="astro-QTOKGA5Y">app.js 內容</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#scriptslogrequestjs-內容" class="astro-QTOKGA5Y">scripts/logRequest.js 內容</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#scriptssavetofilejs-內容" class="astro-QTOKGA5Y">scripts/saveToFile.js 內容</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在本作業中實作的相關功能：</p>
+<ul>
+<li>透過 Express middleware 偵測發送給<code>localhost:3000</code>的請求</li>
+<li>將每一筆對<code>localhost:3000</code>的請求（request）時間、方法、路由與回應時間輸出到終端上；形式如：<code>2021-05-23 13:00:20 | GET from / | total time: 117ms</code></li>
+<li>將以上記錄寫入純文字檔案中，並使用者可下載此份檔案</li>
+<li>專案 GitHub：<a href="https://github.com/tzynwang/ac_assignment_2-3_middleware#readme">tzynwang/ac_assignment_2-3_middleware</a></li>
+</ul>
+<p><img src="/2021/express-middleware/assignment-screenshot.png" alt="demo"></p>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">node: 12.20.2</span></span>
+<span class="line"><span style="color: #e1e4e8">express: 4.17.1</span></span>
+<span class="line"><span style="color: #e1e4e8">express-handlebars: 5.3.2</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="專案結構">專案結構</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">├─ requestLogs</span></span>
+<span class="line"><span style="color: #e1e4e8">|   └─ requestLogs.txt</span></span>
+<span class="line"><span style="color: #e1e4e8">├─ scripts</span></span>
+<span class="line"><span style="color: #e1e4e8">|   ├─ logRequest.js</span></span>
+<span class="line"><span style="color: #e1e4e8">|   └─ saveToFile.js</span></span>
+<span class="line"><span style="color: #e1e4e8">├─ views</span></span>
+<span class="line"><span style="color: #e1e4e8">|   ├─ layouts</span></span>
+<span class="line"><span style="color: #e1e4e8">|   |  └─ main.handlebars</span></span>
+<span class="line"><span style="color: #e1e4e8">|   └─ index.handlebars</span></span>
+<span class="line"><span style="color: #e1e4e8">└─ app.js</span></span></code></pre>
+<ul>
+<li><code>requestLogs/requestLogs.txt</code>：記錄每一次請求的文字檔案</li>
+<li><code>scripts/logRequest.js</code>：記錄每一次請求的日期、時間、方法與路由，除了輸出到終端外，也會呼叫<code>saveToFile()</code>來將以上內容寫入檔案中</li>
+<li><code>scripts/saveToFile.js</code>：負責寫入檔案的動作</li>
+<li><code>views</code>資料夾：提供瀏覽器介面來讓使用者與此 app 互動</li>
+<li><code>app.js</code>：載入 middleware，並根據路由給予不同的回應</li>
+</ul>
+<h3 id="appjs-內容">app.js 內容</h3>
+<script src="https://gist.github.com/tzynwang/427b059b4444ac99377d9fda7afe0ed3.js"></script>
+<p>第 11 行：Application-level middleware（app 層級的 middleware）</p>
+<ul>
+<li>The function is executed every time the app receives a request (when middleware isn’t mounted with any path).</li>
+<li>出處：<a href="http://expressjs.com/en/guide/using-middleware.html#middleware.application">Express official document: Application-level middleware</a></li>
+<li>宣告<code>app.use(logRequest)</code>讓所有的請求都會經過該 middleware</li>
+</ul>
+<p>第 47-54 行：下載功能（<code>app.post('/download', () => {...})</code>）</p>
+<ul>
+<li>48 行：指定欲下載的檔案的路徑</li>
+<li>49 行：取得當下時間</li>
+<li>50 行：透過<code>.toISOString()</code>將 Date 物件轉換為字串，再使用<code>.slice(0, 10)</code>取出日期部分</li>
+<li>51 行：使用<code>.toLocaleTimeString()</code>來取 timeStart 的時間部分，因為想要取 24 小時制的時間，故<code>option</code>部分加上<code>hour12: false</code>指定輸出 24 小時制的時間；參考<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleTimeString#using_options">MDN: Date.prototype.toLocaleTimeString() — Using options</a>；最後搭配<code>.split(':').join('')</code>將時間字串從<code>HH:MM:SS</code>的格式轉為<code>HHMMSS</code></li>
+<li>52 行：宣告檔案名稱格式</li>
+<li>53 行：<code>res.download()</code> 第一個變數為檔案路徑，第二個變數為檔案名稱；可參考<a href="http://expressjs.com/en/api.html#res.download">Express official document: res.download()</a></li>
+</ul>
+<h3 id="scriptslogrequestjs-內容">scripts/logRequest.js 內容</h3>
+<script src="https://gist.github.com/tzynwang/84d5282f68abfd5e60aa36d94fbe84b7.js"></script>
+<p>第 13 行：<code>res.locals.logs = {...}</code></p>
+<ul>
+<li>路由只接受<code>res</code>或<code>req</code>這兩種參數，無法透過 middleware 的<code>next()</code>來傳遞變數</li>
+<li>將變數賦予<code>res.locals</code>後，即可在每一個路由中透過<code>res.locals</code>取出需要的值；相關概念的說明可參考以下影片（9:25 開始相關段落）</li>
+</ul>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lY6icfhap2o?start=565" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p>第 14 行：<code>res.on('finish')</code>或<code>res.on('close')</code></p>
+<ul>
+<li><a href="https://nodejs.org/api/http.html#http_event_finish">Event finish</a>: Emitted <strong>when the response has been sent</strong>. More specifically, this event is emitted when the last segment of the response headers and body have been handed off to the operating system for transmission over the network. <strong>It does not imply that the client has received anything yet.</strong> 送出回應後即觸發，不考慮客戶端是否真的有收到回應</li>
+<li><a href="https://nodejs.org/api/http.html#http_event_close_1">Event close</a>: Indicates that the <strong>response is completed</strong>, or its underlying connection was terminated prematurely (before the response completion).</li>
+<li>如果只是為計算「伺服器收到請求到發出回應」的時間的話，使用<code>res.on('finish')</code>即可</li>
+</ul>
+<h3 id="scriptssavetofilejs-內容">scripts/saveToFile.js 內容</h3>
+<script src="https://gist.github.com/tzynwang/15a3ac5e5ff573117c8a8070109adc54.js"></script>
+<ul>
+<li>第 4 行：<code>fs.appendFile()</code>使用方式可參考：<a href="https://nodejs.org/docs/latest-v12.x/api/fs.html#fs_fs_appendfile_path_data_options_callback">Node.js: fs.appendFile(path, data[, options], callback)</a></li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li>Express official document:
+<ul>
+<li><a href="http://expressjs.com/en/api.html#res.download">res.download()</a></li>
+<li><a href="http://expressjs.com/en/api.html#res.locals">res.locals</a></li>
+</ul>
+</li>
+<li>StackOverFlow:
+<ul>
+<li><a href="https://stackoverflow.com/questions/7288814/download-a-file-from-nodejs-server-using-express">Download a file from NodeJS Server using Express</a></li>
+<li><a href="https://stackoverflow.com/questions/38273555/what-events-should-i-handle-in-express-response-stream-object-to-handle-when-t">What events should I handle in express response (stream) object to handle when the response finishes?</a></li>
+<li><a href="https://stackoverflow.com/questions/19793723/can-i-send-data-via-express-next-function">Can I send data via express next() function?</a></li>
+<li><a href="https://stackoverflow.com/questions/347551/what-tool-to-use-to-draw-file-tree-diagram">What tool to use to draw file tree diagram</a>：Windows 系統直接在終端輸入 tree 就可以產生資料夾的樹狀結構資料了，不用安裝其他工具</li>
+</ul>
+</li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

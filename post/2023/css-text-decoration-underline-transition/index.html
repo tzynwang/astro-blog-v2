@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>對 CSS text-decoration underline 加上動畫效果</title>
+    <meta name="title" content="對 CSS text-decoration underline 加上動畫效果">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/css-text-decoration-underline-transition/">
+    <meta property="og:title" content="對 CSS text-decoration underline 加上動畫效果">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/css-text-decoration-underline-transition/">
+    <meta property="twitter:title" content="對 CSS text-decoration underline 加上動畫效果">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">對 CSS text-decoration underline 加上動畫效果</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-02-02 19:14</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>想做出「滑鼠滑到超連結元件時，文字底線逐漸顯現」的效果，發現 <code>transition: text-decoration</code> 不管用，但可透過 <code>transition: text-decoration-color</code> 來實現。</p>
+<h2 id="筆記">筆記</h2>
+<p>下面的寫法很直覺但無效：滑鼠滑過去時底線會直接浮現，不會有漸變效果。</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #85E89D">a</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">text-decoration</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">none</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">transition</span><span style="color: #E1E4E8">: text-decoration </span><span style="color: #79B8FF">0.2</span><span style="color: #F97583">s</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">ease</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #85E89D">a</span><span style="color: #B392F0">:hover</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">text-decoration</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">underline</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<p>理由：參考 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration">MDN: text-decoration</a> 中關於 Animation type 的說明，會發現 <code>text-decoration-style</code> 與 <code>text-decoration-line</code> 皆被標註為 <code>discrete</code>，亦即這兩組 CSS 樣式在樣式變化時，不會有補幀效果：</p>
+<blockquote>
+<p><a href="https://stackoverflow.com/questions/44510663/what-are-discrete-animations">stackOverFlow</a>: Discrete animations proceed from one keyframe to the next without any interpolation.</p>
+</blockquote>
+<p>w3c 對 <code>discrete</code> 的定義如下：</p>
+<blockquote>
+<p><a href="https://www.w3.org/TR/web-animations-1/#discrete">w3c</a>: The property’s values cannot be meaningfully combined, thus it is not additive and interpolation swaps from Va to Vb at 50% (p=0.5)</p>
+</blockquote>
+<p>但 <code>text-decoration-color</code> 是能表現出動畫效果的，所以如果只是要「滑鼠滑過，底線慢慢浮現」的效果，可透過以下方式達成：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #85E89D">a</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">text-decoration</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">underline</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">text-decoration-color</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">transparent</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">transition</span><span style="color: #E1E4E8">: text-decoration-color </span><span style="color: #79B8FF">0.2</span><span style="color: #F97583">s</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">ease</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #85E89D">a</span><span style="color: #B392F0">:hover</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">text-decoration-color</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">black</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="css,result" data-slug-hash="OJwrypv" data-user="Charlie7779" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/OJwrypv">
+  transition: text-decoration-color</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<p>搞定。</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.w3.org/TR/web-animations-1/#discrete">w3c: 5.2. Animating properties - discrete</a></li>
+<li><a href="https://stackoverflow.com/questions/30352431/css-transition-not-working-with-underline">stackOverFlow: CSS transition not working with underline</a></li>
+<li><a href="https://stackoverflow.com/questions/44510663/what-are-discrete-animations">stackOverFlow: What are discrete animations?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

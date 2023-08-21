@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>閱讀筆記：Good Code, Bad Code Chapter 1 Code quality</title>
+    <meta name="title" content="閱讀筆記：Good Code, Bad Code Chapter 1 Code quality">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/good-code-bad-code-ch1-code-quality/">
+    <meta property="og:title" content="閱讀筆記：Good Code, Bad Code Chapter 1 Code quality">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/good-code-bad-code-ch1-code-quality/">
+    <meta property="twitter:title" content="閱讀筆記：Good Code, Bad Code Chapter 1 Code quality">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">閱讀筆記：Good Code, Bad Code Chapter 1 Code quality</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-03-05 18:02</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Software Architecture
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#為什麼好的程式碼很重要" class="astro-QTOKGA5Y">為什麼好的程式碼很重要</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#何謂好的程式碼" class="astro-QTOKGA5Y">何謂好的程式碼</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#如何寫出好程式碼" class="astro-QTOKGA5Y">如何寫出好程式碼</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>此篇文章是 Good Code, Bad Code: Think like a software engineer 第一章（Code quality）的閱讀筆記。此章旨在闡揚程式碼品質的重要性，以及作者認為高品質的程式碼中會有哪些特性、工程師在開發時又可以透過哪些方式撰寫優質程式碼。</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="為什麼好的程式碼很重要">為什麼好的程式碼很重要</h3>
+<p>程式碼的本意是在解決問題，而透過程式碼組合起來的軟體，其目的也是在解決各式各樣的問題。好的程式碼能確保軟體「可靠、易於維護且盡量不出錯」。</p>
+<p>優質的程式碼不直接等於好用的軟體，但這是造就一個好用軟體的大前提。如果一段程式碼本身就不可靠、也無法保證其運作的可行性，那麼建立在此之上的軟體多半也無法順利處理它原本要解決的問題。</p>
+<h3 id="何謂好的程式碼">何謂好的程式碼</h3>
+<p>優質的程式碼應具備以下特性：</p>
+<ol>
+<li>這段程式碼能夠解決問題</li>
+<li>這段程式碼不僅滿足當下的需求，還能配合新的需求進行改動</li>
+<li>不要重造輪子：當工程師在解決問題時，通常會將主需求切割為數個小問題依序解決。有些小問題或許已經有現成的解決方式，這些工具多半經過大量測試，其品質會比自行開發來的穩定。並且如果一個問題已經有了常見的解決方法，那麼使用第三方工具也能提升程式碼的可讀性，讓其他人在閱讀程式碼時，能夠更快理解該程式碼的用處。</li>
+</ol>
+<h3 id="如何寫出好程式碼">如何寫出好程式碼</h3>
+<ol>
+<li>使其容易閱讀：閱讀後能了解該段程式碼「解決了什麼問題」、「過程如何」、「是否需傳入參數」以及「最後回傳的結果為何」</li>
+<li>避免驚喜：程式碼應避免破壞共識、心智模型（mental model）</li>
+<li>盡可能降低被誤用的可能性（誤用的後果可能不會在第一時間被發現，導致除錯困難）</li>
+<li>模組化：降低改動難度、提升可測試性</li>
+<li>提升復用性（reusable）與通用性（generalizable）</li>
+<li>能夠被測試</li>
+</ol>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.manning.com/books/good-code-bad-code">Manning: Good Code, Bad Code</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

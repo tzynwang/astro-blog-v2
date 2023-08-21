@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>30天挑戰：「CSS簡易動畫」 相關筆記</title>
+    <meta name="title" content="30天挑戰：「CSS簡易動畫」 相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/ithome2021-9-animation-fill-mode/">
+    <meta property="og:title" content="30天挑戰：「CSS簡易動畫」 相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/ithome2021-9-animation-fill-mode/">
+    <meta property="twitter:title" content="30天挑戰：「CSS簡易動畫」 相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">30天挑戰：「CSS簡易動畫」 相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-08-21 06:19</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span><span class="astro-2IYMVI75">
+  2021鐵人賽
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>使用<code>animation-fill-mode: backwards;</code>讓<code>animation-direction</code>為<code>normal</code>或<code>alternate</code>的元素在動畫開始時的時間點就套用<code>@keyframes 0%</code>時的樣式</p>
+<p><img src="/2021/ithome2021-9-animation-fill-mode/btn-animation-demo.gif" alt="landing下方按鈕會在頁面載入時從下方滑入"></p>
+<h2 id="筆記">筆記</h2>
+<script src="https://gist.github.com/tzynwang/8f653570757710176f8620e17d3fcfcc.js"></script>
+<ul>
+<li><code>.btn</code>本身設定為<code>position: relative;</code>讓其<code>::after</code>在<code>position: absolute;</code>狀態下可以根據按鈕本體進行定位</li>
+<li><code>animation-fill-mode: backwards;</code>讓<code>.btn</code>在動畫開始時就呈現<code>@keyframes moveFromBottom</code>在<code>0%</code>的效果：<code>opacity: 0;</code>與<code>transform: translateY(3rem);</code></li>
+<li><code>.btn:hover::after</code>代表 hover 按鈕後，其<code>::after</code>會放大（<code>scale(1.2, 1.4)</code>）並<code>opacity: 0;</code></li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-fill-mode">MDN: animation-fill-mode</a></li>
+<li><a href="https://www.udemy.com/course/advanced-css-and-sass/">Udemy: Advanced CSS and Sass: Flexbox, Grid, Animations and More!</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

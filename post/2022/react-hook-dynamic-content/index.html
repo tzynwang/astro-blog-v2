@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第30週 工作筆記：透過 custom hook 回傳動態內容</title>
+    <meta name="title" content="2022 第30週 工作筆記：透過 custom hook 回傳動態內容">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-hook-dynamic-content/">
+    <meta property="og:title" content="2022 第30週 工作筆記：透過 custom hook 回傳動態內容">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-hook-dynamic-content/">
+    <meta property="twitter:title" content="2022 第30週 工作筆記：透過 custom hook 回傳動態內容">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第30週 工作筆記：透過 custom hook 回傳動態內容</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-07-28 18:32</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  MaterialUI
+</span><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#作法一將邏輯全部納入-hook-中" class="astro-QTOKGA5Y">作法一：將邏輯全部納入 hook 中</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#作法二透過參數控制-hook-回傳的內容" class="astro-QTOKGA5Y">作法二：透過參數控制 hook 回傳的內容</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#bonus-track-materialui-styled-component-with-typescript" class="astro-QTOKGA5Y">bonus track: MaterialUI styled component with TypeScript</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在重構的過程中收到來自前輩的建議，在這篇筆記記錄一下兩種 react custom hook 的設計方向
+需要 custom hook 完成的事情：根據條件回傳對應的元件，比如根據當下的路由替換網站 NavBar 的選單內容</p>
+<p>原始碼：<a href="https://github.com/tzynwang/react-content-hooks">https://github.com/tzynwang/react-content-hooks</a>
+展示頁：<a href="https://tzynwang.github.io/react-content-hooks/">https://tzynwang.github.io/react-content-hooks/</a></p>
+<h2 id="筆記">筆記</h2>
+<h3 id="作法一將邏輯全部納入-hook-中">作法一：將邏輯全部納入 hook 中</h3>
+<script src="https://gist.github.com/tzynwang/e6cde22debcde3029e2b00382cbdbeb0.js"></script>
+<ul>
+<li>直接在需要動態內容的元件中呼叫該 hook 即可，所有的邏輯都在 hook 內處理；外層元件不進行干涉，只取用 hook 回傳的結果</li>
+<li>在「只有一個關連性需要考慮」的時候，較適合使用此類設計方向
+<ul>
+<li>舉例：如果一個網站的 NavBar 內容根據（且僅需根據）路由來產生動態變化，則可將路由作為唯一會影響動態內容的條件來實作此 hook ，參考上述程式碼第 80 行唯一的 dependency 內容</li>
+</ul>
+</li>
+<li>優點：在邏輯需要修改時，針對 hook 內容進行調整即可，不需要在修改後回頭更新引用 hook 的元件</li>
+<li>缺點：在條件開始變複雜（有兩組以上的關聯性資料會影響產出）後，hook 的內容會逐漸肥大，維護與除錯難度會上升
+<ul>
+<li>舉例：網站的 NavBar 不但在不同的路由間需呈現不同內容，且還須考慮使用者是否已經登入該網站；前述的規格中有<strong>兩個</strong>條件會影響 NavBar 的內容，而判斷最後產出內容的程式碼就會開始增長</li>
+</ul>
+</li>
+</ul>
+<h3 id="作法二透過參數控制-hook-回傳的內容">作法二：透過參數控制 hook 回傳的內容</h3>
+<script src="https://gist.github.com/tzynwang/1164af23cad63fa41e46fccf9e635ab4.js"></script>
+<ul>
+<li>呼叫 hook 時需要提供參數來影響最終內容，並產物在呼叫該 hook 的元件內可能也須搭配其他條件來計算最後是否要渲染在畫面上
+<ul>
+<li>參考 <a href="https://github.com/tzynwang/react-content-hooks/blob/master/src/components/Common/Category/index.tsx#L44">@Components/Common/Category</a> 第 44 與 45 行，透過 hook 取得按鈕元件後，再根據使用者是否登入、是否為 premium 會員來決定畫面上究竟需要渲染哪些按鈕</li>
+</ul>
+</li>
+<li>優點：因部分條件透過外部傳入的關係，讓 hook 本身的程式碼相對簡短</li>
+<li>缺點：需注意在修改 hook 內容後，現行呼叫該 hook 的元件其傳入的參數是否還可沿用，或者需要調整</li>
+</ul>
+<h3 id="bonus-track-materialui-styled-component-with-typescript">bonus track: MaterialUI styled component with TypeScript</h3>
+<p>記錄一下 styled component 型別的來源，以及在根據 MUI 元件建立 styled component 時，自定義的型別要如何傳入 <code>styled</code> 中</p>
+<script src="https://gist.github.com/tzynwang/7946d03c812ea011d08359282d41abd3.js"></script>
+<ul>
+<li>從 <code>@emotion/styled</code> 取得 type <code>StyledComponent</code></li>
+<li>從 <code>@mui/system</code> 取得 type <code>MUIStyledCommonProps</code></li>
+<li>從 <code>@mui/material/styles</code> 取得 type <code>Theme</code></li>
+<li>從 <code>react</code> 取得 type <code>DetailedHTMLProps</code> 與 <code>HTMLAttributes</code></li>
+<li>在需要傳入自定義 <code>props</code> 到 MUI 元件時：
+<ul>
+<li>types.d.ts 第 3 行：先匯入該元件的 props types</li>
+<li>types.d.ts 第 7 行：再 extends 一個自定義型別</li>
+<li>index.tsx 第 26 行：將自定義的 <code>ButtonProps</code> 傳入 <code>StyledComponent</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li>hook 設計方向：來自前輩同事的建議</li>
+<li>type <code>StyledComponent</code>: <a href="https://github.com/emotion-js/emotion/blob/main/packages/styled/types/base.d.ts">emotion/packages/styled/types/base.d.ts</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

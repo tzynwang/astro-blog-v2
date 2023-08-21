@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「setTimeout() difference between parameters as string or function」相關筆記</title>
+    <meta name="title" content="「setTimeout() difference between parameters as string or function」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/settimeout-args/">
+    <meta property="og:title" content="「setTimeout() difference between parameters as string or function」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/settimeout-args/">
+    <meta property="twitter:title" content="「setTimeout() difference between parameters as string or function」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「setTimeout() difference between parameters as string or function」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-04-12 20:27</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  JavaScript
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#原始問題" class="astro-QTOKGA5Y">原始問題</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#解析-1" class="astro-QTOKGA5Y">解析 1</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#延伸問題在迴圈內" class="astro-QTOKGA5Y">延伸問題：在迴圈內</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#解析-2" class="astro-QTOKGA5Y">解析 2</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="原始問題">原始問題</h2>
+<p><code>setTimeout()</code>傳入「與函式一致的字串」作為參數時，為何輸出的結果與「直接傳入函式」不同？</p>
+<p>第一組程式碼：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// 傳入與函式內容一樣的字串作為參數</span></span>
+<span class="line"><span style="color: #B392F0">setTimeout</span><span style="color: #E1E4E8">(console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'first'</span><span style="color: #E1E4E8">), </span><span style="color: #79B8FF">0</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'second'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #6A737D">// 輸出結果：</span></span>
+<span class="line"><span style="color: #6A737D">// >> first</span></span>
+<span class="line"><span style="color: #6A737D">// >> second</span></span></code></pre>
+<p>第二組程式碼：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// 直接傳入函式作為參數</span></span>
+<span class="line"><span style="color: #B392F0">setTimeout</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'first'</span><span style="color: #E1E4E8">), </span><span style="color: #79B8FF">0</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'second'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #6A737D">// 輸出結果：</span></span>
+<span class="line"><span style="color: #6A737D">// >> second</span></span>
+<span class="line"><span style="color: #6A737D">// >> first</span></span></code></pre>
+<h3 id="解析-1">解析 1</h3>
+<ul>
+<li>第一組程式碼的<code>console.log('first')</code>沒有被視為函式，而是被視為一組字串，此組字串在編譯後會被執行</li>
+<li>MDN（說明頁面中稱之為<code>code</code>）對於字串參數的說明：<code>setTimeout()</code> allows you to include a string, which is compiled and executed when the timer expires.</li>
+<li>第一組程式碼實際上做的事情：
+<ol>
+<li><code>setTimeout()</code>沒有收到任何函式作為參數，沒有任何函式被延遲執行</li>
+<li><code>setTimeout()</code>內的<code>console.log('first')</code>被執行，輸出<code>first</code></li>
+<li><code>setTimeout()</code>收到的是「執行<code>console.log('first')</code>後回傳的值」，也就是<code>undefined</code></li>
+<li><code>console.log('second')</code>被執行，輸出<code>second</code></li>
+</ol>
+</li>
+<li>第二組程式碼實際上做的事情：
+<ol>
+<li><code>setTimeout()</code>收到一組匿名函式，該匿名函式被延後執行</li>
+<li><code>console.log('second')</code>被執行，輸出<code>second</code></li>
+<li>call stack 已經沒有其他任務，被<code>setTimeout()</code>延後的匿名函式（<code>console.log('first')</code>）此時可以執行了，輸出<code>first</code>到 console 上</li>
+</ol>
+</li>
+</ul>
+<h2 id="延伸問題在迴圈內">延伸問題：在迴圈內</h2>
+<p>第三組程式碼：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">for</span><span style="color: #E1E4E8"> (</span><span style="color: #F97583">var</span><span style="color: #E1E4E8"> i </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">0</span><span style="color: #E1E4E8">; i </span><span style="color: #F97583">&#x3C;</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">2</span><span style="color: #E1E4E8">; i</span><span style="color: #F97583">++</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">setTimeout</span><span style="color: #E1E4E8">(console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(i));</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"><span style="color: #6A737D">// 輸出結果：</span></span>
+<span class="line"><span style="color: #6A737D">// >> 0</span></span>
+<span class="line"><span style="color: #6A737D">// >> 1</span></span>
+<span class="line"><span style="color: #6A737D">// >> 39607 (timeoutID) (在DevTool執行才會有這行輸出)</span></span>
+<span class="line"><span style="color: #6A737D">// 在Node.js環境執行此段程式碼會回傳TypeError : Callback must be a function. Received undefined</span></span></code></pre>
+<p>第四組程式碼：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">for</span><span style="color: #E1E4E8"> (</span><span style="color: #F97583">var</span><span style="color: #E1E4E8"> i </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">0</span><span style="color: #E1E4E8">; i </span><span style="color: #F97583">&#x3C;</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">2</span><span style="color: #E1E4E8">; i</span><span style="color: #F97583">++</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">setTimeout</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(i));</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"><span style="color: #6A737D">// 輸出結果：</span></span>
+<span class="line"><span style="color: #6A737D">// >> 39670 (timeoutID) (在DevTool執行才會有這行輸出，以Node.js執行不會有這行)</span></span>
+<span class="line"><span style="color: #6A737D">// >> 2</span></span>
+<span class="line"><span style="color: #6A737D">// >> 2</span></span></code></pre>
+<h3 id="解析-2">解析 2</h3>
+<ul>
+<li>第三組程式碼實際上做的事情：
+<ol>
+<li>i 為 0，迴圈第一次執行，<code>console.log(i)</code>為字串參數，執行後輸出 i</li>
+<li>i 增加為 1，迴圈第二次執行，<code>console.log(i)</code>為字串參數，執行後輸出 i</li>
+<li>i 增加為 2，迴圈條件不成立，迴圈停止</li>
+</ol>
+</li>
+<li>第四組程式碼實際上做的事情：
+<ol>
+<li>i 為 0，迴圈第一次執行，函式<code>console.log(i)</code>被延後，停在 callback queue 中等待 call stack 清空</li>
+<li>i 增加為 1，迴圈第二次執行，函式<code>console.log(i)</code>被延後，停在 callback queue 中等待 call stack 清空</li>
+<li>i 增加為 2，迴圈條件不成立，迴圈停止</li>
+<li>call stack 已空，輪到 callback queue 中的 callback function 被執行</li>
+<li>i 為 2，迴圈第一次執行時被延後的<code>console.log(i)</code>輸出 i</li>
+<li>i 為 2，迴圈第二次執行時被延後的<code>console.log(i)</code>輸出 i</li>
+</ol>
+</li>
+</ul>
+<p><img src="/2021/settimeout-args/JS-in-browser.png" alt="瀏覽器環境圖，取自：How JavaScript works: an overview of the engine, the runtime, and the call stack"></p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/54259645/javascript-code-executes-differently-for-settimeout-when-a-function-is-passed-as">Javascript code executes differently for setTimeout when a function is passed as argument</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout">MDN: WindowOrWorkerGlobalScope.setTimeout()</a></li>
+<li><a href="https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf">How JavaScript works: an overview of the engine, the runtime, and the call stack</a></li>
+<li><a href="https://youtu.be/Nzokr6Boeaw">JavaScript for-loops are… complicated - HTTP203</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

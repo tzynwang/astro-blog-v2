@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「部屬Express.js App至Google App Engine」相關筆記</title>
+    <meta name="title" content="「部屬Express.js App至Google App Engine」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/express-app-deploy-gcp/">
+    <meta property="og:title" content="「部屬Express.js App至Google App Engine」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/express-app-deploy-gcp/">
+    <meta property="twitter:title" content="「部屬Express.js App至Google App Engine」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「部屬Express.js App至Google App Engine」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-06-25 14:06</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Express
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#部屬前設定" class="astro-QTOKGA5Y">部屬前設定</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#appjs" class="astro-QTOKGA5Y">app.js</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#configmongoosejs" class="astro-QTOKGA5Y">config/mongoose.js</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#appyaml" class="astro-QTOKGA5Y">app.yaml</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#packagejson" class="astro-QTOKGA5Y">package.json</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#部屬流程" class="astro-QTOKGA5Y">部屬流程</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#練習結果" class="astro-QTOKGA5Y">練習結果</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#關於種子資料" class="astro-QTOKGA5Y">關於種子資料</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<ul>
+<li>同樣是在搭配使用 MongoDB 的情境下，整體流程比感覺比部屬至 Heroku 簡單許多</li>
+<li>缺點：無法處理「對資料庫導入種子資料」的需求；雖然 App Engine 提供<code>runtime: custom</code>與<code>Dockerfile</code>來處理一定程度的客製化需求，但無法配合<code>docker-compose.yml</code>來安裝 mongoDB</li>
+</ul>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">Google Cloud SDK: 346.0.0</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="部屬前設定">部屬前設定</h2>
+<h3 id="appjs">app.js</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// 新增process.env.PORT，讓App可以讀取Google App Engine分配的埠號</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">port</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> process.env.</span><span style="color: #79B8FF">PORT</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">||</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">5000</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D">// 追加以下內容</span></span>
+<span class="line"><span style="color: #E1E4E8">app.</span><span style="color: #B392F0">set</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'trust proxy'</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">true</span><span style="color: #E1E4E8">);</span></span></code></pre>
+<ul>
+<li>關於<code>app.set('trust proxy', true)</code>
+<ul>
+<li>參考官方文件內容：<a href="https://cloud.google.com/appengine/docs/standard/nodejs/runtime#https_and_forwarding_proxies">HTTPS and forwarding proxies</a></li>
+<li>App Engine terminates HTTPS connections at the load balancer and forwards requests to your application. Some applications need to determine the original request IP and protocol. The user’s IP address is available in the standard X-Forwarded-For header. Applications that require this information should configure their web framework to trust the proxy.</li>
+<li>With Express.js, use the trust proxy setting: <code>app.set('trust proxy', true)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="configmongoosejs">config/mongoose.js</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// 於config/mongoose.js中追加process.env.MONGODB_URI</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">MONGODB_URI</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> process.env.</span><span style="color: #79B8FF">MONGODB_URI</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">||</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'mongodb://localhost/login-passport'</span></span>
+<span class="line"><span style="color: #E1E4E8">mongoose.</span><span style="color: #B392F0">connect</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">MONGODB_URI</span><span style="color: #E1E4E8">, { </span><span style="color: #F97583">...</span><span style="color: #E1E4E8"> })</span></span></code></pre>
+<h3 id="appyaml">app.yaml</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #85E89D">runtime</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">nodejs12</span></span>
+<span class="line"><span style="color: #85E89D">env_variables</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">MONGODB_URI</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">'mongodb+srv://&#x3C;DB使用者帳號>:&#x3C;DB密碼>@&#x3C;MongoDB cluster名稱>.8glc1.mongodb.net/&#x3C;MongoDB cluster名稱>?retryWrites=true&#x26;w=majority'</span></span></code></pre>
+<ul>
+<li><code>app.yaml</code>檔案位於專案的根目錄</li>
+<li>參考官方文件：<a href="https://cloud.google.com/appengine/docs/standard/nodejs/runtime">Node.js Runtime Environment</a></li>
+</ul>
+<h3 id="packagejson">package.json</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #9ECBFF">"scripts"</span><span style="color: #E1E4E8">: {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #9ECBFF">"start"</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">"node app.js"</span></span>
+<span class="line"><span style="color: #E1E4E8">},</span></span>
+<span class="line"><span style="color: #9ECBFF">"engines"</span><span style="color: #E1E4E8">: {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #9ECBFF">"node"</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">"^12.0.0"</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<ul>
+<li>Google App Engine 預設執行<code>node server.js</code>來啟動 App，可以透過 package.json 中的<code>start</code> scripts 修改執行內容（本次練習中改為<code>node app.js</code>）</li>
+<li>參考<a href="https://cloud.google.com/appengine/docs/standard/nodejs/runtime#application_startup">官方文件</a>：By default, the runtime starts your application by running <code>node server.js</code>. If you specify a start script in your <code>package.json</code> file, the runtime <strong>runs the specified start script instead</strong>.</li>
+</ul>
+<h2 id="部屬流程">部屬流程</h2>
+<ol>
+<li>在 Google Cloud Platform 建立新專案</li>
+<li>安裝 Google Cloud SDK</li>
+</ol>
+<ul>
+<li>官方說明文件：<a href="https://cloud.google.com/sdk/docs/install">https://cloud.google.com/sdk/docs/install</a></li>
+<li>Google Cloud SDK 需搭配 Python，安裝 SDK 時勾選 Install Bundled Python 選項即可，不須另外自行安裝 Python</li>
+</ul>
+<ol>
+<li>
+<p>安裝完畢後，移動到要部屬到 Google App Engine 的專案的資料夾，在終端機輸入<code>gcloud init</code></p>
+</li>
+<li>
+<p>完成布署前設定後，即可執行<code>gcloud app deploy</code>，部屬完畢後終端機會顯示 App URL（類似<code>https://&#x3C;專案ID>.de.r.appspot.com/</code>），可直接開啟該 URL 瀏覽專案</p>
+</li>
+<li>
+<p>若 URL 打開後沒有載入任何內容，則進入 App Engine → 版本 → 診斷 → 記錄檔中查看錯誤訊息</p>
+<p><img src="/2021/express-app-deploy-gcp/gcp_AppEngine_Version.png" alt="demo 1">
+<img src="/2021/express-app-deploy-gcp/gcp_log.png" alt="demo 2"></p>
+</li>
+</ol>
+<h2 id="練習結果">練習結果</h2>
+<ul>
+<li>Login practice: <a href="https://complete-verve-317814.de.r.appspot.com/">https://complete-verve-317814.de.r.appspot.com/</a></li>
+<li>Movie list (Express.js): <a href="https://academic-genius-317809.de.r.appspot.com/">https://academic-genius-317809.de.r.appspot.com/</a></li>
+</ul>
+<h2 id="關於種子資料">關於種子資料</h2>
+<ul>
+<li>原本以為可以僅靠<code>Dockerfile</code>來處理<code>npm run seed</code>，不過實際執行後得到錯誤訊息<code>MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017</code></li>
+<li>錯誤訊息的意義：環境中沒有安裝 MongoDB
+<ul>
+<li><a href="https://stackoverflow.com/questions/46523321/mongoerror-connect-econnrefused-127-0-0-127017">MongoError: connect ECONNREFUSED 127.0.0.1:27017</a>: This happened probably because the <strong>MongoDB service isn’t started</strong>.</li>
+</ul>
+</li>
+<li>然而 Google App Engine 並不支援<code>docker-compose</code>，故無法進行「安裝 MongoDB 後導入種子資料」此需求，參考討論串：
+<ul>
+<li><a href="https://stackoverflow.com/questions/63782456/docker-compose-yml-in-google-cloud-run">docker-compose.yml in Google Cloud Run</a></li>
+<li><a href="https://stackoverflow.com/questions/63223193/google-app-engine-run-command-after-deploy">Google App Engine run command after deploy</a></li>
+<li><a href="https://stackoverflow.com/questions/39877521/using-docker-compose-within-google-app-engine">Using Docker compose within Google App Engine</a></li>
+</ul>
+</li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

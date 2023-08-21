@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>bundle exec</title>
+    <meta name="title" content="bundle exec">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/bundle-exec/">
+    <meta property="og:title" content="bundle exec">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/bundle-exec/">
+    <meta property="twitter:title" content="bundle exec">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">bundle exec</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-02-08 20:31</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  jekyll
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#note" class="astro-QTOKGA5Y">Note</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#reference" class="astro-QTOKGA5Y">Reference</a>
+            </li>
+      </ul>
+    </div>
+    <p>Question: why adds <code>bundle exec</code> in the command when running jekyll server in the first time?
+Answer (short): to know the version of the gems that are going to use.</p>
+<h2 id="note">Note</h2>
+<p><code>bundle exec</code> will check the Gemfile to understand ”<strong>what gems</strong> will be used” and ”<strong>which version</strong> of the gems should be used”.
+In the case that Gemfile is modified, run <code>bundle exec jekyll server</code> instead of just running <code>jekyll server</code>.</p>
+<p>第一次執行<code>jekyll server</code>要輸入<code>bundle exec jekyll server</code>，讓環境根據 Gemfile 查詢你的程式會用到哪些 gems、並這些 gems 該使用哪些版本。在 Gemfile 沒有更新的情況下，第二次以後直接在環境輸入<code>jekyll server</code>就可以了。</p>
+<p>若有修改 Gemfile 的內容，則須重新執行<code>bundle exec jekyll server</code>。</p>
+<h2 id="reference">Reference</h2>
+<p><a href="https://stackoverflow.com/a/16218854/15028185">What does bundle exec rake mean?</a></p>
+<p>You’re running <code>bundle exec</code> on a program. The program’s creators wrote it when <strong>certain versions of gems</strong> were available. The program <strong>Gemfile</strong> specifies the versions of the gems the creators decided to use. That is, the script was made to run correctly against these gem versions.</p>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

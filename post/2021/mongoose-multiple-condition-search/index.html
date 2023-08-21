@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>從零開始重寫：餐廳清單（Express版）複數條件篩選</title>
+    <meta name="title" content="從零開始重寫：餐廳清單（Express版）複數條件篩選">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/mongoose-multiple-condition-search/">
+    <meta property="og:title" content="從零開始重寫：餐廳清單（Express版）複數條件篩選">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/mongoose-multiple-condition-search/">
+    <meta property="twitter:title" content="從零開始重寫：餐廳清單（Express版）複數條件篩選">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">從零開始重寫：餐廳清單（Express版）複數條件篩選</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-07-06 15:25</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Mongoose
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#前端-filterjs" class="astro-QTOKGA5Y">前端 filter.js</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#後端-restaurantjs" class="astro-QTOKGA5Y">後端 restaurant.js</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>實作了「使用者勾選餐廳類別後，根據使用者勾選的類別顯示相對應的內容，並支援複數類別檢索」，記錄一下如何透過 mongoose 執行相關的搜尋操作</p>
+<p><img src="/2021/mongoose-multiple-condition-search/filterDemo.gif" alt="功能展示"></p>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">mongoose: 5.12.14</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="前端-filterjs">前端 filter.js</h3>
+<script src="https://gist.github.com/tzynwang/575200d7844107259bc11c89733f5b2c.js"></script>
+<ul>
+<li>第 7 行：取畫面中所有被勾選起來的選項</li>
+<li>第 9 行：將 nodeList 整理為只剩下勾選內容的乾淨陣列，假設使用者勾選類別「美式餐廳」與「酒吧」，那麼<code>selected</code>內容即為<code>['美式餐廳', '酒吧']</code></li>
+<li>第 11 行：等同<code>const payload = { selected: selected }</code></li>
+<li>12-16 行：透過 axios 對<code>/restaurant/filter</code>發送 POST 請求，夾帶<code>data: payload</code></li>
+<li>17 行：載入 loading spinner</li>
+<li>19 行：根據<code>/restaurant/filter</code>回傳的資料重新渲染畫面</li>
+</ul>
+<h3 id="後端-restaurantjs">後端 restaurant.js</h3>
+<script src="https://gist.github.com/tzynwang/6229f2d31c1b7bebf0ce5a6cb9dc3b14.js"></script>
+<ul>
+<li>第 2 行：<code>selected</code>內容與前端 filter.js 的<code>selected</code>一致；假如使用者勾選類別「美式餐廳」與「酒吧」，那麼這裡<code>selected</code>的內容即為<code>['美式餐廳', '酒吧']</code></li>
+<li>第 3 行：為了配合 mongoose 的<code>.or()</code>，將<code>selected</code>加工為<code>[ { category: '美式餐廳' }, { category: '酒吧' } ]</code>的形式，放入<code>.or()</code>中的意思即為「搜尋 category 為美式餐廳或是咖啡的 Document」
+<code>const conditions = selected.map(category => ({ category }))</code>等同
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">conditions</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> selected.</span><span style="color: #B392F0">map</span><span style="color: #E1E4E8">((</span><span style="color: #FFAB70">category</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> { category: category };</span></span>
+<span class="line"><span style="color: #E1E4E8">});</span></span></code></pre>
+</li>
+<li>第 7 行：根據<code>selected.length</code>判斷使用者是否有勾選任何篩選類別，如果「一個類別都沒有勾選」的話，視同停止篩選行為，故回傳該使用者擁有的所有餐廳；反之在使用者「有勾選類別」的情況下，就根據使用者勾選的類別進行篩選</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/45072255/axios-post-array-data">axios post array data</a></li>
+<li><a href="https://stackoverflow.com/questions/7382207/mongooses-find-method-with-or-condition-does-not-work-properly">Mongoose’s find method with $or condition does not work properly</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

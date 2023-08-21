@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>從零開始重寫：餐廳清單（Express版）基礎功能與架構</title>
+    <meta name="title" content="從零開始重寫：餐廳清單（Express版）基礎功能與架構">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/express-restaurant-list/">
+    <meta property="og:title" content="從零開始重寫：餐廳清單（Express版）基礎功能與架構">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/express-restaurant-list/">
+    <meta property="twitter:title" content="從零開始重寫：餐廳清單（Express版）基礎功能與架構">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">從零開始重寫：餐廳清單（Express版）基礎功能與架構</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-06-21 15:47</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Express
+</span><span class="astro-2IYMVI75">
+  Express Handlebars
+</span><span class="astro-2IYMVI75">
+  Mongoose
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#appjs" class="astro-QTOKGA5Y">app.js</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#db-schema" class="astro-QTOKGA5Y">DB schema</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#db-seeder" class="astro-QTOKGA5Y">DB seeder</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#模板部分" class="astro-QTOKGA5Y">模板部分</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>試著從頭開始重新練習一次 Express、Express handlebars 與 Mongoose 相關內容，本篇筆記主要記錄練習途中遭遇到的問題、解法與日後可能會回頭參考的相關內容</p>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">express: 4.17.1</span></span>
+<span class="line"><span style="color: #e1e4e8">express-fileupload: 1.2.1</span></span>
+<span class="line"><span style="color: #e1e4e8">express-handlebars: 5.3.2</span></span>
+<span class="line"><span style="color: #e1e4e8">mongoose: 5.12.14</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="appjs">app.js</h2>
+<script src="https://gist.github.com/tzynwang/97709d3b1d83e3ff4505924a09d819f4.js"></script>
+<ul>
+<li>20-21 行：為了處理使用者上傳的餐廳圖片，使用套件<code>express-fileupload</code>（<a href="https://www.npmjs.com/package/express-fileupload">npm</a>）
+<ul>
+<li>參考<a href="https://github.com/richardgirges/express-fileupload/tree/master/example#basic-file-upload">官方示範</a>，HTML 的 form 元素須加上<code>encType="multipart/form-data"</code>才能取到圖片資料</li>
+<li>注意：是透過<code>req.files</code>而非<code>req.body</code>來取使用者上傳的圖片資料</li>
+<li>取出<code>req.files.&#x3C;input name>.mimetype</code>與<code>req.files.&#x3C;input name>.data</code>來存入資料庫</li>
+</ul>
+</li>
+<li>26 行 helpers 部分：本次使用自定義的 helpers 來配合 Express handlebars，接觸過 Vue 的 computed 後比較能理解 helpers 的運作模式了
+<ul>
+<li>注意呼叫自定義的 helpers<strong>不需要加上#</strong>，在模板中直接傳入 helpers 與參數即可，比如：</li>
+<li><code>&#x3C;img src="{{toImage this.image.contentType this.image.data.buffer}}"></code></li>
+<li><code>&#x3C;option {{ifEquals this ../restaurant.category}}>&#x3C;/option></code></li>
+</ul>
+</li>
+<li>39 行開始：對比之前的作業多半使用<code>.then()</code>進行串接，本次基本上都改用 await/async 語法糖來處理資料庫端相關的行為
+<ul>
+<li><code>await Restaurant.find({ deleteFlag: false }).sort({ _id: -1 }).lean()</code>：取所有<code>deleteFlag</code>為<code>false</code>的內容，並根據<code>_id</code>逆向排列</li>
+</ul>
+</li>
+<li>48 行開始：本次實作出「根據使用者選取的欄位來限制搜尋範圍」之功能，<code>keyword</code>為使用者輸入的關鍵字、<code>field</code>為使用者指定要進行搜尋的欄位範圍
+<ul>
+<li>52-53 行：無法在<code>mongoose.find()</code>直接使用 template literal，故改為「建立一個空物件，物件的鍵根據<code>field</code>決定，物件的值為<code>new RegExp(keyword, 'i')</code>」，並將該物件作為條件傳入<code>.find()</code>中</li>
+<li>57 行：偷懶行為，直接將<code>field</code>的中文對應名稱物件宣告在這邊，並傳入顯示搜尋結果的<code>index</code>模板</li>
+</ul>
+</li>
+<li>第 71 行：<code>await Restaurant.find().distinct('category').lean()</code>
+<ul>
+<li>取出所有不重複的<code>category</code>的值</li>
+<li><a href="https://stackoverflow.com/questions/30020946/mongoose-returning-unique-result-set-with-no-duplicate-entries">Mongoose: Returning unique result set with no duplicate entries</a>: use <code>find</code> to establish the query and then chain a call to <code>distinct</code> on the resulting query object to get the unique result.</li>
+<li><a href="https://mongoosejs.com/docs/api.html#query_Query-distinct">Mongoose: Query.prototype.distinct()</a>: Declares or executes a <code>distinct()</code> operation.</li>
+<li><a href="https://www.w3schools.com/sql/sql_distinct.asp">SQL SELECT DISTINCT Statement</a>: The <code>SELECT DISTINCT</code> statement is used to <strong>return only distinct (different) values</strong>.</li>
+</ul>
+</li>
+<li>99-104 行：若使用者選擇自行上傳餐廳圖片（<code>if (req.files)</code>）的話，取圖片的<code>data</code>與<code>mimetype</code>存入 DB 中，若使用者沒有上傳圖片的話，則自動安排一張預設的餐廳圖片 url 給<code>image_url</code>欄位</li>
+<li>第 152 行：使用<code>.findOne()</code>來取出<code>document</code>型態的資料，之後才可配合<code>.save()</code>將修改完的資料存回 DB 中
+<ul>
+<li><a href="https://mongoosejs.com/docs/documents.html#documents-vs-models">Mongoose: Documents vs Models</a>: <code>Document</code> and <code>Model</code> are distinct classes in Mongoose. The <code>Model</code> class is a subclass of the <code>Document</code> class. When you use the <code>Model</code> constructor, you create a new <code>document</code>.</li>
+<li>When you load documents from MongoDB using model functions like <code>findOne()</code>, you get a Mongoose <code>document</code> back.</li>
+</ul>
+</li>
+</ul>
+<h2 id="db-schema">DB schema</h2>
+<script src="https://gist.github.com/tzynwang/935464602cb71801e3b1c63acce9eb76.js"></script>
+<ul>
+<li>image 欄位的內容參考<a href="https://stackoverflow.com/questions/27353346/saving-image-with-mongoose">Saving image with mongoose</a></li>
+<li>deleteFlag 預設為<code>false</code>（<code>default: false</code>），參考<a href="https://mongoosejs.com/docs/defaults.html">Mongoose: Declaring Defaults in Your Schema</a></li>
+</ul>
+<h2 id="db-seeder">DB seeder</h2>
+<script src="https://gist.github.com/tzynwang/7585b5fbe4fcdfa38aecfaf72276f832.js"></script>
+<ul>
+<li>2-3 行：讀取<code>.json</code>資料</li>
+<li>第 15 行開始：改用 async/await 語法糖包裝<code>Restaurant.create()</code></li>
+<li>31 行：seeder 寫入完畢後，呼叫<code>db.close()</code>結束連線</li>
+</ul>
+<h2 id="模板部分">模板部分</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">{{#if searchCheck}}</span></span>
+<span class="line"><span style="color: #e1e4e8">&#x3C;script src="/scripts/searchCheck.js">&#x3C;/script></span></span>
+<span class="line"><span style="color: #e1e4e8">{{/if}}</span></span></code></pre>
+<p>目前僅有<code>/</code>與<code>/search</code>路由回傳<code>searchCheck: true</code>，故<code>searchCheck.js</code>只會在這兩個頁面被載入</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/58189365/async-await-in-nodejs-mongoose">Async/await in Nodejs + Mongoose</a></li>
+<li><a href="https://stackoverflow.com/questions/8499633/how-to-display-base64-images-in-html">How to display Base64 images in HTML?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

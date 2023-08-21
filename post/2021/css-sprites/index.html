@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「CSS Sprites」相關筆記</title>
+    <meta name="title" content="「CSS Sprites」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/css-sprites/">
+    <meta property="og:title" content="「CSS Sprites」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/css-sprites/">
+    <meta property="twitter:title" content="「CSS Sprites」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「CSS Sprites」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-09-01 14:14</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#關於-http2" class="astro-QTOKGA5Y">關於 HTTP/2</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>CSS Sprites 帶來的優勢：減少發對伺服器發送請求的次數，增加 performance</p>
+<h2 id="筆記">筆記</h2>
+<ul>
+<li>CSS Sprites are a means of combining multiple images into a <strong>single image file</strong> for use on a website, to help with <strong>performance</strong>.</li>
+<li>The term “sprites” comes from a technique in computer graphics, most often used in video games.
+<ul>
+<li>The idea was that the computer could <strong>fetch a graphic into memory</strong>, and then only <strong>display parts of that image</strong> at a time, which was faster than having to continually fetch new images.</li>
+<li>The sprite was the big combined graphic.</li>
+</ul>
+</li>
+<li>Get the image <strong>once</strong>, and shift it around and only display parts of it. This <strong>reduces the overhead of having to fetch multiple images</strong>.</li>
+<li>把一堆 icon 集合在一張大圖裡面，這樣只要請求（request）就一次就可以取得所有的 icon</li>
+<li>透過 background-position 調整「顯示這張大圖的哪一個部分」就可以在網頁各處展示需要的 icon</li>
+<li>因為瀏覽器只需要對伺服器做一次請求就可以獲得全部的圖示，請求的數量減少，網頁載入的速度會變快
+<blockquote>
+<p>By now you should realize that the more HTTP requests your page requires, the more overhead you’ll have and therefore the slower the page will be. <strong>Reducing the number of HTTP request</strong> is the best thing you can to <strong>speed up a page</strong>. <a href="https://www.bookofspeed.com/chapter3.html">Book of Speed</a></p>
+</blockquote>
+</li>
+</ul>
+<h3 id="關於-http2">關於 HTTP/2</h3>
+<ul>
+<li>然而 MDN 也有補充：
+<blockquote>
+<p>Note: When using HTTP/2, it may in fact be more bandwidth-friendly to use multiple small requests.</p>
+</blockquote>
+</li>
+<li>stackOverFlow:
+<ul>
+<li>Thanks to the <strong>multiplexing</strong> feature of the HTTP/2 protocol, the number of concurrent requests per domain is not limited to 6-8, but it is virtually unlimited.</li>
+<li>It is virtually unlimited in the sense that browsers and servers may limit the number of concurrent requests via the <a href="https://datatracker.ietf.org/doc/html/rfc7540#section-6.5.2">HTTP/2 configuration parameter</a> called <code>SETTINGS_MAX_CONCURRENT_STREAMS</code>.</li>
+</ul>
+</li>
+<li>Wikipedia HTTP/2:
+<ul>
+<li>Additional performance improvements in the first draft of HTTP/2 (which was a copy of SPDY) come from <strong>multiplexing of requests and responses</strong> to avoid some of the head-of-line blocking problem in HTTP 1 (even when HTTP pipelining is used), header compression, and prioritization of requests.</li>
+</ul>
+</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Images/Implementing_image_sprites_in_CSS">MDN: Implementing image sprites in CSS</a></li>
+<li><a href="https://css-tricks.com/css-sprites/">CSS Sprites: What They Are, Why They’re Cool, and How To Use Them</a></li>
+<li><a href="https://en.wikipedia.org/wiki/HTTP/2">Wikipedia: HTTP/2</a></li>
+<li><a href="https://stackoverflow.com/a/36847527/15028185">stackOverFlow: Is the per-host connection limit raised with HTTP/2?</a></li>
+<li><a href="https://instantsprite.com/">Instant Sprite: CSS Sprite Generator</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

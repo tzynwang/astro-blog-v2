@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>作業功能擴充：為老爸的私房錢新增開支圖表、將開支紀錄下載為Excel檔案</title>
+    <meta name="title" content="作業功能擴充：為老爸的私房錢新增開支圖表、將開支紀錄下載為Excel檔案">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/express-chartjs-exceljs/">
+    <meta property="og:title" content="作業功能擴充：為老爸的私房錢新增開支圖表、將開支紀錄下載為Excel檔案">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/express-chartjs-exceljs/">
+    <meta property="twitter:title" content="作業功能擴充：為老爸的私房錢新增開支圖表、將開支紀錄下載為Excel檔案">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">作業功能擴充：為老爸的私房錢新增開支圖表、將開支紀錄下載為Excel檔案</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-07-11 18:08</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Express
+</span><span class="astro-2IYMVI75">
+  Mongoose
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#圖表部分" class="astro-QTOKGA5Y">圖表部分</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#原始碼-1" class="astro-QTOKGA5Y">原始碼 1</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#將紀錄下載為-excel-部分" class="astro-QTOKGA5Y">將紀錄下載為 Excel 部分</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#原始碼-2" class="astro-QTOKGA5Y">原始碼 2</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>圖表套件：<code>chart.js</code>（<a href="https://www.chartjs.org/docs/latest/">官方文件</a>）
+生成 Excel 之套件：<code>exceljs</code>（<a href="https://www.npmjs.com/package/exceljs">npm</a>）</p>
+<p><img src="/2021/express-chartjs-exceljs/chartDemo.png" alt="圖表成品示意"></p>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">chart.js: 3.4.1</span></span>
+<span class="line"><span style="color: #e1e4e8">exceljs: 4.2.1</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="圖表部分">圖表部分</h2>
+<ul>
+<li>需求：
+<ul>
+<li>使用者登入記帳 APP 時，若當月有任何記帳資料的話，顯示開支圖表；若該月份還未有任何記帳資料，則不會顯示圖表</li>
+<li>使用者可以在首頁篩選不同月份的記帳資料，篩選月份後，若該月份有記帳資料，則顯示圖表（反之該月份若無任何記帳資料，不顯示圖表）</li>
+<li>使用者若篩選特定類型的帳目資料，不顯示圖表</li>
+</ul>
+</li>
+<li>實作規劃：
+<ul>
+<li>監聽<code>&#x3C;input type="month"></code>的<code>change</code>事件，只有在使用者選取了帳目月份、且帳目類型為「全類別」的時候，才會顯示圖表</li>
+<li>根據使用者選擇的條件（月份、類型）向後端發出 POST request，等待後端回應資料後，再根據資料修改前端畫面</li>
+</ul>
+</li>
+</ul>
+<h3 id="原始碼-1">原始碼 1</h3>
+<script src="https://gist.github.com/tzynwang/327957091f91f81b86c527f29a51c84d.js"></script>
+<h2 id="將紀錄下載為-excel-部分">將紀錄下載為 Excel 部分</h2>
+<ul>
+<li>需求：想要滿足「可以讓使用者備份記帳 APP 中的開支資料」此一需求</li>
+<li>實作規劃：
+<ul>
+<li>從資料庫中取出該使用者的所有未被刪除的帳目資料，寫入 excel 檔案後，下載該檔案</li>
+<li>搜尋關鍵字「express download excel」，參考 stackOverFlow 與 blog 討論串進行實作</li>
+</ul>
+</li>
+</ul>
+<h3 id="原始碼-2">原始碼 2</h3>
+<script src="https://gist.github.com/tzynwang/b77a79b8bc53c6f5d546b4f18aa7ce71.js"></script>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/43729199/how-i-can-use-like-operator-on-mongoose">How I can use “LIKE” operator on mongoose?</a></li>
+<li><a href="https://stackoverflow.com/questions/38497650/how-to-find-items-using-regex-in-mongoose">How to find items using regex in Mongoose</a></li>
+<li><a href="https://stackoverflow.com/questions/40056555/destroy-chart-js-bar-graph-to-redraw-other-graph-in-same-canvas">Destroy chart.js bar graph to redraw other graph in same canvas</a></li>
+<li><a href="https://bezkoder.com/node-js-download-excel-file/">Node.js Download Excel file example with exceljs</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第51週 實作筆記：視覺效果一致的 TextField 與 FormControl 拼裝版 Input</title>
+    <meta name="title" content="2022 第51週 實作筆記：視覺效果一致的 TextField 與 FormControl 拼裝版 Input">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/mui-Input-FormHelperText/">
+    <meta property="og:title" content="2022 第51週 實作筆記：視覺效果一致的 TextField 與 FormControl 拼裝版 Input">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/mui-Input-FormHelperText/">
+    <meta property="twitter:title" content="2022 第51週 實作筆記：視覺效果一致的 TextField 與 FormControl 拼裝版 Input">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第51週 實作筆記：視覺效果一致的 TextField 與 FormControl 拼裝版 Input</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-12-23 20:19</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  JavaScript
+</span><span class="astro-2IYMVI75">
+  MaterialUI
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#元件部分" class="astro-QTOKGA5Y">元件部分</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#javascript-syntax" class="astro-QTOKGA5Y">JavaScript syntax</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在將專案的 MaterialUI 版本從 4 升到 5 時，發現除了直接使用 <code>TextField</code> 以外，也可透過 <code>FormControl</code>、<code>Input</code> 與 <code>FormHelperText</code> 組合做出一致的視覺效果。</p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">@mui/material: 5.11.0</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="元件部分">元件部分</h3>
+<p>從 <a href="https://github.com/mui/material-ui/blob/master/packages/mui-material/src/TextField/TextField.js">mui/material-ui/TextField.js</a> 可以觀察到 <code>TextField</code> 會根據傳入的 <code>props.variant</code> 來決定最後要使用 <code>Input</code>、<code>FilledInput</code> 或 <code>OutlinedInput</code> 元件：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">variantComponent</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  standard: Input,</span></span>
+<span class="line"><span style="color: #E1E4E8">  filled: FilledInput,</span></span>
+<span class="line"><span style="color: #E1E4E8">  outlined: OutlinedInput,</span></span>
+<span class="line"><span style="color: #E1E4E8">};</span></span></code></pre>
+<p>而原始碼下方的 <code>return</code> 部位也可觀察到 <code>TextField</code> 是根據 <code>helperText</code> 的有無來判定是否要顯示 <code>FormHelperText</code> 元件：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">{</span></span>
+<span class="line"><span style="color: #E1E4E8">  helperText </span><span style="color: #F97583">&#x26;&#x26;</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;</span><span style="color: #79B8FF">FormHelperText</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">id</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{helperTextId} {</span><span style="color: #F97583">...</span><span style="color: #E1E4E8">FormHelperTextProps}></span></span>
+<span class="line"><span style="color: #E1E4E8">      {helperText}</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;/</span><span style="color: #79B8FF">FormHelperText</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  );</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<p>單純以視覺效果來說，以下兩者可以做出一致效果，但須注意 <code>FormControl</code> 拼裝版需自行設定 <code>id</code>、<code>htmlFor</code> 與 <code>aria-describedby</code>：</p>
+<iframe src="https://codesandbox.io/embed/mui-textfield-input-formcontrol-hpbhqh?fontsize=14&#x26;hidenavigation=1&#x26;module=%2Fdemo.tsx&#x26;theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="mui-TextField-Input-FormControl" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+<h2 id="javascript-syntax">JavaScript syntax</h2>
+<p>在原始碼中發現還有以下寫法，解構賦值的同時使用冒號來將值賦予新的變數：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// ...</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">id</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">idOverride</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// ...</span></span>
+<span class="line"><span style="color: #E1E4E8">} </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> props;</span></span></code></pre>
+<p>白話文：將 <code>props.id</code> 的值賦予到本地變數 <code>idOverride</code> 中。</p>
+<blockquote>
+<p>MDN: A property can be unpacked from an object and assigned to a variable with a different name than the object property.</p>
+</blockquote>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">o</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> { p: </span><span style="color: #79B8FF">42</span><span style="color: #E1E4E8">, q: </span><span style="color: #79B8FF">true</span><span style="color: #E1E4E8"> };</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> { </span><span style="color: #FFAB70">p</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">foo</span><span style="color: #E1E4E8">, </span><span style="color: #FFAB70">q</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">bar</span><span style="color: #E1E4E8"> } </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> o;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(foo); </span><span style="color: #6A737D">// 42</span></span>
+<span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(bar); </span><span style="color: #6A737D">// true</span></span></code></pre>
+<blockquote>
+<p>MDN: Here, for example, const <code>{ p: foo } = o</code> takes from the object <code>o</code> the property named <code>p</code> and assigns it to a local variable named <code>foo</code>.</p>
+</blockquote>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://github.com/mui/material-ui/blob/master/packages/mui-material/src/TextField/TextField.js">mui/material-ui/TextField.js</a></li>
+<li><a href="https://mui.com/material-ui/react-text-field/">MUI: Text Field</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#assigning_to_new_variable_names">MDN: Object destructuring — Assigning to new variable names</a></li>
+<li><a href="https://stackoverflow.com/questions/51959013/use-of-colon-in-object-assignment-destructuring-javascript">stackOverFlow: Use of Colon in object assignment destructuring Javascript</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

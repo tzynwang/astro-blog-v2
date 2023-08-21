@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>自主練習專案「grid-template-areas generator」技術記錄</title>
+    <meta name="title" content="自主練習專案「grid-template-areas generator」技術記錄">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/grid-template-areas-generator-review/">
+    <meta property="og:title" content="自主練習專案「grid-template-areas generator」技術記錄">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/grid-template-areas-generator-review/">
+    <meta property="twitter:title" content="自主練習專案「grid-template-areas generator」技術記錄">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">自主練習專案「grid-template-areas generator」技術記錄</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-03-24 12:18</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#成品" class="astro-QTOKGA5Y">成品</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#css-內容" class="astro-QTOKGA5Y">CSS 內容</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#使用before與linear-gradient畫圖示" class="astro-QTOKGA5Y">使用::before與linear-gradient()畫圖示</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#textarea換行上色效果" class="astro-QTOKGA5Y">&lt;textarea&gt;換行上色效果</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#js-內容" class="astro-QTOKGA5Y">JS 內容</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#return與break的差別" class="astro-QTOKGA5Y">return與break的差別</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#regular-expressions-筆記" class="astro-QTOKGA5Y">Regular Expressions 筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>微型專案「grid-template-areas generator」是為了不想要手動輸入多種 grid-template-areas 設定的產物；輸入 column 與 row 的始末後，按下 generate 按鈕即可產生能直接使用的 grid-template-areas 設定，並提供一鍵複製的功能。</p>
+<h2 id="成品">成品</h2>
+<p>codepen 展示：</p>
+<p class="codepen" data-height="265" data-theme-id="dark" data-default-tab="css,result" data-user="Charlie7779" data-slug-hash="qBqGbpm" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="grid-template-areas generator">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/qBqGbpm">
+  grid-template-areas generator</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">Google Chrome: 89.0.4389.90 (Official Build) (64-bit)</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="css-內容">CSS 內容</h2>
+<h3 id="使用before與linear-gradient畫圖示">使用<code>::before</code>與<code>linear-gradient()</code>畫圖示</h3>
+<ul>
+<li>
+<p>先選取<code>.label</code>的<code>::before</code>部位，設定<code>position: absolute;</code>與<code>top: 8px;</code>、<code>left: 4px;</code>來讓圖示預定繪製的範圍離<code>.label</code>左邊框 4px 遠，並垂直置中</p>
+</li>
+<li>
+<p><code>background</code>如果設定多個<code>linear-gradient()</code>，原始碼從上到下會分別對應圖層從上到下繪製的內容</p>
+<ul>
+<li>以 cell start 的圖示為例：</li>
+</ul>
+<script src="https://gist.github.com/tzynwang/9b197345e6727409ced24f58820e1a47.js"></script>
+  <p class="codepen" data-height="265" data-theme-id="dark" data-default-tab="css,result" data-user="Charlie7779" data-slug-hash="GRrJEJM" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="linear-gradient()">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/GRrJEJM">
+  linear-gradient()</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+  </p>
+  <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+  - 其他欄位的圖示原理相同，僅是修改色塊位置或縮小覆蓋區域
+</li>
+</ul>
+<h3 id="textarea換行上色效果"><code>&#x3C;textarea></code>換行上色效果</h3>
+<ul>
+<li>使用<code>repeating-linear-gradient</code>來重複製造淺綠／白色相間的色塊背景</li>
+<li>將文字的高度設定成與色塊背景高度一致，並在<code>background</code>加上<code>local</code>參數，讓背景隨著滑鼠滾輪捲動，視覺上更為自然
+  <script src="https://gist.github.com/tzynwang/1badaf6cd76aa8aaef55437f307378e3.js"></script>
+</li>
+</ul>
+<h2 id="js-內容">JS 內容</h2>
+<h3 id="return與break的差別"><code>return</code>與<code>break</code>的差別</h3>
+<script src="https://gist.github.com/tzynwang/3e954aaba9dc39d3c9409e58ebdbbd02.js"></script>
+<ul>
+<li>一開始在第 13 行與 23 行使用不正確的關鍵字<code>break</code>來脫離迴圈；<code>break</code>儘代表「跳脫現在的迴圈」，卻會繼續執行接下來的程式碼。故第 13 行使用<code>break</code>離開後，接下來會去執行第 21 行的程式碼（而不是脫離整個 function）。</li>
+<li>改用<code>return</code>後，第 13 行與 23 行的意義變為「印出錯誤訊息後，就離開 function，不會繼續走完 function 接下來的程式碼」。</li>
+</ul>
+<h3 id="regular-expressions-筆記">Regular Expressions 筆記</h3>
+<ul>
+<li>使用方式：先設定包覆在<code>//</code>中的<code>pattern</code>（有需要的話也可指定<code>modifiers</code>），再搭配<code>test()</code>來判定變數是否帶有 pattern 內容；以下為步驟解析：
+<ul>
+<li><code>let r = /^\+?[1-9][0-9]*$/</code>中，pattern 的內容是「<code>^\+?[1-9][0-9]*$</code>」</li>
+<li><code>^</code>：「開頭須包含」</li>
+<li><code>\+</code>與<code>?</code>：加號前面的斜線為跳脫字元，<code>?</code>代表可以有 0 個或 1 個<code>\+</code></li>
+<li><code>[1-9]</code>：內容範圍涵蓋 1 到 9</li>
+<li><code>[0-9]</code>與<code>*</code>：代表可以擁有 0 個（含）以上的<code>[0-9]</code>字元</li>
+<li><code>$</code>：「結尾須包含」</li>
+</ul>
+</li>
+<li>翻譯成白話文：「開頭需有 1-9 任一數字，可以有<code>+</code>號，接著可以有任意數量的 0-9」</li>
+<li>pattern 並無包含數字以外字元的內容，故如果是「<code>123a321</code>」這樣夾雜數字以外的字串，<code>r.test(x)</code>會回傳<code>false</code></li>
+<li>最後並沒有採用正規表示式來判定輸入內容是否為正整數，而是改用<code>parseInt()</code>，因為<code>parseInt()</code>可以同時處理<code>String</code>轉換為<code>Number</code>的工作</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://wcc723.github.io/css/2013/09/25/background-att/">CSS 沒有極限 - 意想不到的 background-attachment</a></li>
+<li><a href="https://www.youtube.com/watch?v=rhzKDrUiJVk">Learn Regular Expressions In 20 Minutes</a></li>
+<li><a href="https://regexr.com/">RegExr: Learn, Build, &#x26; Test RegEx</a>：會顯示有依附關係的 reg exr</li>
+<li><a href="https://regex101.com/">regular expressions 101</a>：有附 debugger</li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

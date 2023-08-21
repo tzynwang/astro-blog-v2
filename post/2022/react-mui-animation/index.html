@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第19週 實作筆記：在 React APP 中搭配 Mui 處理基礎動畫</title>
+    <meta name="title" content="2022 第19週 實作筆記：在 React APP 中搭配 Mui 處理基礎動畫">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-mui-animation/">
+    <meta property="og:title" content="2022 第19週 實作筆記：在 React APP 中搭配 Mui 處理基礎動畫">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-mui-animation/">
+    <meta property="twitter:title" content="2022 第19週 實作筆記：在 React APP 中搭配 Mui 處理基礎動畫">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第19週 實作筆記：在 React APP 中搭配 Mui 處理基礎動畫</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-05-11 18:24</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span><span class="astro-2IYMVI75">
+  React
+</span><span class="astro-2IYMVI75">
+  MaterialUI
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>記錄一下如何使用 Mui 搭配 styled component 處理簡單點擊效果動畫</p>
+<iframe src="https://codesandbox.io/embed/compassionate-meninsky-scr36s?fontsize=14&#x26;hidenavigation=1&#x26;theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="compassionate-meninsky-scr36s" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">@mui/material: 5.0.3</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<ul>
+<li>需求：使用者點擊按鈕後，按鈕需表現出「轉一圈」的動畫</li>
+<li>想法梳理：
+<ul>
+<li>透過 CSS class 來控制動畫表現與否</li>
+<li>透過 <code>useState</code> 來控制元件是否綁定控制動畫的 CSS class</li>
+</ul>
+</li>
+<li>實作：
+<ul>
+<li>搭配 <code>setTimout()</code> 在一秒後將 <code>useState</code> 狀態重設回 <code>false</code> ，移除動畫效果</li>
+<li>使用 <code>transform/rotate</code> 處理動畫，至少在 Blink 與 Gecko 這兩個瀏覽器引擎中僅會觸發 re-composite，不會發生 re-flow (layout) 與 re-paint，效能表現較好</li>
+<li>因按鈕只需轉一圈，故 <code>animation-iteration-count</code> 設定為一次即可</li>
+</ul>
+</li>
+<li>備註：
+<ul>
+<li>從 <code>@mui/system</code> export 出來的 <code>keyframes</code> 其實就是 <code>@emotion/react</code> 的 <code>keyframes</code>
+<blockquote>
+<p>You can define animations using the <code>keyframes</code> helper from <code>@emotion/react</code>. <code>keyframes</code> takes in a css keyframe definition and returns an object you can use in styles. You can use strings or objects just like css.
+Ref.: <a href="https://emotion.sh/docs/keyframes">Emotion: Keyframes</a></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation">MDN: animation</a></li>
+<li><a href="https://csstriggers.com/transform">CSS Triggers: transform</a></li>
+<li><a href="https://stackoverflow.com/a/63546822/15028185">How to apply custom animation effect @keyframes in MUI?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

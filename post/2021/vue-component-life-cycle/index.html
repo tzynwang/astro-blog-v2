@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「Vue component生命週期」相關筆記</title>
+    <meta name="title" content="「Vue component生命週期」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/vue-component-life-cycle/">
+    <meta property="og:title" content="「Vue component生命週期」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/vue-component-life-cycle/">
+    <meta property="twitter:title" content="「Vue component生命週期」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「Vue component生命週期」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-10-08 14:48</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Vue
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#原始問題" class="astro-QTOKGA5Y">原始問題</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#回答" class="astro-QTOKGA5Y">回答</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="原始問題">原始問題</h2>
+<p>Vue component 從建立到摧毀，會經過數個階段的生命週期；請描述以下這兩個 DOM 元素的生命週期發生順序為何？</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">&#x3C;</span><span style="color: #85E89D">header</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">nav</span><span style="color: #E1E4E8">>&#x3C;/</span><span style="color: #85E89D">nav</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;/</span><span style="color: #85E89D">header</span><span style="color: #E1E4E8">></span></span></code></pre>
+<h2 id="回答">回答</h2>
+<ol>
+<li>先是<code>header</code>的 beforeCreate、created 與 beforeMount（<code>header</code>準備掛載）</li>
+<li>接著<code>nav</code>進行 beforeCreate、created 與 beforeMount（<code>nav</code>準備掛載）</li>
+<li><code>nav</code> mounted，然後<code>header</code> mounted（掛載<code>nav</code>後，掛載<code>header</code>）</li>
+<li>準備銷毀時先<code>header</code> beforeDestroy，接著<code>nav</code> beforeDestroy（<code>header</code>準備銷毀，接著<code>nav</code>準備銷毀）</li>
+<li><code>nav</code> destroyed，最後<code>header</code> destroyed（銷毀<code>nav</code>後再銷毀<code>header</code>）</li>
+</ol>
+<p>遇到資料更新時則是<code>beforeUpdate</code>接<code>updated</code>
+自作純觀察用的奈米專案（結果輸出於 devTool console）：<a href="https://tzynwang.github.io/vue-component-life-cycle/">demo</a> | <a href="https://github.com/tzynwang/vue-component-life-cycle#readme">repo</a></p>
+<p><img src="/2021/vue-component-life-cycle/vue-component-life-cycle.png" alt="vue component life cycle"></p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">vue: 2.6.11</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<ul>
+<li>透過<code>console.log</code>可觀察到<code>this.$data</code>在<code>created</code>後才可取用（操作）
+<ul>
+<li>Vue.js 技術揭密：可以從原始碼看到<code>beforeCreate</code>和<code>created</code>的 hook 分別在<code>initState</code>的前後調用，而<code>initState</code>的作用是初始化<code>props</code>、<code>data</code>、<code>methods</code>、<code>watch</code>、<code>computed</code>等屬性，所以在<code>beforeCreate</code>的 hook 無法取用 props、data 定義的值，也不能調用<code>methods</code>中的 function。</li>
+</ul>
+</li>
+<li><code>$el</code>與<code>$ref</code>皆是<code>mounted</code>後才可取用
+<ul>
+<li>重新認識 Vue.js：直到<code>mounted</code>階段，Vue 才正式將網頁上的 DOM 節點、事件都綁定至 Vue 的實體。也就是說，如果我們基於某些原因需要手動操作 DOM API，如<code>querySelector</code>或<code>addEventListener</code>等，最好在<code>mounted</code>階段完成後進行操作，以免操作的 DOM 節點被 Vue 替換掉。</li>
+<li>functions in <code>mounted</code> hook: called after the instance has been mounted, where <code>el</code> is replaced by the newly created <code>vm.$el</code>.</li>
+<li>An important note about the <code>ref</code> registration timing: because the refs themselves are created as a result of the render function, you <strong>cannot access them on the initial render</strong> - they don’t exist yet!</li>
+</ul>
+</li>
+<li>在<code>beforeUpdate</code>階段時，資料就已經更新了，只是還未重渲染畫面；<code>updated</code>則代表「畫面已更新」
+<ul>
+<li>Vue 的<code>$nextTick()</code>就是要確保其<code>cb()</code>在畫面更新後才執行</li>
+</ul>
+</li>
+<li>Vue component 被銷毀（<code>destroyed</code>）後，無法再透過 Vue 操作 DOM（<code>$ref</code>的值變為<code>undefined</code>）（devTool 中的 Vue extension 也不再顯示相關內容），但 DOM 元素依舊存在</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://vuejs.org/v2/guide/instance.html#Lifecycle-Diagram">The Vue Instance: Lifecycle Diagram</a></li>
+<li><a href="https://book.vue.tw/CH1/1-7-lifecycle.html">重新認識 Vue.js：1-7 元件的生命週期與更新機制</a></li>
+<li><a href="https://ustbhuangyi.github.io/vue-analysis/v2/components/lifecycle.html#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">Vue.js 技術揭密：生命週期</a></li>
+<li><a href="https://juejin.cn/post/6844903811094413320">Vue 生命周期</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

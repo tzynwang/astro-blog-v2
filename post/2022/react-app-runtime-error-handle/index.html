@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第24週 學習筆記：在 React App 中處理錯誤情境</title>
+    <meta name="title" content="2022 第24週 學習筆記：在 React App 中處理錯誤情境">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-app-runtime-error-handle/">
+    <meta property="og:title" content="2022 第24週 學習筆記：在 React App 中處理錯誤情境">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-app-runtime-error-handle/">
+    <meta property="twitter:title" content="2022 第24週 學習筆記：在 React App 中處理錯誤情境">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第24週 學習筆記：在 React App 中處理錯誤情境</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-06-18 10:00</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  JavaScript
+</span><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#錯誤的層次" class="astro-QTOKGA5Y">錯誤的層次</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#對應手段" class="astro-QTOKGA5Y">對應手段</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>記錄一下在與同事討論中歸納出 React App 三種層次的錯誤，並這三種錯誤分別有哪些可對應的手段</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="錯誤的層次">錯誤的層次</h3>
+<p><img src="/2022/react-app-runtime-error-handle/errors-in-three-phase.png" alt="level of error"></p>
+<ul>
+<li>API
+<ul>
+<li>不論是 4xx 或是 5xx 類型的錯誤，都可以在 React App 中透過 try catch 的形式來對應</li>
+<li>有捕捉到的話，基本上不會（也不應）造成整個 React App 掛掉</li>
+</ul>
+</li>
+<li>React APP
+<ul>
+<li>以公司專案來舉例：因有在 React App 中額外嵌入第三方客服服務的內容，這個服務本身也可以當做是一種提示；假設在使用者嘗試打開專案看到畫面一片空白，但第三方客服對話框有出現在畫面角落時，就代表全部的 scripts 已經載入＋解析完成 —> 客戶端有拿到整個 html 檔案，但 React App 並沒有成功被啟動</li>
+<li>上述 React App 沒有成功被啟動的常見原因：更版，但客戶端仍然吃到快取中的內容導致 React App 死去；解決方案就是清掉快取、或是用無痕模式開啟 React App</li>
+<li>補充：雖然在透過 webpack 打包時可以對檔案名稱加上 hash 來避免吃到快取，但 index.html 很難透過 hash name 來迴避快取陷阱</li>
+</ul>
+</li>
+<li>scripts 以上
+<ul>
+<li>網路環境太糟，導致檔案載入不完全：工程師沒辦法幫上太多的忙，請客戶換個環境再重整一次試試</li>
+<li>客戶端的瀏覽器版本沒有即時更新，導致測試時雖然一切暢通，但仍然有可能在客戶端出現問題；一樣，工程師對此類錯誤沒辦法幫上太多的忙 (›´ω`‹ )</li>
+</ul>
+</li>
+</ul>
+<h3 id="對應手段">對應手段</h3>
+<ul>
+<li>使用 React Error Boundaries 來捕捉整個 React App 中出現的錯誤
+<ul>
+<li>可在 Error Boundaries 中選擇將錯誤訊息顯示在畫面上，這樣只要看到畫面就可以分辨是哪一個層次的錯誤</li>
+</ul>
+</li>
+<li>除了透過 try catch 直接捕捉之外，也可在 catch block 將錯誤訊息送至收集錯誤用的 API ，或觸發 GA 事件
+<ul>
+<li>此方法可以捕捉到「還未被人發現，但已經潛伏在 App 中的錯誤」（或許是還沒有被觸發，但這個錯誤已經存在了）</li>
+<li>承上，除了直接一個一個修改現行程式碼中的 try catch 內容，也可以透過 decorator 的形式來追加 error handling 用的補丁內容</li>
+</ul>
+</li>
+<li>使用獨立的頁面來觀測 React App 的存活狀態</li>
+<li>使用 <code>GlobalEventHandlers.onerror</code> 搭配 <code>location.reload()</code> 達成「監聽到錯誤時，直接重新整理整個畫面」 <del>F5 治百病</del></li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/34269416/when-does-parsing-html-dom-tree-happen">When does parsing HTML DOM tree happen?</a></li>
+<li><a href="https://www.chromium.org/developers/the-rendering-critical-path/">The Chromium Projects: The Rendering Critical Path</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/GlobalEventHandlers/onerror">MDN: GlobalEventHandlers.onerror</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Location/reload">MDN: location.reload()</a></li>
+<li><a href="https://blog.logrocket.com/understanding-javascript-decorators/">Understanding JavaScript decorators</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第47週 閱讀筆記：Don’t use JPEG-XR on the Web</title>
+    <meta name="title" content="2022 第47週 閱讀筆記：Don’t use JPEG-XR on the Web">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/image-decode-basic-note/">
+    <meta property="og:title" content="2022 第47週 閱讀筆記：Don’t use JPEG-XR on the Web">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/image-decode-basic-note/">
+    <meta property="twitter:title" content="2022 第47週 閱讀筆記：Don’t use JPEG-XR on the Web">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第47週 閱讀筆記：Don’t use JPEG-XR on the Web</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-11-27 11:09</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Image format
+</span><span class="astro-2IYMVI75">
+  Web performance
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#影響解碼效率的因素" class="astro-QTOKGA5Y">影響解碼效率的因素</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在選擇影像格式時，除了壓縮率以外，可能也得將圖片解碼（decode）的效率納入考量。
+即使一張圖片本身的尺寸變小（更快被下載到客戶端），但若硬體需要花費較多資源進行解碼，那麼對使用者來說，更換圖片的保存格式也無助於提升一個網站的載入效能（使用體驗） ┐(ツ)┌</p>
+<h2 id="筆記">筆記</h2>
+<p>JPEG-XR 與 AVIF 這兩種格式皆可在維持圖片視覺品質的情況下，表現出更好的檔案壓縮率（需要傳輸的資料量更少）。然而在 <a href="https://calendar.perfplanet.com/2018/dont-use-jpeg-xr-on-the-web/">Web Performance Calendar: Don’t use JPEG-XR on the Web</a> 的檢證過程中，發現 JPEG-XR 格式的圖片並沒有比較快出現在使用者的裝置上，理由如下：</p>
+<ol>
+<li>JPEG-XR 的解碼發生在 CPU 中，但 CPU 除了處理影像解碼外，還需處理前端的 JS 編譯內容；亦即此格式的圖片會吃掉預計拿來處理畫面渲染的資源
+<blockquote>
+<p>During the investigation, it was suggested that Internet Explorer <strong>may have implemented the decoding of JPEG-XRs software-side on the CPU</strong>, which would utilize the same thread as the active browser tab, thereby impacting overall page loading and rendering performance.</p>
+</blockquote>
+</li>
+<li>而 JPG 格式的解碼工作卻可以交棒給 GPU 處理，讓 CPU 專注進行 JS 編譯</li>
+<li>結果就是使用 JPEG-XR 格式的前端 SPA 專案為了處理圖片解碼，分走了原本可以拿來進行畫面渲染的資源；使用 JPG 的 SPA 專案反而可以透過 CPU/GPU 分工來更快完成畫面渲染</li>
+</ol>
+<h3 id="影響解碼效率的因素">影響解碼效率的因素</h3>
+<p>參考 <a href="https://dexecure.com/blog/image-decoding/">Dexecure: Image decoding on the web</a> 一文，列點如下：</p>
+<ol>
+<li>影像尺寸：尺寸越大的圖片，解碼時需要的時間就越長；故提升網站效能的第一步通常都是建議開發者將圖片尺寸調整到最終使用者會看到的大小就好，不要提供過大的圖片</li>
+<li>瀏覽器本身被允許存取的 CPU/RAM 資源量：能使用的資源越多，自然能更快完成圖片解碼，並把結果渲染到畫面上；同樣的圖片在電腦與手機上渲染的時間不同，也是因為這兩種硬體能提供的資源量多寡有所差異</li>
+<li>decoder 的普及度：常見的格式如 PNG 或 JPG 雖然在檔案尺寸壓縮率不如 AVIF 或 webP，但因為在各種裝置上的解碼效率較好，在 web performance 上的表現不一定會比較差</li>
+</ol>
+<p>AVIF 與 webP 這類壓縮率好、但解碼效率（目前還）較不起色的檔案格式還有一個發揮場合：如果預期網站的使用者通常處在一個數據傳輸嚴苛的情況下（頻寬窄小、網速慢，或是處在傳輸成本極高的環境），那麼使用 AVIF/webP 格式來確保圖片佔用較少的傳輸資源，把顯示圖片的成本轉移到使用者解碼圖片這一段，也是一種應用方式。</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://calendar.perfplanet.com/2018/dont-use-jpeg-xr-on-the-web/">Web Performance Calendar: Don’t use JPEG-XR on the Web</a></li>
+<li><a href="https://calendar.perfplanet.com/2018/is-avif-the-future-of-images-on-the-web/">Is AVIF the future of images on the web?</a></li>
+<li><a href="https://dexecure.com/blog/image-decoding/">Dexecure: Image decoding on the web</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

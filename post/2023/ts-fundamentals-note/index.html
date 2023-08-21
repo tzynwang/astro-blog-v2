@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2023 第3週 學習筆記：Frontend Masters TypeScript Fundamentals</title>
+    <meta name="title" content="2023 第3週 學習筆記：Frontend Masters TypeScript Fundamentals">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/ts-fundamentals-note/">
+    <meta property="og:title" content="2023 第3週 學習筆記：Frontend Masters TypeScript Fundamentals">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/ts-fundamentals-note/">
+    <meta property="twitter:title" content="2023 第3週 學習筆記：Frontend Masters TypeScript Fundamentals">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2023 第3週 學習筆記：Frontend Masters TypeScript Fundamentals</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-01-21 10:35</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  TypeScript
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#function-overloads" class="astro-QTOKGA5Y">Function Overloads</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#parameter-properties" class="astro-QTOKGA5Y">Parameter Properties</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#non-null-assertion-operator" class="astro-QTOKGA5Y">Non-null assertion operator</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>記錄一下在 Frontend Masters 課程 TypeScript Fundamentals 中接觸到的新概念。</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="function-overloads">Function Overloads</h3>
+<p>解決的問題：一個 function 可能有多種參數組合，此時可以透過 function overloads 來定義出各種組合的可能性，並確保 TS 編譯器依舊能檢查傳入 function 的參數組合是否正確。
+使用方式：如下範例，同一個 function signatures 搭配不同的參數組合以及最下方的實作內容。</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">handleArrayUnshift</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">elem</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">number</span><span style="color: #E1E4E8">, </span><span style="color: #FFAB70">arr</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">number</span><span style="color: #E1E4E8">[])</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">number</span><span style="color: #E1E4E8">[];</span></span>
+<span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">handleArrayUnshift</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">elem</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">, </span><span style="color: #FFAB70">arr</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">[])</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">[];</span></span>
+<span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">handleArrayUnshift</span><span style="color: #E1E4E8">(</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">elem</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">number</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">arr</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Array</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #79B8FF">number</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">)</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Array</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #79B8FF">number</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> [elem, </span><span style="color: #F97583">...</span><span style="color: #E1E4E8">arr];</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(</span><span style="color: #B392F0">handleArrayUnshift</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">1</span><span style="color: #E1E4E8">, [</span><span style="color: #79B8FF">2</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">3</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">4</span><span style="color: #E1E4E8">]));</span></span>
+<span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(</span><span style="color: #B392F0">handleArrayUnshift</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'hello'</span><span style="color: #E1E4E8">, [</span><span style="color: #9ECBFF">'world'</span><span style="color: #E1E4E8">]));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D">/*</span></span>
+<span class="line"><span style="color: #6A737D">下面這行會報錯</span></span>
+<span class="line"><span style="color: #6A737D">No overload matches this call.</span></span>
+<span class="line"><span style="color: #6A737D">  Overload 1 of 2, '(elem: number, arr: number[]): number[]', gave the following error.</span></span>
+<span class="line"><span style="color: #6A737D">    Argument of type 'string' is not assignable to parameter of type 'number'.(2769)</span></span>
+<span class="line"><span style="color: #6A737D">*/</span></span>
+<span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(</span><span style="color: #B392F0">handleArrayUnshift</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'no way'</span><span style="color: #E1E4E8">, [</span><span style="color: #79B8FF">1</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">2</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">3</span><span style="color: #E1E4E8">]));</span></span></code></pre>
+<h3 id="parameter-properties">Parameter Properties</h3>
+<p>解決的問題：在 class constructor 中的參數與 class properties 名稱一致時，TS 提供偷懶寫法；並且能搭配各種 prefix 關鍵字。</p>
+<blockquote>
+<p>TypeScript offers special syntax for turning a constructor parameter into a class property with the same name and value. These are called <strong>parameter properties</strong> and are created by prefixing a constructor argument with one of the visibility modifiers <code>public</code>, <code>private</code>, <code>protected</code>, or <code>readonly</code>.</p>
+</blockquote>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">/* 原本要一個一個賦值 */</span></span>
+<span class="line"><span style="color: #F97583">class</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Car</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">make</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">model</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">year</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">number</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">constructor</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">make</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">, </span><span style="color: #FFAB70">model</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">, </span><span style="color: #FFAB70">year</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">number</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.make </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> make;</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.model </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> model;</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.year </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> year;</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">/* 在 TS 中可以透過 constructor 偷懶 */</span></span>
+<span class="line"><span style="color: #F97583">class</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Car</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">constructor</span><span style="color: #E1E4E8">(</span><span style="color: #F97583">public</span><span style="color: #E1E4E8"> </span><span style="color: #FFAB70">make</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">, </span><span style="color: #F97583">public</span><span style="color: #E1E4E8"> </span><span style="color: #FFAB70">model</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">, </span><span style="color: #F97583">public</span><span style="color: #E1E4E8"> </span><span style="color: #FFAB70">year</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">number</span><span style="color: #E1E4E8">) {}</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">aHonda</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">new</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Car</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'Honda'</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'Accord'</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">2017</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">info</span><span style="color: #E1E4E8">(aHonda.year); </span><span style="color: #6A737D">// 2017</span></span></code></pre>
+<h3 id="non-null-assertion-operator">Non-null assertion operator</h3>
+<p>解決的問題：當開發者十分肯定某一變數有值（非 <code>nullish</code>）時，可使用 <code>!.</code> 的語法來讓 TS 編譯器不再報錯。</p>
+<blockquote>
+<p>A new <code>!</code> post-fix expression operator may be used to assert that its operand is non-null and non-undefined in contexts where the type checker is unable to conclude that fact.</p>
+</blockquote>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// Compiled with --strictNullChecks</span></span>
+<span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">validateEntity</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">e</span><span style="color: #F97583">?:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Entity</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// Throw exception if e is null or invalid entity</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">processEntity</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">e</span><span style="color: #F97583">?:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Entity</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">validateEntity</span><span style="color: #E1E4E8">(e);</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">let</span><span style="color: #E1E4E8"> s </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> e</span><span style="color: #F97583">!</span><span style="color: #E1E4E8">.name; </span><span style="color: #6A737D">// Assert that e is non-null and access name</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads">TypeScript Official Docs: Function Overloads</a></li>
+<li><a href="https://www.typescriptlang.org/docs/handbook/2/classes.html#parameter-properties">TypeScript Official Docs: Parameter Properties</a></li>
+<li><a href="https://www.typescript-training.com/course/fundamentals-v3">TypeScript Fundamentals v3</a></li>
+<li><a href="https://stackoverflow.com/questions/42273853/in-typescript-what-is-the-exclamation-mark-bang-operator-when-dereferenci">StackOverFlow: In Typescript, what is the ! (exclamation mark / bang) operator when dereferencing a member?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>閱讀筆記：Good Code, Bad Code Chapter 3 Other engineers and code contracts</title>
+    <meta name="title" content="閱讀筆記：Good Code, Bad Code Chapter 3 Other engineers and code contracts">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/good-code-bad-code-ch3-other-engineers-and-code-contracts/">
+    <meta property="og:title" content="閱讀筆記：Good Code, Bad Code Chapter 3 Other engineers and code contracts">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/good-code-bad-code-ch3-other-engineers-and-code-contracts/">
+    <meta property="twitter:title" content="閱讀筆記：Good Code, Bad Code Chapter 3 Other engineers and code contracts">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">閱讀筆記：Good Code, Bad Code Chapter 3 Other engineers and code contracts</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-03-11 17:19</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Software Architecture
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#為何程式碼會被誤用" class="astro-QTOKGA5Y">為何程式碼會被誤用</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#如何避免程式碼被誤用" class="astro-QTOKGA5Y">如何避免程式碼被誤用</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#契約式設計" class="astro-QTOKGA5Y">契約式設計</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>此篇文章是 Good Code, Bad Code: Think like a software engineer 第三章（Other engineers and code contracts）的閱讀筆記。主要在說明：</p>
+<ul>
+<li>為何程式碼會被誤用</li>
+<li>如何避免程式碼被誤用</li>
+</ul>
+<h2 id="筆記">筆記</h2>
+<p>我們寫好的程式碼除了自己以外，多少都有機會被其他工程師使用。更極端地來說，就算這些程式碼永遠只會被自己使用（或維護），降低程式碼被誤用的機會也有助於提升軟體的可靠度。</p>
+<p>理由：程式碼一旦被誤用（該程式碼能正確執行的前提不成立），則無法保證程式碼的行為繼續符合預期，這會導致使用這段程式碼的軟體變得不可靠。</p>
+<h3 id="為何程式碼會被誤用">為何程式碼會被誤用</h3>
+<p>以下是本書列出的三種可能性：</p>
+<ol>
+<li>當你在撰寫一段程式碼解決問題時，你本人必定十分清楚這個問題的整體脈絡以及解決方式。但是當其他工程師使用你寫好的東西時，他們對於這個問題的知識（理解）通常不會和你一樣多。這個資訊落差會導致其他人可能會透過預期外的方式來使用你的程式碼</li>
+<li>承上，如果你的程式碼不幸被誤用，卻沒辦法針對這些「誤用」做出反應（編譯失敗、拋出錯誤等），誤用者可能根本無法察覺問題，於是「誤用」持續發生</li>
+<li>時間久了，連你自己也會忘記當出撰寫這些程式碼的情境或理由</li>
+</ol>
+<h3 id="如何避免程式碼被誤用">如何避免程式碼被誤用</h3>
+<p>撰寫程式碼時，預想其他人可能會如何誤用這段程式碼，並根據預想引用對應手段：</p>
+<ol>
+<li>賦予程式碼有意義的命名，理想狀態：閱讀一段程式碼的名稱，就能理解該程式碼要做什麼</li>
+<li>為程式碼的參數以及回傳內容設定有意義的型別。以 TypeScript 來說，如果一個 function 需要傳入參數、或執行完畢後會回傳對應結果，則這兩個行為都會限制工程師「僅能傳入正確型態的參數」以及「檢查回傳物的型別是否符合預期、或是根據型別切換條件分支」</li>
+<li>盡可能避免「只能透過註解或文件」來使人了解一段程式碼，理由如下：
+<ol>
+<li>不像程式碼的名字，你無法強迫所有使用你的 code 的人一定要先讀註解、文件</li>
+<li>無法保證其他人讀了註解、文件後就能完全理解一段程式碼的意圖，可能文件並不明確、或是讀者誤會文字內容</li>
+<li>註解與文件不一定會與程式碼同步更新，文字傳遞的資訊可能會過時</li>
+</ol>
+</li>
+<li>盡可能避免「隱藏條件」：
+<ol>
+<li>如果需要先讓特定條件成立、才能確保程式碼能順利運作，那就讓這個前提<strong>不能被跳過</strong></li>
+<li>讓程式碼在該條件失效的情況下停止編譯、或是拋出錯誤，確保程式碼不會帶著錯誤的前提繼續執行</li>
+</ol>
+</li>
+</ol>
+<p>補充：許多提升程式碼品質的方法，其實都圍繞在「限縮狀態」或「限制（針對值的）修改」這兩件事情上。</p>
+<blockquote>
+<p>Many ways of improving code quality revolve around <strong>minimizing state or mutability</strong>.</p>
+</blockquote>
+<h3 id="契約式設計">契約式設計</h3>
+<blockquote>
+<p>engineers think about the interactions between different pieces of code <strong>as though they were a contract</strong>: callers are required to <strong>meet certain obligations</strong>, and in return, the code being called will <strong>return a desired value or modify some state</strong>.</p>
+</blockquote>
+<p>將程式碼間的互動比喻為契約，呼叫程式碼的一方要先滿足特定條件，而被呼叫的程式碼在前提成立時，會回傳期望的結果（或更新狀態）。</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.manning.com/books/good-code-bad-code">Manning: Good Code, Bad Code</a></li>
+<li><a href="https://zh.wikipedia.org/zh-tw/%E5%A5%91%E7%BA%A6%E5%BC%8F%E8%AE%BE%E8%AE%A1">Wikipedia: 契約式設計</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

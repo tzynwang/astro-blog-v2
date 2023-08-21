@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>tailwindcss 與 typescript 快速試用筆記</title>
+    <meta name="title" content="tailwindcss 與 typescript 快速試用筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/tailwindcss-webpack-note/">
+    <meta property="og:title" content="tailwindcss 與 typescript 快速試用筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/tailwindcss-webpack-note/">
+    <meta property="twitter:title" content="tailwindcss 與 typescript 快速試用筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">tailwindcss 與 typescript 快速試用筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-05-24 19:48</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#與-typescript-的搭配" class="astro-QTOKGA5Y">與 typescript 的搭配</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#webpackconfig" class="astro-QTOKGA5Y">webpack.config</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>試玩心得：typescript 支援似乎不太全面，<a href="https://github.com/tailwindlabs/tailwindcss/discussions/1077#discussioncomment-528222">issue #1077: Configuration file type definitions</a> 的解法沒有用，試玩時先改用自行定義的型別；但在目前商業專案固定使用 typescript 的情境下，使用 tailwindcss 的吸引力變低 🤔</p>
+<p>但如果只是個人專案，搭配 <a href="https://daisyui.com/docs/themes/">daisyui 與其 theme</a> 則是讓視覺效果變的妙不可言</p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">tailwindcss: 3.0.24</span></span>
+<span class="line"><span style="color: #e1e4e8">webpack: 5.72.1</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="與-typescript-的搭配">與 typescript 的搭配</h3>
+<script src="https://gist.github.com/tzynwang/f6c0d91573d09f116bcca00bfebf7c5f.js"></script>
+<ul>
+<li>透過 IDE 檢查上述 <code>tailwindcss.App.tsx</code> 第 9 行中的 <code>theme.colors</code> 的型別會得到 <code>(property) TailwindTheme.colors?: TailwindThemeColors | undefined</code></li>
+<li>查看 <code>tailwind-config.d.ts</code> 會得知：
+<ul>
+<li><code>export type TailwindThemeColors = TailwindThemeGetter&#x3C;TailwindValuesColor>;</code></li>
+<li>而 <code>TailwindValuesColor</code> 定義如下：</li>
+</ul>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">interface</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">TailwindValuesColor</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">readonly</span><span style="color: #E1E4E8"> [</span><span style="color: #FFAB70">key</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">]</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">TailwindColorValue</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+</li>
+<li>為了想要在 IDE 開發時可以透過型別進行 auto-complete 故先補上自定義型別 <code>type Colors</code>（檔案 <code>tailwindcss.types.d.ts</code>），全部的顏色 keys 參考 <a href="https://tailwindcss.com/docs/customizing-colors">tailwindcss: customization/colors (v3)</a></li>
+</ul>
+<h3 id="webpackconfig">webpack.config</h3>
+<ul>
+<li>需注意 <code>module.rules</code> 中針對 <code>.css</code> 檔案的處理需帶入以下內容：
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #B392F0">module</span><span style="color: #E1E4E8">: {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">rules</span><span style="color: #E1E4E8">: [</span></span>
+<span class="line"><span style="color: #E1E4E8">    {</span></span>
+<span class="line"><span style="color: #E1E4E8">      test:</span><span style="color: #DBEDFF"> </span><span style="color: #9ECBFF">/</span><span style="color: #85E89D; font-weight: bold">\.</span><span style="color: #DBEDFF">css</span><span style="color: #F97583">$</span><span style="color: #9ECBFF">/</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">      use: [</span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #9ECBFF">'style-loader'</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">        { loader: </span><span style="color: #9ECBFF">'css-loader'</span><span style="color: #E1E4E8">, options: { importLoaders: </span><span style="color: #79B8FF">1</span><span style="color: #E1E4E8"> } },</span></span>
+<span class="line"><span style="color: #E1E4E8">        </span><span style="color: #9ECBFF">'postcss-loader'</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">      ],</span></span>
+<span class="line"><span style="color: #E1E4E8">    },</span></span>
+<span class="line"><span style="color: #E1E4E8">  ],</span></span>
+<span class="line"><span style="color: #E1E4E8">},</span></span></code></pre>
+</li>
+<li>透過 <code>create-react-app</code> 建立的專案不需擔心此問題（設定已經被 cra 處理掉），但如果是在沒有使用 <code>cra</code> 建立 React APP 的情況下需補上此規則才能正常使用 tailwindcss</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://stackblitz.com/edit/daisyui-react-webpack?file=webpack.config.js">daisyui: webpack sample code</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「捲軸樣式、影片背景與box-decoration-break」相關筆記</title>
+    <meta name="title" content="「捲軸樣式、影片背景與box-decoration-break」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/css-scrollbar-bg-video-box-decoration-break/">
+    <meta property="og:title" content="「捲軸樣式、影片背景與box-decoration-break」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/css-scrollbar-bg-video-box-decoration-break/">
+    <meta property="twitter:title" content="「捲軸樣式、影片背景與box-decoration-break」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「捲軸樣式、影片背景與box-decoration-break」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-08-22 16:30</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#捲軸樣式" class="astro-QTOKGA5Y">捲軸樣式</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#影片背景" class="astro-QTOKGA5Y">影片背景</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#box-decoration-break" class="astro-QTOKGA5Y">box-decoration-break</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>集中記錄一些在 AC 與 Udemy Advanced CSS and Sass 課程中學到的技巧</p>
+<p class="codepen" data-height="600" data-default-tab="css,result" data-slug-hash="LYLPeep" data-user="Charlie7779" style="height: 600px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/LYLPeep">
+  landing with video</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h2 id="筆記">筆記</h2>
+<h3 id="捲軸樣式">捲軸樣式</h3>
+<p class="codepen" data-height="300" data-default-tab="css,result" data-slug-hash="rNmKexG" data-user="Charlie7779" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/rNmKexG">
+  scrollbar</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<ul>
+<li>沒有 vendor prefix 的<code>scrollbar-color</code>目前支援度不佳，參考：<a href="https://caniuse.com/?search=scrollbar-color">Can I use: scrollbar-color?</a></li>
+<li>改用<code>::-webkit-scrollbar</code>、<code>::-webkit-scrollbar-track</code>與<code>::-webkit-scrollbar-thumb</code>來設定捲軸樣式</li>
+</ul>
+<h3 id="影片背景">影片背景</h3>
+<ul>
+<li>外部 container 設定為<code>position: relative;</code>，內層<code>&#x3C;video></code>元素設定為<code>position: absolute;</code>與<code>top: 0;</code>、<code>left: 0;</code>來根據 container 進行定位</li>
+<li><code>&#x3C;video></code>本身沒有<code>src</code>，影片來源需透過子代的<code>&#x3C;source></code>元素設定</li>
+<li>可透過<code>&#x3C;source></code>設定影片相關特性，比如<code>autoplay</code>、<code>loop</code>與<code>muted</code>等，參考：<a href="https://www.w3schools.com/tags/tag_video.asp">HTML video Tag: Optional Attributes</a></li>
+<li>加上<code>object-fit: cover;</code>確保在任何螢幕尺寸下都能維持原始比例並占滿畫面</li>
+<li>素材來源：<a href="https://coverr.co/">Coverr</a></li>
+</ul>
+<h3 id="box-decoration-break">box-decoration-break</h3>
+<ul>
+<li>
+<p>預設值為<code>slice</code></p>
+<p><img src="/2021/css-scrollbar-bg-video-box-decoration-break/slice.png" alt="demo slice"></p>
+</li>
+<li>
+<p>設定為<code>clone</code>後，換行處會補齊樣式設定</p>
+<p><img src="/2021/css-scrollbar-bg-video-box-decoration-break/clone.png" alt="demo clone"></p>
+</li>
+<li>
+<p>設定<code>line-height: 1.75;</code>來撐開換行後行與行之間的距離</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/line-height#values">MDN</a>: The used value is this unitless <code>&#x3C;number></code> <strong>multiplied</strong> by the element’s own <strong>font size</strong>. The computed value is the same as the specified <code>&#x3C;number></code>. In most cases, this is the preferred way to set line-height and avoid unexpected results due to inheritance.</li>
+<li>沒有加上單位的情況下，<code>line-height</code>的計算方式為<strong>字體大小乘以設定的數值</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color">MDN: scrollbar-color</a></li>
+<li><a href="https://css-tricks.com/almanac/properties/s/scrollbar/">CSS-Tricks: scrollbar</a></li>
+<li><a href="https://css-tricks.com/custom-scrollbars-in-webkit/">CSS-Tricks: Custom Scrollbars in WebKit</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-decoration-break">MDN: box-decoration-break</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/line-height">MDN: line-height</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

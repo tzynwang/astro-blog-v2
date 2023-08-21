@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第16週 實作筆記：Mui 滑動式清單</title>
+    <meta name="title" content="2022 第16週 實作筆記：Mui 滑動式清單">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/mui-slide-menu/">
+    <meta property="og:title" content="2022 第16週 實作筆記：Mui 滑動式清單">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/mui-slide-menu/">
+    <meta property="twitter:title" content="2022 第16週 實作筆記：Mui 滑動式清單">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第16週 實作筆記：Mui 滑動式清單</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-04-23 11:35</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  MaterialUI
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#開發思路" class="astro-QTOKGA5Y">開發思路</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#原始碼" class="astro-QTOKGA5Y">原始碼</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#實作筆記" class="astro-QTOKGA5Y">實作筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>使用 MuiMenu 與 MuiPaper 搭配組合出有滑動效果的清單元件，支援 RWD</p>
+<p><img src="/2022/mui-slide-menu/demo-desktop.png" alt="桌機版本"></p>
+<p><img src="/2022/mui-slide-menu/demo-mobile.png" alt="手機版本"></p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">@mui/material: 5.6.2</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="開發思路">開發思路</h3>
+<ul>
+<li>對 Mui theme 中的各個元件加上 <code>styleOverrides</code> 搭配開發時自定義的 css class names 處理排版效果
+<ul>
+<li>大多數的 Mui 元件都有支援 <code>classes</code> props，搭配各元件的 API 說明即可將自定義的 css classes names 傳入對應的元件層</li>
+<li>以 <a href="https://mui.com/material-ui/api/menu/#css">MuiMenu</a> 為例，其 <code>classes</code> props 支援三組 key：root、paper 與 list；亦即在 MuiMenu 的 classes 傳入 <code>{{ root: '___CustomRootClass___', paper: '___CustomPaperClass___', list: '___CustomListClass__' }}</code> 的話，最終 MuiMenu 的 css class names 會長這樣：</li>
+</ul>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">&#x3C;</span><span style="color: #85E89D">div</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">class</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"MuiModal-root ___CustomRootClass___ MuiPopover-root MuiMenu-root css-10nakn3-MuiModal-root-MuiPopover-root-MuiMenu-root"</span></span>
+<span class="line"><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">div</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #B392F0">class</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 ___CustomPaperClass___ MuiMenu-paper MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiPopover-paper css-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper"</span></span>
+<span class="line"><span style="color: #E1E4E8">  ></span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;</span><span style="color: #85E89D">ul</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #B392F0">class</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"MuiList-root MuiList-padding ___CustomListClass__ MuiMenu-list css-6hp17o-MuiList-root-MuiMenu-list"</span></span>
+<span class="line"><span style="color: #E1E4E8">    ></span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #FDAEB7; font-style: italic">&#x3C;</span><span style="color: #E1E4E8">! –– list items ––></span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;/</span><span style="color: #85E89D">ul</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;/</span><span style="color: #85E89D">div</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;/</span><span style="color: #85E89D">div</span><span style="color: #E1E4E8">></span></span></code></pre>
+<ul>
+<li><code>___CustomRootClass___</code> 與 <code>MuiMenu-root</code> 並列</li>
+<li><code>___CustomPaperClass___</code> 與 <code>MuiMenu-paper</code> 並列</li>
+<li><code>___CustomListClass__</code> 與 <code>MuiMenu-list</code> 並列</li>
+<li>接著就可以在 mui theme 中透過 <code>styleOverrides</code> 來進行樣式設定了</li>
+</ul>
+</li>
+<li>使用 Mui <code>useMediaQuery</code> hook 判定目前的視區是否進入小版狀態，並根據此狀態替換元件的 css class names</li>
+<li>套用 Mui <code>&#x3C;Slide /></code> 元件在小版面時做出滑動效果
+<ul>
+<li>在「非小版面」的狀態下設定 props <code>in</code> 恆常為 <code>true</code> 避免滑動發生（確保元件會固定顯示在畫面上）</li>
+<li>使用 props <code>container</code> 控制滑動的視覺效果只會發生在 <code>container</code> 容器中</li>
+</ul>
+</li>
+</ul>
+<h3 id="原始碼">原始碼</h3>
+<script src="https://gist.github.com/tzynwang/a72ae5095969ca85ca877b86837f83a1.js"></script>
+<h3 id="實作筆記">實作筆記</h3>
+<ul>
+<li>根據 <code>parent</code> 的值來過濾出 <code>dynamicChildList</code> 內容；並且 <code>parent</code> 為 <code>null</code> 時，右側欄位不會渲染出任何內容（在使用者未點擊親類別前，不顯示子類別）</li>
+<li>透過 Mui <code>Checkbox</code> 元件的 <code>indeterminate</code> props 處理「某一親類別下的子類別沒有被全數勾選時」的視覺效果；邏輯如下：
+<ul>
+<li>如果 <code>checkedChild</code> 陣列中「屬於某一親類別的子類別數量 !== 屬於該親類別的全體子類別數量」的話，代表該親類別處於 <code>indeterminate</code> 狀態</li>
+<li>如果<code>checkedChild</code> 陣列中「屬於某一親類別的子類別數量 === 屬於該親類別的全體子類別數量」的話，代表該親類別下的子類別已經全部被使用者勾選了，故該親類別應進入 <code>checked</code> 狀態</li>
+</ul>
+</li>
+<li>在使用者勾選親類別時，先將所有屬於該親類別的子類別都加入 <code>checkedChild</code> 陣列中，再透過 lodash 的 <code>uniqBy</code> 移除重複加入子類別</li>
+<li>透過 lodash 的 <code>find</code> 功能判定某一子類別是否存在於 <code>checkedChild</code> 中，進而決定該子類別的 Mui <code>Checkbox</code> 元件是否應進入 <code>checked</code> 狀態</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://mui.com/material-ui/customization/theme-components/">MaterialUI: Customization/Components</a></li>
+<li><a href="https://mui.com/material-ui/react-menu/#main-content">MaterialUI: Menu</a></li>
+<li><a href="https://mui.com/material-ui/transitions/#slide">MaterialUI: Transition/Slide</a></li>
+<li><a href="https://mui.com/material-ui/react-paper/#main-content">MaterialUI: Paper</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第2週 學習記錄：React Forwarding Refs</title>
+    <meta name="title" content="2022 第2週 學習記錄：React Forwarding Refs">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/work-log-2022-w2/">
+    <meta property="og:title" content="2022 第2週 學習記錄：React Forwarding Refs">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/work-log-2022-w2/">
+    <meta property="twitter:title" content="2022 第2週 學習記錄：React Forwarding Refs">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第2週 學習記錄：React Forwarding Refs</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-01-15 20:20</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#情境" class="astro-QTOKGA5Y">情境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#forwarding-ref" class="astro-QTOKGA5Y">Forwarding Ref</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#faker" class="astro-QTOKGA5Y">faker</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#原始碼" class="astro-QTOKGA5Y">原始碼</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>functional component 無法直接搭配 <code>useRef()</code> 來操作其 DOM，本篇紀錄如何使用 <code>React.forwardRef</code> 來處理 functional component 的 <code>ref</code></p>
+<h2 id="情境">情境</h2>
+<ul>
+<li>製作了一個 table container 元件，全專案的表單元件可作為 children 傳入此 table container 元件</li>
+<li>需要達成的效果是「當使用者點擊 pagination 元件時，應將 table container 捲回頂部」</li>
+<li>但 table container 為自定義的 functional component，無法直接對其使用 <code>useRef()</code>，需透過 <code>forwarding ref</code> 來實作相關需求</li>
+</ul>
+<h2 id="筆記">筆記</h2>
+<h3 id="forwarding-ref">Forwarding Ref</h3>
+<ul>
+<li>
+<p>在需要傳遞 <code>ref</code> 的情境下，使用 <code>React.forwardRef()</code> 來建立 functional component（參考以下 gist 中的 <code>Layer.TableContainer.tsx</code>）</p>
+</li>
+<li>
+<p>傳入 <code>React.forwardRef()</code> 的 arrow function 形式如右：<code>(props, ref) => {/* return a component */}</code>；第一個參數為 <code>props</code>，<code>ref</code> 放在 arrow function 的第二個參數傳入</p>
+<ul>
+<li>或參考 stackOverFlow 上的寫法：</li>
+</ul>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Component</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> (</span><span style="color: #FFAB70">props</span><span style="color: #E1E4E8">, </span><span style="color: #FFAB70">ref</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">div</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">ref</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{ref}>/* anything you want to render here */&#x3C;/</span><span style="color: #85E89D">div</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">default</span><span style="color: #E1E4E8"> React.</span><span style="color: #B392F0">forwardRef</span><span style="color: #E1E4E8">(Component);</span></span></code></pre>
+</li>
+<li>
+<p>在 parent component 中呼叫 <code>React.createRef()</code> 來建立一個 React ref 物件（參考 gist 中的 <code>Page.App.tsx</code> 第 19 行，保存在變數 <code>tableContainerRef</code> 中）</p>
+</li>
+<li>
+<p>將變數 <code>tableContainerRef</code> 傳遞給 <code>&#x3C;TableContainer /></code>，開發者即可透過 <code>tableContainerRef</code> 來操作 <code>&#x3C;TableContainer /></code> 的 DOM</p>
+</li>
+<li>
+<p>在 gist 示範中，使用者只要點擊了表格元件中的按鈕，就會觸發 function <code>scrollToTop</code>，而此功能會將 <code>&#x3C;TableContainer /></code> 捲回頂部</p>
+</li>
+<li>
+<p>以上邏輯調整成「使用者點擊 pagination 元件後，執行 function <code>scrollToTop</code>」即可做出點擊 pagination 換頁後將表單捲回頂部的效果</p>
+</li>
+</ul>
+<h3 id="faker">faker</h3>
+<ul>
+<li>本次使用 <code>faker@5.5.3</code> 來產生表格元件用的假資料（30 組）：
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">ROWS</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Row</span><span style="color: #E1E4E8">[] </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> Array.</span><span style="color: #B392F0">from</span><span style="color: #E1E4E8">({ length: </span><span style="color: #79B8FF">30</span><span style="color: #E1E4E8"> }, () </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> ({</span></span>
+<span class="line"><span style="color: #E1E4E8">  name: faker.name.</span><span style="color: #B392F0">firstName</span><span style="color: #E1E4E8">(),</span></span>
+<span class="line"><span style="color: #E1E4E8">  city: faker.address.</span><span style="color: #B392F0">city</span><span style="color: #E1E4E8">(),</span></span>
+<span class="line"><span style="color: #E1E4E8">  email: faker.internet.</span><span style="color: #B392F0">email</span><span style="color: #E1E4E8">(),</span></span>
+<span class="line"><span style="color: #E1E4E8">}));</span></span></code></pre>
+</li>
+<li>文件可參考：<a href="https://www.npmjs.com/package/faker/v/5.5.3">https://www.npmjs.com/package/faker/v/5.5.3</a></li>
+<li>搭配 TypeScript 使用時，追加安裝 <code>npm install --save @types/faker</code>；參考 <a href="https://www.npmjs.com/package/@types/faker">@types/faker</a></li>
+</ul>
+<h3 id="原始碼">原始碼</h3>
+<script src="https://gist.github.com/tzynwang/921437ebdfc48057cc2d7e2e8c81ac62.js"></script>
+<p>完整內容：<a href="https://github.com/tzynwang/react-forwarding-ref">https://github.com/tzynwang/react-forwarding-ref</a>
+展示頁：<a href="https://tzynwang.github.io/react-forwarding-ref/">https://tzynwang.github.io/react-forwarding-ref/</a></p>
+<p><img src="/2022/work-log-2022-w2/forwarding-ref-table-demo.gif" alt="demo"></p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://reactjs.org/docs/forwarding-refs.html">React: Forwarding Refs</a></li>
+<li><a href="https://stackoverflow.com/questions/61192450/useref-hook-on-a-custom-component">stackOverFlow: useRef() Hook on a custom component</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

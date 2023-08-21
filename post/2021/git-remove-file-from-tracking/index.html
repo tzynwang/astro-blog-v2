@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「git stop tracking files」相關筆記</title>
+    <meta name="title" content="「git stop tracking files」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/git-remove-file-from-tracking/">
+    <meta property="og:title" content="「git stop tracking files」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/git-remove-file-from-tracking/">
+    <meta property="twitter:title" content="「git stop tracking files」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「git stop tracking files」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-05-22 13:47</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  git
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#注意事項" class="astro-QTOKGA5Y">注意事項</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#流程" class="astro-QTOKGA5Y">流程</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#補充" class="astro-QTOKGA5Y">補充</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<ul>
+<li>如果在<code>.gitignore</code>建立前就已經讓 git 追蹤（tracking）該檔案的話，即使後來將該檔案加入<code>.gitignore</code>清單內，也<strong>不會讓 git 自動停止追蹤該檔案</strong></li>
+<li>可使用<code>git rm --cached &#x3C;該檔案></code>讓 git 僅停止追蹤，且不從硬碟中移除該檔案</li>
+</ul>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">git: 2.30.0.windows.2</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="注意事項">注意事項</h3>
+<ul>
+<li>
+<p>若該檔案是在「已經被 git 追蹤」的情況下被加到.gitignore，git 不會自動停止追蹤該檔案；官方文件說明如下：</p>
+<blockquote>
+<p>A gitignore file specifies intentionally untracked files that Git should ignore. <strong>Files already tracked by Git are not affected.</strong></p>
+</blockquote>
+<blockquote>
+<p>The purpose of gitignore files is to ensure that <strong>certain files not tracked by Git remain untracked</strong>. To stop tracking a file that is currently tracked, use <code>git rm --cached</code>.</p>
+</blockquote>
+</li>
+<li>
+<p>透過<code>git rm --cached &#x3C;不想要繼續被git追蹤的檔案></code>並執行<code>git commit</code>與<code>git push</code>後，若該檔案已經被推至 GitHub 等儲存空間，該檔案會被刪除</p>
+</li>
+</ul>
+<h3 id="流程">流程</h3>
+<p>參考 Remove a folder from git tracking 討論串中<a href="https://stackoverflow.com/a/54481162/15028185">lukehillonline 的回覆</a>，以下是「使 git 停止追蹤某檔案，但不使該檔案從硬碟中被移除」的流程：</p>
+<ol>
+<li>備份該檔案，並將備份移動到 git 不會追蹤到的資料夾外</li>
+<li>執行<code>git rm --cached &#x3C;不想要繼續被git追蹤的檔案></code>、<code>git commit</code>與<code>git push</code></li>
+<li>將該檔案加入<code>.gitignore</code>清單內</li>
+<li>如果需要的話，將該檔案移動回資料夾中</li>
+</ol>
+<h3 id="補充">補充</h3>
+<p>在部分討論串中看到<code>git rm -r --cached &#x3C;filename></code>的指令，其中的<code>-r</code>意義如下：</p>
+<blockquote>
+<p>Allow <strong>recursive removal</strong> when a leading directory name is given.</p>
+</blockquote>
+<p>出處：<a href="https://git-scm.com/docs/git-rm#Documentation/git-rm.txt--r">git official documentation: rm</a></p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/24290358/remove-a-folder-from-git-tracking/">StackOverFlow: Remove a folder from git tracking</a></li>
+<li><a href="https://git-scm.com/docs/gitignore/2.22.0">git official documentation: gitignore</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

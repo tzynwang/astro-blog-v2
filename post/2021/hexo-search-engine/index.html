@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>Add local search</title>
+    <meta name="title" content="Add local search">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/hexo-search-engine/">
+    <meta property="og:title" content="Add local search">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/hexo-search-engine/">
+    <meta property="twitter:title" content="Add local search">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">Add local search</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-02-17 09:07</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  hexo
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#summary-of-this-post" class="astro-QTOKGA5Y">Summary of this post</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#environment" class="astro-QTOKGA5Y">Environment</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#hexo-generator-searchdb" class="astro-QTOKGA5Y">hexo-generator-searchdb</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#github" class="astro-QTOKGA5Y">GitHub</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#configuration" class="astro-QTOKGA5Y">Configuration</a>
+            </li><li class="toc-4 astro-QTOKGA5Y">
+              <a href="#_configyml" class="astro-QTOKGA5Y">_config.yml</a>
+            </li><li class="toc-4 astro-QTOKGA5Y">
+              <a href="#_confignextyml" class="astro-QTOKGA5Y">_config.next.yml</a>
+            </li><li class="toc-4 astro-QTOKGA5Y">
+              <a href="#css-for-search-result-highlight" class="astro-QTOKGA5Y">CSS for search result highlight</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#result-1" class="astro-QTOKGA5Y">Result 1</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#programmable-search-engine" class="astro-QTOKGA5Y">Programmable Search Engine</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#workflow" class="astro-QTOKGA5Y">Workflow</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#result-2" class="astro-QTOKGA5Y">Result 2</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#note" class="astro-QTOKGA5Y">Note</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#reference" class="astro-QTOKGA5Y">Reference</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="summary-of-this-post">Summary of this post</h2>
+<p>2 ways to add local search engine to the hexo blog:</p>
+<ol>
+<li>Use plugin: <a href="https://github.com/next-theme/hexo-generator-searchdb">hexo-generator-searchdb</a></li>
+<li>Use Google’s <a href="https://programmablesearchengine.google.com/about/">Programmable Search Engine</a></li>
+</ol>
+<h2 id="environment">Environment</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">hexo: 5.3.0</span></span>
+<span class="line"><span style="color: #e1e4e8">hexo-cli: 4.2.0</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="hexo-generator-searchdb">hexo-generator-searchdb</h2>
+<h3 id="github">GitHub</h3>
+<p><a href="https://github.com/next-theme/hexo-generator-searchdb">hexo-generator-searchdb</a>
+Version: 1.3.3</p>
+<h3 id="configuration">Configuration</h3>
+<h4 id="_configyml">_config.yml</h4>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #85E89D">search</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">path</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">search.xml</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">field</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">post</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">content</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">true</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">format</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">html</span></span></code></pre>
+<h4 id="_confignextyml">_config.next.yml</h4>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D"># ---------------------------------------------------------------</span></span>
+<span class="line"><span style="color: #6A737D"># Search Services</span></span>
+<span class="line"><span style="color: #6A737D"># ---------------------------------------------------------------</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D"># Local Search</span></span>
+<span class="line"><span style="color: #85E89D">local_search</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">enable</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">true</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D"># If auto, trigger search by changing input.</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D"># If manual, trigger search by pressing enter key or search button.</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">trigger</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">auto</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D"># Show top n results per article, show all results by setting to -1</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">top_n_per_article</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">-1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D"># Unescape html strings to the readable one.</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">unescape</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">false</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D"># Preload the search data when the page loads.</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">preload</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">false</span></span></code></pre>
+<p>Note:
+No needs to add <code>/search/</code> link in <code># Menu Settings</code> if you want to use local search engine that provides by hexo-generator-searchdb. NexT (theme) will handle the search tab once the <code># Local Search</code> option is enable.</p>
+<h4 id="css-for-search-result-highlight">CSS for search result highlight</h4>
+<p>File path: <code>themes\next\source\css\_common\components\third-party\search.styl</code>
+I’d removed the bold setting and update the border-bottom style for <code>mark.search-keyword</code>:</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #85E89D">mark</span><span style="color: #B392F0">.search-keyword</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">background</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">transparent</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">border-bottom</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">1</span><span style="color: #F97583">px</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">solid</span><span style="color: #E1E4E8"> $</span><span style="color: #79B8FF">red</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">color</span><span style="color: #E1E4E8">: $</span><span style="color: #79B8FF">red</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/*font-weight: bold;*/</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<h3 id="result-1">Result 1</h3>
+<p><img src="/2021/hexo-search-engine/search-result.jpg" alt="The screenshot of hexo blog local search"></p>
+<h2 id="programmable-search-engine">Programmable Search Engine</h2>
+<p>Another way to add search function for hexo blog is adding <a href="https://programmablesearchengine.google.com/about/">Google’s Programmable Search Engine</a>.</p>
+<h3 id="workflow">Workflow</h3>
+<ol>
+<li>
+<p>Go to <a href="https://programmablesearchengine.google.com/about/">Programmable Search Engine</a> and click “Get Started”
+<img src="/2021/hexo-search-engine/programmable-search-engine-00.jpg" alt="The screenshot of Google&#x27;s Programmable Search Engine homepage"></p>
+</li>
+<li>
+<p>Enter the URL of the site to search. I enter <code>https://tzynwang.github.io/*</code> (with <code>*</code> at the end of URL) to make Google search the whole hexo blog
+<img src="/2021/hexo-search-engine/programmable-search-engine-01.jpg" alt="The screenshot of config URL for Programmable Search Engine"></p>
+</li>
+<li>
+<p>Click “CREATE” to submit the search engine application
+<img src="/2021/hexo-search-engine/programmable-search-engine-02.jpg" alt="The screenshot after submitting the search engine application"></p>
+</li>
+<li>
+<p>To add Google’s search engine to hexo blog, click “Get code”</p>
+</li>
+<li>
+<p>Copy the code
+<img src="/2021/hexo-search-engine/programmable-search-engine-03.jpg" alt="The screenshot of copying search engine&#x27;s code"></p>
+</li>
+<li>
+<p>Launch cmd.exe, enter <code>hexo new page search</code> to add the searching page for hexo blog</p>
+</li>
+<li>
+<p>Open the <code>index.md</code> file in <code>search</code> folder which was just created, add the front-matter <code>type: "search"</code></p>
+</li>
+<li>
+<p>Paste the search engine code as the content in <code>index.md</code>. Here’s how the <code>index.md</code> should look like:</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">---</span></span>
+<span class="line"><span style="color: #85E89D">title</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">search</span></span>
+<span class="line"><span style="color: #85E89D">date</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">2021-02-17 10:33:04</span></span>
+<span class="line"><span style="color: #85E89D">type</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">'search'</span></span>
+<span class="line"><span style="color: #85E89D">layout</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">search</span></span>
+<span class="line"><span style="color: #E1E4E8">---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;script async src="https://cse.google.com/cse.js?cx=9e7ebf1af41ffecee">&#x3C;/script></span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;div class="gcse-search">&#x3C;/div></span></span></code></pre>
+</li>
+<li>
+<p>Update the configuration in the <code>_config.next.yml</code> file: add <code>search</code> option in <code># Menu Settings</code></p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D"># ---------------------------------------------------------------</span></span>
+<span class="line"><span style="color: #6A737D"># Menu Settings</span></span>
+<span class="line"><span style="color: #6A737D"># ---------------------------------------------------------------</span></span>
+<span class="line"><span style="color: #85E89D">menu</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #85E89D">home</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">/ || fa fa-home</span></span>
+<span class="line"><span style="color: #85E89D">about</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">/about/ || fa fa-user</span></span>
+<span class="line"><span style="color: #85E89D">tag</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">/categories/ || fa fa-th</span></span>
+<span class="line"><span style="color: #85E89D">archives</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">/archives/ || fa fa-archive</span></span>
+<span class="line"><span style="color: #85E89D">Google search</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">/search/ || fa fa-search</span></span></code></pre>
+</li>
+<li>
+<p>Save the settings, run <code>hexo server</code> to preview the result</p>
+</li>
+</ol>
+<h3 id="result-2">Result 2</h3>
+<p><img src="/2021/hexo-search-engine/programmable-search-engine-04.jpg" alt="The screenshot of Google&#x27;s Programmable Search Engine on hexo blog"></p>
+<h2 id="note">Note</h2>
+<p>I decide to use <code>hexo-generator-searchdb</code> instead of adding another page to handle the search engine.
+Prefer the way that NexT theme handles the search engine, it opens a searching tab on the current page. Users don’t need to navigate to another page for doing content searching.</p>
+<h2 id="reference">Reference</h2>
+<p><a href="https://blog.johnwu.cc/article/hexo-google-custom-search.html">Hexo - 自訂站內搜尋 (Google Custom Search)</a></p>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

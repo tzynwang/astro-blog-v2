@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「webpack引用assets靜態檔案」相關筆記</title>
+    <meta name="title" content="「webpack引用assets靜態檔案」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/webpack-assets/">
+    <meta property="og:title" content="「webpack引用assets靜態檔案」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/webpack-assets/">
+    <meta property="twitter:title" content="「webpack引用assets靜態檔案」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「webpack引用assets靜態檔案」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-08-14 13:24</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  webpack
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#資料夾結構" class="astro-QTOKGA5Y">資料夾結構</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#套件安裝" class="astro-QTOKGA5Y">套件安裝</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#設定" class="astro-QTOKGA5Y">設定</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#webpackconfigjs" class="astro-QTOKGA5Y">webpack.config.js</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#srctemplatehtml" class="astro-QTOKGA5Y">src/template.html</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#srcassetsstylesmainscss" class="astro-QTOKGA5Y">src/assets/styles/main.scss</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#srcindexjs" class="astro-QTOKGA5Y">src/index.js</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#打包成果" class="astro-QTOKGA5Y">打包成果</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>此篇筆記為記錄在專案需引用靜態檔案時，webpack 應如何設定
+展示用 repo：<a href="https://github.com/tzynwang/webpack-demo">https://github.com/tzynwang/webpack-demo</a></p>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">webpack: 5.50.0</span></span>
+<span class="line"><span style="color: #e1e4e8">webpack-cli: 4.7.2</span></span>
+<span class="line"><span style="color: #e1e4e8">html-loader: 2.1.2</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="資料夾結構">資料夾結構</h2>
+<p><img src="/2021/webpack-assets/folder-structure.png" alt="src資料夾結構"></p>
+<h2 id="套件安裝">套件安裝</h2>
+<p><code>npm i -D css-loader html-loader html-webpack-plugin mini-css-extract-plugin node-sass sass-loader webpack webpack-cli</code></p>
+<h2 id="設定">設定</h2>
+<h3 id="webpackconfigjs">webpack.config.js</h3>
+<script src="https://gist.github.com/tzynwang/31e5e4e84c47de9c014025fb764dcb35.js"></script>
+<ul>
+<li>第 26-29 行：設定所有 png、jp(e)g、gif、svg 檔案都要辨識為 asset/resource，並打包後名稱統一為<code>img/[原本的檔案名稱].[副檔名]</code>
+<ul>
+<li>加上<code>img/</code>是為了讓打包後的圖片檔案通通被掃進<code>dist/img</code>這個資料夾中</li>
+<li>沒有加上<code>/img</code>的話，所有的檔案都會直接散落在 dist 根目錄裡面，沒有功能差異，但看起來很亂</li>
+</ul>
+</li>
+<li>第 33-34 行：為了要讓<code>.html</code>中使用的圖片（比如<code>&#x3C;img src="..."></code>）也能被打包，故需使用<code>html-loader</code></li>
+</ul>
+<h3 id="srctemplatehtml">src/template.html</h3>
+<script src="https://gist.github.com/tzynwang/c60103fb640648950925d14592c2a52b.js"></script>
+<p>第 13 行引用了靜態圖片檔案</p>
+<h3 id="srcassetsstylesmainscss">src/assets/styles/main.scss</h3>
+<script src="https://gist.github.com/tzynwang/7fd0b11b799b6a2da4ae63dfee48d044.js"></script>
+<p>第 23 行引用了靜態圖片檔案</p>
+<h3 id="srcindexjs">src/index.js</h3>
+<script src="https://gist.github.com/tzynwang/26e8c23c42febcafa3d204d08a582c8a.js"></script>
+<ul>
+<li><code>main.scss</code>與<code>template.html</code>都要 import 進來，webpack 才會把這兩份檔案中引用到的靜態資源一併打包起來</li>
+</ul>
+<h2 id="打包成果">打包成果</h2>
+<p><img src="/2021/webpack-assets/folder-structure-packed.png" alt="dist資料夾結構">
+<img src="/2021/webpack-assets/demo.png" alt="webpack會置換靜態檔案的路徑"></p>
+<p>透過 devTools 可以觀察到 webpack 已經將 src 中的檔案路徑都轉換為應對 dist 資料夾中的靜態檔案路徑了</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://webpack.js.org/guides/asset-management/#loading-images">webpack: Loading Images</a></li>
+<li><a href="https://awdr74100.github.io/2020-03-09-webpack-urlloader-fileloader/">Webpack 前端打包工具 - 使用 url-loader 與 file-loader 處理靜態資源</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

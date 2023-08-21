@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>30天挑戰：「使用SCSS搭配Vue實作dark mode」技術記錄</title>
+    <meta name="title" content="30天挑戰：「使用SCSS搭配Vue實作dark mode」技術記錄">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/ithome2021-2-vue-dark-mode/">
+    <meta property="og:title" content="30天挑戰：「使用SCSS搭配Vue實作dark mode」技術記錄">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/ithome2021-2-vue-dark-mode/">
+    <meta property="twitter:title" content="30天挑戰：「使用SCSS搭配Vue實作dark mode」技術記錄">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">30天挑戰：「使用SCSS搭配Vue實作dark mode」技術記錄</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-08-07 09:02</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span><span class="astro-2IYMVI75">
+  Vue
+</span><span class="astro-2IYMVI75">
+  2021鐵人賽
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#前言" class="astro-QTOKGA5Y">前言</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#正篇開始" class="astro-QTOKGA5Y">正篇開始</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#scss" class="astro-QTOKGA5Y">SCSS</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#html" class="astro-QTOKGA5Y">HTML</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#vue" class="astro-QTOKGA5Y">Vue</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在不使用其他框架或 library 的情況下，僅透過 SCSS 與 Vue 來實作網頁的 dark mode</p>
+<p><img src="/2021/ithome2021-2-vue-dark-mode/darkmode-demo.png" alt="dark mode展示"></p>
+<p>成品：<a href="https://tzynwang.github.io/ac_assignment_3F_ALPHA-Shop/">https://tzynwang.github.io/ac_assignment_3F_ALPHA-Shop/</a>
+原始碼：<a href="https://github.com/tzynwang/ac_assignment_3F_ALPHA-Shop">https://github.com/tzynwang/ac_assignment_3F_ALPHA-Shop</a></p>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">Vue.js: 2.X</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="前言">前言</h2>
+<p>結構較複雜的專案不適合僅使用<code>&#x3C;input type="checkbox"></code>搭配<code>filter: hue-rotate() invert();</code>來實作 dark mode 需求，且在設計師有指定 dark mode 色票時，還是引入 JavaScript 來協助處理 dark mode 較為輕鬆</p>
+<p>純 CSS 的 dark mode 相關技巧可參考：</p>
+<ul>
+<li><a href="https://youtu.be/qimopjP6YoM">(YouTube) Full Dark Mode with only 1 CSS PROPERTY?!</a></li>
+<li><a href="https://youtu.be/5aJTVV-rlBw">(YouTube) Pure CSS3 Dark Mode Effects For Website | CSS Only Night mode</a></li>
+</ul>
+<h2 id="正篇開始">正篇開始</h2>
+<h3 id="scss">SCSS</h3>
+<script src="https://gist.github.com/tzynwang/7a9ea9e2a13e499121f1cef6d18f53d0.js"></script>
+<ul>
+<li>僅有需要在 dark mode 變色的顏色變數才須設定兩套值；範例中的<code>--primary-pink</code>因設計師並不打算在 dark mode 進行變色，故僅在<code>html {...}</code>中出現，不須於<code>html[data-theme="dark"] {...}</code>再設定一次</li>
+<li>開發時可先將專案 body 中的<code>color</code>與<code>background</code>都設定為最終成品不會使用到的顏色，方便一眼確認還有哪些部位沒有上色
+<img src="/2021/ithome2021-2-vue-dark-mode/color-check.png" alt="填入專案不會用到的顏色，方便檢查填色進度"></li>
+<li>版面配置多使用<code>padding</code>而非<code>margin</code>，才方便滿版上色</li>
+<li>使用<code>var()</code>進行顏色設定
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">background-color: var(</span><span style="color: #FFAB70">--white</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">color: var(</span><span style="color: #FFAB70">--dark</span><span style="color: #E1E4E8">);</span></span></code></pre>
+</li>
+</ul>
+<h3 id="html">HTML</h3>
+<ul>
+<li>因搭配 Vue 進行操作，故在 light/dark mode 切換時需要更換圖片的部位皆須搭配<code>v-bind:src</code>，比如<code>&#x3C;img :src="navMenuIcon"></code></li>
+<li>使用<code>&#x3C;input type="checkbox"></code>搭配<code>v-model</code>讀取 checkbox 的勾選狀態：<code>&#x3C;input type="checkbox" id="darkModeSwitch" v-model="darkMode"></code></li>
+</ul>
+<h3 id="vue">Vue</h3>
+<script src="https://gist.github.com/tzynwang/c719372a29bdc21e6f6678933614abe8.js"></script>
+<ul>
+<li><code>darkMode</code>預設為<code>false</code></li>
+<li>使用<code>watch</code>監看<code>darkMode</code>的值，一旦更動後，就根據<code>darkMode</code>為 true 或 false 修改<code>data-theme</code>（與 CSS 中的<code>var()</code>變數們連動）與圖示的<code>src</code></li>
+<li>也可對<code>&#x3C;input type="checkbox"></code>綁定<code>@change="darkModeMethod($event)</code>，並透過<code>methods</code>來切換為 dark mode（以下方式就不需對 input 綁 v-model）：
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #B392F0">methods</span><span style="color: #E1E4E8">: {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">darkModeMethod</span><span style="color: #E1E4E8"> (event) {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (event.target.checked) {</span></span>
+<span class="line"><span style="color: #E1E4E8">      document.documentElement.</span><span style="color: #B392F0">setAttribute</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'data-theme'</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'dark'</span><span style="color: #E1E4E8">)</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.navLogoSrc </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/logo-dark.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.navSearchIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-nav-search-dark.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.navChartIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-nav-chart-dark.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.navModeIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-nav-to-light-mode.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.navMenuIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-nav-menu-dark.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.footerFbIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-footer-fb-dark.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.footerIGIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-footer-ig-dark.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.footerTelIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-footer-tel-dark.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">    } </span><span style="color: #F97583">else</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">      document.documentElement.</span><span style="color: #B392F0">setAttribute</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'data-theme'</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">''</span><span style="color: #E1E4E8">)</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.navLogoSrc </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/logo.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.navSearchIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-nav-search.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.navChartIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-nav-chart.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.navModeIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-nav-to-dark-mode.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.navMenuIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-nav-menu.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.footerFbIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-footer-fb.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.footerIGIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-footer-ig.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.footerTelIcon </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'./images/icon-footer-tel.svg'</span></span>
+<span class="line"><span style="color: #E1E4E8">    }</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://codyhouse.co/blog/post/dark-light-switch-css-javascript">How to create a dark\light mode switch in CSS and Javascript</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

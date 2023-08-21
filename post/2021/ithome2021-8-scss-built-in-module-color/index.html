@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>30天挑戰：「SCSS built-in color module」相關筆記</title>
+    <meta name="title" content="30天挑戰：「SCSS built-in color module」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/ithome2021-8-scss-built-in-module-color/">
+    <meta property="og:title" content="30天挑戰：「SCSS built-in color module」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/ithome2021-8-scss-built-in-module-color/">
+    <meta property="twitter:title" content="30天挑戰：「SCSS built-in color module」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">30天挑戰：「SCSS built-in color module」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-08-19 09:54</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span><span class="astro-2IYMVI75">
+  2021鐵人賽
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考資料" class="astro-QTOKGA5Y">參考資料</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>SCSS 本身即內建<code>color</code>模組來調整顏色的亮度、透明度，也可直接回傳負片或去飽和度的結果</p>
+<p class="codepen" data-height="350" data-default-tab="css,result" data-slug-hash="oNWrgqG" data-user="Charlie7779" style="height: 350px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/oNWrgqG">
+  scss:color</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<h2 id="筆記">筆記</h2>
+<ul>
+<li>Dart Sass: supports this feature since <code>1.23.0</code></li>
+<li>Only Dart Sass currently supports loading built-in modules with <code>@use</code>. Users of other implementations must call functions using their global names instead.
+<ul>
+<li>不透過<code>@use</code>載入<code>color</code>模組的話，則直接呼叫 functions 的 global names；比如<code>color.scale(...)</code>改為呼叫<code>scale-color(...)</code></li>
+</ul>
+</li>
+<li><code>color: scale-color(red, $lightness: -50%);</code>：套用傳入的顏色，但降低亮度 50%</li>
+<li><code>color: scale-color(red, $lightness: 50%);</code>：套用傳入的顏色，但提昇亮度 50%</li>
+<li><code>color: grayscale(red);</code>：套用去除飽和度後的傳入顏色</li>
+<li><code>color: invert(red);</code>：套用負片後的傳入顏色</li>
+<li><code>color: scale-color(red, $alpha: -75%);</code>：
+<ul>
+<li>範例中<code>-75%</code>的意義為「讓傳入的顏色剩下 25%的透明度」</li>
+<li>編譯後的 CSS 為<code>color: rgba(255, 0, 0, 0.25);</code></li>
+<li><code>$alpha</code>的值設定為負數才有透明效果；<code>0%</code>為不修改透明度，<code>-100%</code>代表完全透明</li>
+</ul>
+</li>
+</ul>
+<h2 id="參考資料">參考資料</h2>
+<ul>
+<li><a href="https://sass-lang.com/documentation/modules/color">sass:color</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

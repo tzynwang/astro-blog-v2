@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第3週 學習記錄：Creational Design Patterns</title>
+    <meta name="title" content="2022 第3週 學習記錄：Creational Design Patterns">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/work-log-2022-w3/">
+    <meta property="og:title" content="2022 第3週 學習記錄：Creational Design Patterns">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/work-log-2022-w3/">
+    <meta property="twitter:title" content="2022 第3週 學習記錄：Creational Design Patterns">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第3週 學習記錄：Creational Design Patterns</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-01-22 17:39</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Design Patterns
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#factory-method" class="astro-QTOKGA5Y">Factory Method</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#abstract-factory" class="astro-QTOKGA5Y">Abstract Factory</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#builder" class="astro-QTOKGA5Y">Builder</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#prototype" class="astro-QTOKGA5Y">Prototype</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#singleton" class="astro-QTOKGA5Y">Singleton</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>本篇整理了 design patterns 中歸類為 creational design patterns 的相關筆記：</p>
+<ul>
+<li>Factory Method</li>
+<li>Abstract Factory</li>
+<li>Builder</li>
+<li>Prototype</li>
+<li>Singleton</li>
+</ul>
+<p>Creational patterns 的關注點：provide various object <strong>creation mechanisms</strong>, which increase <strong>flexibility</strong> and <strong>reuse</strong> of existing code. 著眼點在「物件應該如何被建立」的 design patterns</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="factory-method">Factory Method</h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EcFVTgRHJLM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<ul>
+<li>Provides an interface for <strong>creating objects in a superclass</strong>, but allows <strong>subclasses to alter the type of objects</strong> that will be created. 由 superclass 定義好 interface，由 subclass 來實際進行物件的建立與回傳</li>
+<li>The Factory Method <strong>separates product construction</strong> code from the code that <strong>actually uses the product</strong>. For example, <strong>to add a new product</strong> type to the app, you’ll only need to <strong>create a new creator subclass</strong> and override the factory method in it.</li>
+<li>Use the Factory Method <strong>when you don’t know beforehand the exact types and dependencies of the objects</strong> your code should work with. 由 factory method 來根據情境回傳對應的物件</li>
+<li>Using factories provides encapsulation, and means the <strong>code is not tied to specific classes or objects</strong>, and thus the class hierarchy or prototypes can be changed or refactored <strong>without needing to change code that uses them</strong>. 不需要知道物件是根據什麼樣的邏輯或步驟被建立，只要呼叫 subclass 就可以得到需要的物件</li>
+</ul>
+<script src="https://gist.github.com/tzynwang/cd786a10bedf28a61043a8923ce0fdd6.js"></script>
+<ul>
+<li>gist/app.tsx 第 22 行的 <code>generateRandomAnimal.runFactory()</code>，運用這段 code 的人不需要知道 Animal 是根據什麼樣的邏輯被隨機產出，只知道一旦呼叫了 <code>generateRandomAnimal.runFactory()</code> 就會得到隨機的 Animal 物件</li>
+<li>gist/app.tsx 第 26 行的 <code>generateSerialAnimal.runFactory()</code> 則是會以固定的順序回傳 Animal 物件，使用這段 code 的人也不需要知道 Animal 是透過哪些邏輯被依序產出</li>
+<li>使用 <code>runFactory()</code>（即 <code>factory method</code>）的好處是，日後 Animal 的種類就算越變越多，使用者維持使用 <code>generateRandomAnimal.runFactory()</code> 依舊可以隨機獲得任何 Animal 物件，client code 不需進行任何調整</li>
+</ul>
+<h3 id="abstract-factory">Abstract Factory</h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/v-GiuMmsXj4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<ul>
+<li>與 Factory Method 概念類似，唯一的不同是 Factory Method 基本上是產生單一物件，但 Abstract Factory 是產出一組互相搭配的物件，比如在 light mode 或 dark mode 下使用的不同 UI 組合</li>
+<li>Abstract Factory 要解決的問題是：確保產出的物件會是合理的組合</li>
+<li>Abstract Factory can serve as <strong>an alternative to Facade</strong> when you only want to hide the way the subsystem objects are created from the client code.</li>
+</ul>
+<h3 id="builder">Builder</h3>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ziQqmvfg5XE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<ul>
+<li>使用一連串的 method 來產生物件；舉例：透過在披薩上追加不同的配料（<code>methods</code>），會產生不同口味的披薩</li>
+<li>Builder focuses on <strong>constructing complex objects step by step</strong>. Abstract Factory specializes in creating <strong>families of related objects</strong>.</li>
+<li>Abstract Factory returns the product immediately, whereas <strong>Builder lets you run some additional construction steps before fetching the product</strong>.</li>
+</ul>
+<script src="https://gist.github.com/tzynwang/ced5f0ff99570ac61580481dae622b46.js"></script>
+<ul>
+<li>gist/builder.ts 第 50 至 52 行即示範 builder pattern 的特徵：透過一系列的 steps 來建構類似但細節不同的物件</li>
+</ul>
+<h3 id="prototype">Prototype</h3>
+<ul>
+<li>Prototype can help when you need to <strong>save copies of Commands into history</strong>.</li>
+<li>Sometimes Prototype can be a <strong>simpler alternative to Memento</strong>. This works if the object, the state of which you want to store in the history, is fairly straightforward and doesn’t have links to external resources, or the links are easy to re-establish.</li>
+</ul>
+<script src="https://gist.github.com/tzynwang/cdfd010f777a9394e21ac2f9378e4447.js"></script>
+<ul>
+<li>gist/prototype.ts 與 gist/builder.ts 的差異在於使用 <code>.clone()</code> 複製 <code>Pizza</code> 物件當下的狀態，並修改 clone 回傳出來的 <code>Pizza</code> 物件；透過 <code>.listPizzaSpec()</code> 可以發現修改 <code>.clone()</code> 後的新 <code>Pizza</code> 不會影響到被當作複製對象的原始 <code>Pizza</code></li>
+</ul>
+<h3 id="singleton">Singleton</h3>
+<ul>
+<li>Singleton is a creational design pattern that lets you ensure that a class <strong>has only one instance</strong>, while <strong>providing a global access point</strong> to this instance. 實作過的例子：推特專案中唯一一個 web socket instance，確保推特專案在開啟的時候永遠只會有一個 web socket instance 在連線，避免出現使用者重複進出聊天室的錯誤</li>
+<li>注意 redux 並不等於 singleton pattern，而是使用者選擇只維護一個唯一實例，這才讓 redux 保管的資料擁有 singleton 的特性</li>
+<li>Implementation:
+<ul>
+<li>Make the default <code>constructor</code> <strong>private</strong>, to prevent other objects from using the new operator with the Singleton class.</li>
+</ul>
+</li>
+<li>Create a static creation method that acts as a constructor. Under the hood, <strong>this method calls the private constructor to create an object</strong> and saves it in a static field. All following calls to this method <strong>return the cached object</strong>.</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://refactoring.guru/design-patterns/creational-patterns">Refactoring.Guru: Creational Design Patterns</a></li>
+<li><a href="https://www.dofactory.com/javascript/design-patterns">dofactory: JavaScript Design Patterns</a></li>
+<li><a href="https://www.patterns.dev/posts/introduction/">patterns</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

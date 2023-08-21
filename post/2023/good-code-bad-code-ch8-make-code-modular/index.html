@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>閱讀筆記：Good Code, Bad Code Chapter 8 Make code modular</title>
+    <meta name="title" content="閱讀筆記：Good Code, Bad Code Chapter 8 Make code modular">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/good-code-bad-code-ch8-make-code-modular/">
+    <meta property="og:title" content="閱讀筆記：Good Code, Bad Code Chapter 8 Make code modular">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/good-code-bad-code-ch8-make-code-modular/">
+    <meta property="twitter:title" content="閱讀筆記：Good Code, Bad Code Chapter 8 Make code modular">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">閱讀筆記：Good Code, Bad Code Chapter 8 Make code modular</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-04-08 19:13</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Software Architecture
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#模組化的優點" class="astro-QTOKGA5Y">模組化的優點</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#實作技巧" class="astro-QTOKGA5Y">實作技巧</a>
+            </li><li class="toc-4 astro-QTOKGA5Y">
+              <a href="#依賴注入" class="astro-QTOKGA5Y">依賴注入</a>
+            </li><li class="toc-4 astro-QTOKGA5Y">
+              <a href="#謹慎繼承" class="astro-QTOKGA5Y">謹慎繼承</a>
+            </li><li class="toc-4 astro-QTOKGA5Y">
+              <a href="#專注於自身" class="astro-QTOKGA5Y">專注於自身</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>此篇是 Good Code, Bad Code: Think like a software engineer 第八章（Make code modular）的閱讀筆記，本章旨在說明讓程式碼模組化可以帶來的優點，以及提供一些讓程式碼更加模組化的實作技巧。</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="模組化的優點">模組化的優點</h3>
+<p>一個軟體產品通常不太可能一經發布後完全不修改其規格或行為。對軟體開發而言，「修改」是一件可預期發生的事情。而如果程式碼有被模組化，那麼修改這樣的程式碼通常會比改動「沒有模組化的程式碼」來的簡單。</p>
+<blockquote>
+<p>One of the main aims of modularity is to create code that <strong>can be easily adapted and reconfigured</strong>, without having to know exactly how it will need to be adapted or reconfigured. A key goal in achieving this is that different pieces of functionality (or requirements) should <strong>map to distinct (clear, recognizably) parts of the codebase</strong>.</p>
+</blockquote>
+<p>而模組化的核心概念如下：</p>
+<ol>
+<li>不暴露實作細節</li>
+<li>每一個功能（或資料結構、物件等）只專注在自身的任務上，不關心其互動目標的實作內容</li>
+<li>承上，當程式碼需要因應新規格進行變動時，修改應只發生在「與新規格有直接關聯」的程式碼上</li>
+</ol>
+<h3 id="實作技巧">實作技巧</h3>
+<h4 id="依賴注入">依賴注入</h4>
+<p>核心概念是「保持彈性」，避免寫死日後可能會面臨修改的部分。</p>
+<p>以導航軟體為例，「地圖」這類「日後可能會擴充、或是有多種版本」的資料比較適合透過依賴注入（dependency injection）來把內容送進「需要地圖資料」的功能中。直接把地圖資料刻進各種功能內，可能會造成：</p>
+<ol>
+<li>地圖散落在各種需要此類資料的功能中，造成內容（地圖）在多處重複出現</li>
+<li>承上，一旦面臨修改時，所有會用到「地圖」的程式碼都要一起被更新</li>
+<li>或是另一種情況：現在有了兩個版本的地圖資料，但因為日前把第一版的地圖寫死在相關功能中，導致為了對應第二版的地圖，現在需要建立「除了地圖版本不同以外、其他內容基本上都一樣」的第二套功能</li>
+</ol>
+<p>而透過依賴注入可以避免以上情境發生。</p>
+<p>補充：可以透過定義 <code>interface</code> 來確保「注入的參數」以及「功能本身」能夠互相搭配，亦即參數以及功能在實作時都需要遵守特定介面，確保兩者可以順利溝通。</p>
+<h4 id="謹慎繼承">謹慎繼承</h4>
+<p>在執行類別繼承（class inheritance）時，延伸出來的子類別會繼承親類別的 API 以及功能。但本書提出的觀點為：如果親類別的 API 與功能「對於子類別的使用者來說並不相干（屬於實作細節）」的話，直接繼承就不是一個最佳實作方式。而以下是作者建議的替代方案：</p>
+<p>（下面以Ｘ代表原繼承關係中的子類別、Ｙ代表原繼承關係中的親類別）</p>
+<ul>
+<li>直接產生（compose）類別Ｙ的實例，並於類別Ｘ中使用Ｙ實例的功能，此時類別Ｘ的使用者不會看到類別Ｙ的任何實作細節，但類別Ｘ的功能依舊</li>
+<li>透過代理（delegation）來把「使用者要透過類別Ｘ完成的功能」轉交給類別Ｙ執行，類別Ｘ一樣不會暴露任何關於類別Ｙ的實作細節</li>
+</ul>
+<p>而為何要避免暴露實作細節？本書的解釋是：</p>
+<ul>
+<li>一旦親類別的 API 或功能暴露到子類別層級，就無法避免這些功能被子類別的使用者拿來用。而一旦被拿來用，日後工程師便不能輕易修改親類別的功能，因為這可能會影響到那些子類別的使用者</li>
+<li>暴露親類別的 API 或功能可能會導致子類別的使用者感到困惑，因為親類別的 API 或功能可能與子類別沒有直接關聯</li>
+</ul>
+<h4 id="專注於自身">專注於自身</h4>
+<p>核心概念是「不過度依賴其他程式碼的實作細節」。</p>
+<p>在兩段程式碼需要合作時，比較好的做法是定義好共用介面（interface），並根據此資料結構來進行互動。好處是此二程式碼日後若需進行更新，只要兩者繼續遵守日前定義好的介面，那麼其中一方的修改就不會影響到另外一邊的程式碼。</p>
+<p>反之，如果一個功能Ａ的實作全都直接參考Ｂ的回傳結構，這會導致功能Ｂ日後進行任何修改時，都要一併檢查功能Ａ的實作是否還能配合改動後的功能Ｂ。這會讓程式碼變得容易出錯，應盡量避免此類開發方式。</p>
+<p>以上「專注於自身」的技巧除了應用在一般回傳內容上，也適用於拋錯時的錯誤內容：</p>
+<blockquote>
+<p>In order to prevent implementation details being leaked, each layer in the code should ideally <strong>reveal only error types that reflect the given layer of abstraction</strong>. We can achieve this by wrapping any errors from lower layers into error types <strong>appropriate to the current layer</strong>. This means that callers are presented with an appropriate layer of abstraction while also ensuring that the original error information is not lost (because it’s still present within the wrapped error).</p>
+</blockquote>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.manning.com/books/good-code-bad-code">Manning: Good Code, Bad Code</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

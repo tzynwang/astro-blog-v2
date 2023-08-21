@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>快速筆記：使用 axios 下載後端回傳的 pdf binary</title>
+    <meta name="title" content="快速筆記：使用 axios 下載後端回傳的 pdf binary">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/axios-download-binary-pdf/">
+    <meta property="og:title" content="快速筆記：使用 axios 下載後端回傳的 pdf binary">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/axios-download-binary-pdf/">
+    <meta property="twitter:title" content="快速筆記：使用 axios 下載後端回傳的 pdf binary">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">快速筆記：使用 axios 下載後端回傳的 pdf binary</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-06-02 19:42</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  axios
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在透過 axios 來下載 binary 檔案時，記得要設定 <code>responseType: 'arraybuffer'</code> 以便順利取得資料。</p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">axios: 0.24.1</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<p>程式碼如下：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">response</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">await</span><span style="color: #E1E4E8"> axios.</span><span style="color: #B392F0">post</span><span style="color: #E1E4E8">(</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #9ECBFF">'/api/to/download/pdf'</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  { url },</span></span>
+<span class="line"><span style="color: #E1E4E8">  { responseType: </span><span style="color: #9ECBFF">'arraybuffer'</span><span style="color: #E1E4E8"> }</span></span>
+<span class="line"><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">pdfUrl</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> window.</span><span style="color: #79B8FF">URL</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">createObjectURL</span><span style="color: #E1E4E8">(</span><span style="color: #F97583">new</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Blob</span><span style="color: #E1E4E8">([response.data]));</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">link</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> document.</span><span style="color: #B392F0">createElement</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'a'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">link.href </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> pdfUrl;</span></span>
+<span class="line"><span style="color: #E1E4E8">link.</span><span style="color: #B392F0">setAttribute</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'download'</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'file.pdf'</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">link.</span><span style="color: #B392F0">click</span><span style="color: #E1E4E8">(); </span><span style="color: #6A737D">// 瀏覽器應該會自動開始執行下載</span></span></code></pre>
+<p>透過 <code>axios.post</code> 連線時，要在 <code>.post()</code> 的第三個參數傳入設定檔 <code>{ responseType: 'arraybuffer' }</code> 來取出 binary 資料。</p>
+<blockquote>
+<p>“arraybuffer”: The <code>response</code> is a JavaScript <code>ArrayBuffer</code> containing binary data.</p>
+</blockquote>
+<p>接著將 binary 資料透過 <code>new Blob()</code> 與 <code>window.URL.createObjectURL()</code> 產生下載連結，原理如下：</p>
+<ul>
+<li><code>new Blob()</code> 會將後端提供的 binary 內容轉為 Blob 物件</li>
+<li><code>window.URL.createObjectURL()</code> 會為「傳入此功能的參數」建立 url ，至此，後端回傳的 pdf binary 已經被轉成「可以下載的檔案連結」</li>
+</ul>
+<p>最後透過 <code>document.createElement('a')</code> 建立 anchor 元件並直接點擊即可。注意：不需要將該 anchor 渲染到畫面上（不用 <code>document.body.appendChild(...)</code>）</p>
+<p>完事。</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://axios-http.com/docs/req_config">axios: Request Config</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType">MDN: XMLHttpRequest > responseType property</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Blob/Blob">MDN: Blob()</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static">MDN: URL > createObjectURL()</a></li>
+<li><a href="https://stackoverflow.com/questions/49040247/download-binary-file-with-axios">stackOverFlow: Download binary file with Axios</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

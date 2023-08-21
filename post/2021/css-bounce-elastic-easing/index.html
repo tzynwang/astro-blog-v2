@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「Bringing bounce and elastic easing to CSS | HTTP 203」相關筆記</title>
+    <meta name="title" content="「Bringing bounce and elastic easing to CSS | HTTP 203」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/css-bounce-elastic-easing/">
+    <meta property="og:title" content="「Bringing bounce and elastic easing to CSS | HTTP 203」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/css-bounce-elastic-easing/">
+    <meta property="twitter:title" content="「Bringing bounce and elastic easing to CSS | HTTP 203」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「Bringing bounce and elastic easing to CSS | HTTP 203」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-12-01 23:10</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#新規格草案簡單總解" class="astro-QTOKGA5Y">新規格草案簡單總解</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#從-linear-gradient開始" class="astro-QTOKGA5Y">從 linear-gradient()開始</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#集合非常多的點來畫出像是曲線的直線集合" class="astro-QTOKGA5Y">集合非常多的「點」來畫出「像是曲線」的直線集合</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/8FuafvJLDpM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p>目前的<code>cubic-bezier</code>僅能「抵達終點一次（無法在抵達終點後做出彈跳動畫）」，而目前在草稿階段的 CSS 新規格則是想要實現「在一段動畫中彷彿多次觸底反彈（可以做出彈跳動畫）」的行為</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="新規格草案簡單總解">新規格草案簡單總解</h3>
+<blockquote>
+<p>透過組合非常多的「點」來畫出曲線（視覺上），看起來像是觸底的「點」實際上並未達到 1，而是 0.99 的位置</p>
+</blockquote>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #B392F0">.whatever</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">animation-timing-function</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">linear</span><span style="color: #E1E4E8">(</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.003</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.013</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.03</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.05</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.08</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.11</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.15</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.2</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.26</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.31</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.38</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.45</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.53</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.62</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.71</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.81</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.9</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.99</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.94</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.89</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.85</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.82</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.79</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.77</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.76</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.752</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.75</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.755</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.77</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.78</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.81</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.84</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.87</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.92</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.97</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.99</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.97</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.95</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.94</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.938</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.94</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.949</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.96</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.99</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.994</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.986</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.985</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">0.989</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">1</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">100</span><span style="color: #F97583">%</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">100</span><span style="color: #F97583">%</span></span>
+<span class="line"><span style="color: #E1E4E8">  );</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<p><img src="/2021/css-bounce-elastic-easing/new-spec-proposal-demo.png" alt="動畫路線如圖，在視覺上做出回彈效果"></p>
+<h3 id="從-linear-gradient開始">從 linear-gradient()開始</h3>
+<ul>
+<li>CSS 的<code>linear-gradient()</code>在開發者<strong>沒有</strong>提供每一組顏色的<code>&#x3C;linear-color-stop></code>時，會自動根據<code>linear-gradient()</code>的顏色數量參數 、以及要繪製漸層背景的面積，來平均分配每個顏色在漸層中佔據的幅度</li>
+<li>比如<code>background: linear-gradient(orange, pink);</code>就會平均分配橘色與粉紅色的範圍（一半一半），而如果加入第三個顏色：<code>background: linear-gradient(orange, pink, grey);</code>，成果就會是三個顏色的漸層平均分配畫面</li>
+</ul>
+<h3 id="集合非常多的點來畫出像是曲線的直線集合">集合非常多的「點」來畫出「像是曲線」的直線集合</h3>
+<ul>
+<li>承以上畫出漸層的概念，首先允許動畫路徑上有多個「點」（位置）：<code>linear(0, 0.7, 1)</code>，代表起始點<code>0</code>，接著移動到<code>0.7</code>的位置，最終達到<code>1</code></li>
+<li>當路徑上的「點」越來越多，最終路徑就會看起來像是曲線，然而實際上是透過非常多的點繪製出直線，而因為線段組合夠多，視覺上看起來會像是曲線</li>
+<li>視覺上像是「觸底」的位置實際上是<code>0.99</code>而非<code>1</code>，整個動畫最終還是只會抵達終點一次，其他只是在視覺上「非常接近終點」</li>
+</ul>
+<blockquote>
+<p>結果：得到視覺上有回彈效果的動畫路徑</p>
+</blockquote>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://github.com/w3c/csswg-drafts/pull/6533">w3c/csswg-rafts: [css-easing-1] Some ideas for linear() easing</a></li>
+<li><a href="https://easings.net/">Easings cheatsheet</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

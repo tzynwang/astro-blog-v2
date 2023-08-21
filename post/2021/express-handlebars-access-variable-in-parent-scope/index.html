@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「Express Handlebars 取得父層變數內容」相關筆記</title>
+    <meta name="title" content="「Express Handlebars 取得父層變數內容」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/express-handlebars-access-variable-in-parent-scope/">
+    <meta property="og:title" content="「Express Handlebars 取得父層變數內容」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/express-handlebars-access-variable-in-parent-scope/">
+    <meta property="twitter:title" content="「Express Handlebars 取得父層變數內容」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「Express Handlebars 取得父層變數內容」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-05-14 21:11</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Express Handlebars
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#問題描述" class="astro-QTOKGA5Y">問題描述</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#解決方式" class="astro-QTOKGA5Y">解決方式</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="問題描述">問題描述</h2>
+<ul>
+<li>情境：在 express-handlebars 中使用原生的<code>each</code>搭配 handlebars-helpers 的<code>is</code>進行條件判斷，進而渲染出一組<code>&#x3C;select></code>
+<ul>
+<li><code>&#x3C;select></code>中的每一個<code>&#x3C;option></code>都是一種餐廳類型（舉例：日本料理、酒吧、美式餐廳等）</li>
+<li>（由<code>app.js</code>傳遞給<code>edit.handlebars</code>的變數）<code>categories</code>為餐廳類型的陣列資料，<code>restaurant</code>為物件變數，可透過<code>restaurant.category</code>來取得該餐廳的餐廳類型</li>
+<li>當<code>each</code>迴圈中<code>this</code>的值與<code>restaurant.category</code>一致時，pre-selected 該<code>&#x3C;option></code>
+<img src="/2021/express-handlebars-access-variable-in-parent-scope/pre-selected.png" alt="select欄位應預設選擇該餐廳的類型"></li>
+</ul>
+</li>
+<li>問題：檢查最終的 DOM 內容，發現並<strong>沒有</strong>渲染出應該要預先被選擇的<code>&#x3C;option></code></li>
+<li>行為不如預期的原始碼：
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// app.js端</span></span>
+<span class="line"><span style="color: #E1E4E8">app.</span><span style="color: #B392F0">get</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'/restaurants/:id/edit'</span><span style="color: #E1E4E8">, (</span><span style="color: #FFAB70">req</span><span style="color: #E1E4E8">, </span><span style="color: #FFAB70">res</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">id</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Number</span><span style="color: #E1E4E8">(req.params.id)</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">targetRestaurant</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> restaurantList.results.</span><span style="color: #B392F0">find</span><span style="color: #E1E4E8">((</span><span style="color: #FFAB70">restaurant</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> restaurant.id </span><span style="color: #F97583">===</span><span style="color: #E1E4E8"> id)</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">categories</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> []</span></span>
+<span class="line"><span style="color: #E1E4E8">  restaurantList.results.</span><span style="color: #B392F0">forEach</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">restaurant</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (</span><span style="color: #F97583">!</span><span style="color: #E1E4E8">categories.</span><span style="color: #B392F0">includes</span><span style="color: #E1E4E8">(restaurant.category)) {</span></span>
+<span class="line"><span style="color: #E1E4E8">      categories.</span><span style="color: #B392F0">push</span><span style="color: #E1E4E8">(restaurant.category)</span></span>
+<span class="line"><span style="color: #E1E4E8">    }</span></span>
+<span class="line"><span style="color: #E1E4E8">  })</span></span>
+<span class="line"><span style="color: #E1E4E8">  res.</span><span style="color: #B392F0">render</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'edit'</span><span style="color: #E1E4E8">, { restaurant: targetRestaurant, categories })</span></span>
+<span class="line"><span style="color: #E1E4E8">})</span></span></code></pre>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">&#x3C;!-- handlebars端 --></span></span>
+<span class="line"><span style="color: #E1E4E8">{{#each categories}}</span></span>
+<span class="line"><span style="color: #E1E4E8">  {{#is this restaurant.category)}}</span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">option</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">value</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"{{this}}"</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">selected</span><span style="color: #E1E4E8">>{{this}}&#x3C;/</span><span style="color: #85E89D">option</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  {{else}}</span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">option</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">value</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"{{this}}"</span><span style="color: #E1E4E8">>{{this}}&#x3C;/</span><span style="color: #85E89D">option</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  {{/is}}</span></span>
+<span class="line"><span style="color: #E1E4E8">{{/each}}</span></span></code></pre>
+</li>
+</ul>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">express-handlebars: 5.3.2</span></span>
+<span class="line"><span style="color: #e1e4e8">handlebars-helpers: 0.10.0</span></span></code></pre>
+<h2 id="解決方式">解決方式</h2>
+<p>將 handlebars 端的內容修改如下（<code>restaurant.category</code>加上<code>../</code>）：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">&#x3C;!-- handlebars端 --></span></span>
+<span class="line"><span style="color: #E1E4E8">{{#each categories}}</span></span>
+<span class="line"><span style="color: #E1E4E8">  {{#is this ../restaurant.category)}}</span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">option</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">value</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"{{this}}"</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">selected</span><span style="color: #E1E4E8">>{{this}}&#x3C;/</span><span style="color: #85E89D">option</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  {{else}}</span></span>
+<span class="line"><span style="color: #E1E4E8">  &#x3C;</span><span style="color: #85E89D">option</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">value</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"{{this}}"</span><span style="color: #E1E4E8">>{{this}}&#x3C;/</span><span style="color: #85E89D">option</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  {{/is}}</span></span>
+<span class="line"><span style="color: #E1E4E8">{{/each}}</span></span></code></pre>
+<p>參考 Handlebars 官方文件的說明：</p>
+<blockquote>
+<p>Some helpers like <code>#with</code> and <code>#each</code> allow you to <strong>dive into nested objects</strong>. When you include <code>../</code> segments in your path, Handlebars will change back into the <strong>parent context</strong>.</p>
+</blockquote>
+<p>在巢狀結構中，使用<code>../</code>來取得上一層變數的內容</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://handlebarsjs.com/guide/expressions.html#changing-the-context">Handlebars: Changing the context</a></li>
+<li><a href="https://stackoverflow.com/questions/13645084/access-a-variable-outside-the-scope-of-a-handlebars-js-each-loop">Access a variable outside the scope of a Handlebars.js each loop</a></li>
+<li><a href="https://stackoverflow.com/a/12297980/15028185">Access properties of the parent with a Handlebars ‘each’ loop</a></li>
+<li><a href="https://eruditeness.news.blog/2019/08/28/node-js%E5%88%9D%E5%AD%B8%E7%AD%86%E8%A8%9810-%E5%9C%A8express-handlebars%E4%B8%AD%E8%BC%95%E9%AC%86%E5%BB%BA%E7%AB%8B%E5%AE%A2%E8%A3%BDhelperhandlebars-custom-helpers/">Node.js 初學筆記 10: 在 express-handlebars 中輕鬆建立客製 helper(handlebars custom helpers)</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

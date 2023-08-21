@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>Submit to Google Search Console, SEO settings</title>
+    <meta name="title" content="Submit to Google Search Console, SEO settings">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/hexo-Google-Search-Console/">
+    <meta property="og:title" content="Submit to Google Search Console, SEO settings">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/hexo-Google-Search-Console/">
+    <meta property="twitter:title" content="Submit to Google Search Console, SEO settings">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">Submit to Google Search Console, SEO settings</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-02-11 17:03</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  hexo
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#summary-of-this-post" class="astro-QTOKGA5Y">Summary of this post</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#enviroment" class="astro-QTOKGA5Y">Enviroment</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#about-_confignextyml" class="astro-QTOKGA5Y">About _config.next.yml</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#add-html-tag" class="astro-QTOKGA5Y">Add HTML tag</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#provide-sitemapxml" class="astro-QTOKGA5Y">Provide sitemap.xml</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#run-mobile-friendly-test" class="astro-QTOKGA5Y">Run Mobile-Friendly Test</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#bonus-i-forget-the-html-tag-contents" class="astro-QTOKGA5Y">Bonus: I forget the HTML tag contents</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#reference" class="astro-QTOKGA5Y">Reference</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="summary-of-this-post">Summary of this post</h2>
+<p>Q: How to make sure Google Search can find my hexo blog that has been deployed on GitHub Page?
+A: Submit your hexo blog to <a href="https://search.google.com/search-console/welcome">Google Search Console</a> by:</p>
+<ol>
+<li>Add <code>HTML tag</code> into hexo blog’s <code>&#x3C;head>&#x3C;/head></code></li>
+<li>Provide hexo blog’s <code>sitemap.xml</code> to Google</li>
+</ol>
+<p>為了讓 Google 可以搜尋到 hexo 部落格，需把<code>HTML tag</code>（HTML 標記、中繼標籤）加到<code>&#x3C;head>&#x3C;/head></code>，並提交<code>sitemap.xml</code>給<a href="https://search.google.com/search-console/welcome">Google Search Console</a>。</p>
+<h2 id="enviroment">Enviroment</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">hexo: 5.3.0</span></span>
+<span class="line"><span style="color: #e1e4e8">NexT: 8.2.1</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="about-_confignextyml">About _config.next.yml</h2>
+<p>I use <a href="https://theme-next.js.org/docs/getting-started/configuration.html#config-name-yml">Alternate Theme Config</a> to apply the theme modification according to the suggestion from NexT official document.</p>
+<h2 id="add-html-tag">Add HTML tag</h2>
+<ol>
+<li>Visit <a href="https://search.google.com/search-console/welcome">Google Search Console</a>, enter the URL of hexo blog into right hand side column.
+<img src="Enter-hexo-blog-URL-to-Google-Search-Console.png" alt="Enter hexo blog URL"></li>
+<li>Select and copy the HTML tag.
+<img src="Copy-HTML-tag.png" alt="Select and copy the HTML tag provide by Google Search Console"></li>
+<li>Open the file <code>_config.next.yml</code>, navigate to the part <code># SEO Settings</code>, paste the HTML tag “content” part as the value of the key <code>google_site_verification</code>
+For example, this is the whole HTML tag contents you’ve copied:
+<code>&#x3C;meta name="google-site-verification" content="(a string includes letters, numbers and _)" /></code>
+Just paste the content part into <code>_config.next.yml</code>, like the below code block shows:</li>
+</ol>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D"># ---------------------------------------------------------------</span></span>
+<span class="line"><span style="color: #6A737D"># SEO Settings</span></span>
+<span class="line"><span style="color: #6A737D"># See: https://theme-next.js.org/docs/theme-settings/seo</span></span>
+<span class="line"><span style="color: #6A737D"># ---------------------------------------------------------------</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D"># Google Webmaster tools verification.</span></span>
+<span class="line"><span style="color: #85E89D">google_site_verification</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">(a string includes letters, numbers and _) /></span></span></code></pre>
+<ol>
+<li>Launch cmd.exe, move to the hexo blog folder, run <code>hexo clean &#x26;&#x26; hexo generate</code></li>
+<li>Open the file <code>index.html</code> in <code>public</code> folder, the HTML tag should appear between the <code>&#x3C;head>&#x3C;/head></code> tag</li>
+<li>Run <code>hexo deploy</code> to deploy modification to GitHub Page</li>
+<li>Back to Google Search Console and click “Verify”
+<img src="Verify-hexo-blog-after-adding-HTML-tag.png" alt="Click the Verify button after adding the HTML tag"></li>
+<li>One of the two parts of Google SEO setting has finished, have a cup of tea ☕</li>
+</ol>
+<p>個人目前使用的是 8.2.1 版的 NexT，<code>_config.next.yml</code>已內建支援<code>google_site_verification</code>。
+在 Google Search Console 取得 HTML tag 後，將 content 的內容貼上即可。</p>
+<p><code>_config.next.yml</code>若沒有這個參數的話，則手動將整個 HTML tag 貼到<code>\themes\hexo-theme-next\layout\_partials\head</code>資料夾的<code>head</code>檔案中，如下圖：
+<img src="Manually-add-HTML-tag-to-NexT-theme.png" alt="Manually add the Google Search Console HTML tag into NexT theme css head file"></p>
+<h2 id="provide-sitemapxml">Provide sitemap.xml</h2>
+<ol>
+<li>Launch cmd.exe, move to the hexo blog folder, run <code>npm install hexo-generator-sitemap --save</code></li>
+<li>Open the <code>_config.yml</code> file in the root of hexo blog, enter the following contents:</li>
+</ol>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #85E89D">sitemap</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">path</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">sitemap.xml</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">template</span><span style="color: #E1E4E8">: </span><span style="color: #6A737D"># Custom template path. Leave it as blank if no custom template is used</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">rel</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">false</span></span>
+<span class="line"><span style="color: #E1E4E8">   </span><span style="color: #79B8FF">true</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">tag</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">true</span></span></code></pre>
+<ol>
+<li>run <code>hexo generate</code> to generate the file <code>sitemap.xml</code></li>
+<li>Upload <code>sitemap.xml</code> to hexo blog’s GitHub repository <code>master</code> branch</li>
+<li>Visit Google Search Console. Enter “sitemap.xml” and click “Submit”
+<img src="Submit-sitemap.png" alt="Provide sitemap.xml to Googls Search Console"></li>
+<li>Done. The whole Google SEO setting has completed 🎉</li>
+</ol>
+<h2 id="run-mobile-friendly-test">Run Mobile-Friendly Test</h2>
+<p>Got an error message when running Google’s <a href="https://search.google.com/test/mobile-friendly">Mobile-Friendly Test</a> in the first time:</p>
+<blockquote>
+<p>Refused to apply style from (tl;dr) because its MIME type (‘text/html’) is not a supported stylesheet MIME type, and strict MIME checking is enabled.</p>
+</blockquote>
+<p><img src="Mobile-Friendly-Test-error-message.png" alt="Mobile-Friendly Test error message"></p>
+<p>Q: How I fixed this problem?
+A: Open <code>_config.next.yml</code> and update the <code>host</code> value in <code># Font Settings</code> part correctly.</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #85E89D">font</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">enable</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">true</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D"># Uri of fonts host, e.g. https://fonts.googleapis.com (Default).</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">host</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">https://fonts.googleapis.com/css2?family=Noto+Sans+TC&#x26;family=Roboto&#x26;display=swap</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D"># Font options:</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D"># `external: true` will load this font family from `host` above.</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D"># `family: Times New Roman`. Without any quotes.</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D"># `size: x.x`. Use `em` as unit. Default: 1 (16px)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D"># Global font settings used for all elements inside &#x3C;body>.</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #85E89D">global</span><span style="color: #E1E4E8">:</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #85E89D">external</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">true</span></span></code></pre>
+<p>Run the test again and get greenlight.
+<img src="Pass-Mobile-Friendly-Test.png" alt="Pass the Mobile-Friendly Test without andy error message">
+🎉🎉🎉</p>
+<h2 id="bonus-i-forget-the-html-tag-contents">Bonus: I forget the HTML tag contents</h2>
+<ol>
+<li>Visit Google Search Console, click “Settings” in the left side menu
+<img src="User-setting.png" alt="User settings in Google Search Console"></li>
+<li>Click “User”, and then click “User management”
+<img src="User-setting-user-management.png" alt="User management in Google Search Console"></li>
+<li>HTML tag contents are display in the management console
+<img src="View-HTML-tag-contents.png" alt="View HTML tag contents"></li>
+</ol>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://theme-next.js.org/docs/theme-settings/seo#Google-Webmaster-Tools">NexT: Google Webmaster Tools</a></li>
+<li><a href="https://github.com/hexojs/hexo-generator-sitemap">hexojs/hexo-generator-sitemap</a></li>
+<li><a href="https://brooke01.github.io/tecblog/2020/04/26/hexo-generator-sitemap/">hexo-generator-sitemap</a></li>
+<li><a href="https://hsiangfeng.github.io/hexo/20190514/2072033203/">Hexo 搜尋引擎優化</a></li>
+<li><a href="https://askie.today/upload-sitemap-google-search-console-seo-hexo-blog/">輕鬆地提交 Hexo 部落格的 Sitemap.xml 到 Google Search Console</a></li>
+<li><a href="https://hoxis.github.io/Hexo+Next%20SEO%E4%BC%98%E5%8C%96.html">Hexo 博客 Next 主题 SEO 优化方法</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

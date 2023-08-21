@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2021 第49週 學習記錄：MUI 客製元件外觀</title>
+    <meta name="title" content="2021 第49週 學習記錄：MUI 客製元件外觀">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/work-log-w49/">
+    <meta property="og:title" content="2021 第49週 學習記錄：MUI 客製元件外觀">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/work-log-w49/">
+    <meta property="twitter:title" content="2021 第49週 學習記錄：MUI 客製元件外觀">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2021 第49週 學習記錄：MUI 客製元件外觀</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-12-11 22:52</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span><span class="astro-2IYMVI75">
+  MaterialUI
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#自訂元件外觀" class="astro-QTOKGA5Y">自訂元件外觀</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#專案色票設定" class="astro-QTOKGA5Y">專案色票設定</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#專案部署至-gh-pages-流程" class="astro-QTOKGA5Y">專案部署至 gh-pages 流程</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p><img src="/2021/work-log-w49/react-mui.png" alt="demo"></p>
+<p>這禮拜多半在處理 MUI 元件的客製化外觀，索性直接建立一個實驗用的 react app 來當<a href="https://tzynwang.github.io/react-mui/">測試盒</a></p>
+<h2 id="筆記">筆記</h2>
+<h3 id="自訂元件外觀">自訂元件外觀</h3>
+<ul>
+<li>大部分可以透過 <code>styleOverrides</code> 解決</li>
+<li>以 <code>MuiButton</code> 為例，直接設定 Button 系的尺寸、按鈕字體樣式，以及在 <code>:disabled</code> 狀態下的外觀後（<code>src.themes.Button.index.ts</code>），在 <code>src.themes.index.ts</code> 與其他的 mui 自訂外觀設定一起 <code>import</code> ，並透過 <code>createTheme</code> 建立 theme object，最後在 <code>src.index.tsx</code> 作為 <code>props</code> 傳入 <code>ThemeProvider</code></li>
+</ul>
+<script src="https://gist.github.com/tzynwang/efa3400afcc8d3308c0a12d33a991247.js"></script>
+<h3 id="專案色票設定">專案色票設定</h3>
+<ul>
+<li>與自訂元件外觀的作法類似，將設計師提供的色票更新至 <code>src.themes.Palette.index.ts</code> 後匯入 <code>src.themes.index.ts</code></li>
+<li>將專案色票定義完畢後，基本上就不需要手動修改太多 mui 元件的樣式；在專案配色單純的情況下，大部分元件直接使用 <code>primary.main</code> 與 <code>primary.dark</code> 的顏色即可</li>
+</ul>
+<script src="https://gist.github.com/tzynwang/4f3b878282237a0c7941cb6e22a64f12.js"></script>
+<h3 id="專案部署至-gh-pages-流程">專案部署至 gh-pages 流程</h3>
+<ol>
+<li>package.json 追加 <code>"homepage": "https://&#x3C;github-account>.github.io/&#x3C;repo-name>"</code></li>
+<li><code>npm i gh-pages</code></li>
+<li>package.json 的 scripts 部分追加 <code>"predeploy": "npm run build"</code> 與 <code>"deploy": "gh-pages -d build"</code></li>
+<li><code>npm run deploy</code> 後，至 GitHub repo 確認 pages 有指向 branch <code>gh-pages</code> 即可</li>
+</ol>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://mui.com/customization/theming/#themeprovider">MUI: ThemeProvider</a></li>
+<li><a href="https://mui.com/customization/theme-components/">MUI: Theme component</a></li>
+<li><a href="https://create-react-app.dev/docs/deployment/#github-pages">Deployment: GitHub Pages</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>30天挑戰：「Vue project與SCSS」相關筆記</title>
+    <meta name="title" content="30天挑戰：「Vue project與SCSS」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/ithome2021-12-vue-project-scss/">
+    <meta property="og:title" content="30天挑戰：「Vue project與SCSS」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/ithome2021-12-vue-project-scss/">
+    <meta property="twitter:title" content="30天挑戰：「Vue project與SCSS」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">30天挑戰：「Vue project與SCSS」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-08-27 09:25</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Vue
+</span><span class="astro-2IYMVI75">
+  2021鐵人賽
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>關於如何在 Vue Project 中使用 SCSS 的相關筆記</p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">@vue/cli: 4.5.13</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<ul>
+<li>
+<p>Vue CLI 4 預設搭配 webpack 4，<code>sass-loader</code>需指定能配合的版本才能正常運行
+<code>npm install -D sass-loader@^10 sass</code></p>
+</li>
+<li>
+<p>安裝<code>sass-loader</code>後，即可在 vue components 或 views 中使用 scss 語法</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">&#x3C;</span><span style="color: #85E89D">style</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">lang</span><span style="color: #E1E4E8">=</span><span style="color: #9ECBFF">"scss"</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  $</span><span style="color: #85E89D">bg-classroom</span><span style="color: #E1E4E8">: </span><span style="color: #FDAEB7; font-style: italic">#232323</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">#app</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">width</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">100</span><span style="color: #F97583">vw</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">height</span><span style="color: #E1E4E8">: </span><span style="color: #79B8FF">100</span><span style="color: #F97583">vh</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">background-color</span><span style="color: #E1E4E8">: $bg-classroom;</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;/</span><span style="color: #85E89D">style</span><span style="color: #E1E4E8">></span></span></code></pre>
+</li>
+<li>
+<p>如果需要在專案中使用<code>_reset.scss</code>、<code>_color.scss</code>或是<code>_mixin.scss</code>等通用模組的話，則在 Vue 專案根目錄建立<code>vue.config.js</code>並輸入以下內容</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// vue.config.js</span></span>
+<span class="line"><span style="color: #79B8FF">module</span><span style="color: #E1E4E8">.</span><span style="color: #79B8FF">exports</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  css: {</span></span>
+<span class="line"><span style="color: #E1E4E8">    loaderOptions: {</span></span>
+<span class="line"><span style="color: #E1E4E8">      scss: {</span></span>
+<span class="line"><span style="color: #E1E4E8">        additionalData: </span><span style="color: #9ECBFF">`</span></span>
+<span class="line"><span style="color: #9ECBFF">          @import "@/styles/_module1.scss";</span></span>
+<span class="line"><span style="color: #9ECBFF">          @import "@/styles/_module2.scss";</span></span>
+<span class="line"><span style="color: #9ECBFF">        `</span></span>
+<span class="line"><span style="color: #E1E4E8">      }</span></span>
+<span class="line"><span style="color: #E1E4E8">    }</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+</li>
+<li>
+<p>使用反引號即可 import 多組檔案</p>
+</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://cli.vuejs.org/guide/css.html#pre-processors">Vue CLI: Working with CSS</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

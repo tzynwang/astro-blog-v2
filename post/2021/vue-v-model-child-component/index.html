@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>「Vue：在子代元件實作雙向資料綁定」相關筆記</title>
+    <meta name="title" content="「Vue：在子代元件實作雙向資料綁定」相關筆記">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/vue-v-model-child-component/">
+    <meta property="og:title" content="「Vue：在子代元件實作雙向資料綁定」相關筆記">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/vue-v-model-child-component/">
+    <meta property="twitter:title" content="「Vue：在子代元件實作雙向資料綁定」相關筆記">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">「Vue：在子代元件實作雙向資料綁定」相關筆記</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-10-25 12:20</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Vue
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#原始問題" class="astro-QTOKGA5Y">原始問題</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#回答" class="astro-QTOKGA5Y">回答</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="原始問題">原始問題</h2>
+<p>如何在自訂的 vue component 中做出 v-model 的功能？</p>
+<h2 id="回答">回答</h2>
+<p>參考 vue 的官方文件，<code>v-model</code>其實就是<code>v-bind</code>加上<code>v-on</code>的語法糖，故在一個自訂元件上做出 v-model（雙向資料綁定）的效果就等同「使用 props 將資料從親代傳入自訂元件，並從元件透過 emit 將資料變動傳送回親代」</p>
+<p>展示：<a href="https://tzynwang.github.io/v-model-child-component-demo-HIGGS/">https://tzynwang.github.io/v-model-child-component-demo-HIGGS/</a>
+REPO：<a href="https://github.com/tzynwang/v-model-child-component-demo-HIGGS#vue-child-component-two-way-data-binding-demo">https://github.com/tzynwang/v-model-child-component-demo-HIGGS#vue-child-component-two-way-data-binding-demo</a></p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">vue: 2.6.11</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<script src="https://gist.github.com/tzynwang/24f924ee7295f6c08f7b47a0759d0576.js"></script>
+<ul>
+<li>實作思路：
+<ul>
+<li>子代元件<code>inputComponent.vue</code>從親代接收資料<code>componentValue</code></li>
+<li>在子代發生 input 事件時（<code>@input</code>）便呼叫方法<code>emitValue</code>，將使用者輸入的內容 emit 上親代，事件名稱為<code>child-input-value-change</code></li>
+<li>親代在<code>child-input-value-change</code>發生時，呼叫<code>childInputValueChange</code>修改<code>componentValue</code>的值</li>
+<li>資料變動，驅動畫面重新渲染</li>
+</ul>
+</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://vuejs.org/v2/guide/components-custom-events.html#Customizing-Component-v-model">Vue.js: Customizing Component v-model</a></li>
+<li><a href="https://stackoverflow.com/questions/52249365/v-model-for-child-component-and-v-model-inside-child-component-vue/">v-model for child component and v-model inside child component Vue</a></li>
+<li><a href="https://stackoverflow.com/questions/47311936/v-model-and-child-components">v-model and child components?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

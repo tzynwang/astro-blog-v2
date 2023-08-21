@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>快速筆記：在 react-router-dom 5 實作條件路由</title>
+    <meta name="title" content="快速筆記：在 react-router-dom 5 實作條件路由">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/react-router-dom-conditional-route/">
+    <meta property="og:title" content="快速筆記：在 react-router-dom 5 實作條件路由">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/react-router-dom-conditional-route/">
+    <meta property="twitter:title" content="快速筆記：在 react-router-dom 5 實作條件路由">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">快速筆記：在 react-router-dom 5 實作條件路由</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-06-17 12:44</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#需求描述" class="astro-QTOKGA5Y">需求描述</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#程式碼" class="astro-QTOKGA5Y">程式碼</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>目前手上有一個專案是使用 react 18 搭配 react-router-dom 5 來進行開發，在實作「條件式路由＋懶載入」的途中，持續遇到「進入不存在的路由時，404 畫面消失，畫面只剩一片空白」的情況。此篇筆記將記錄一下最後能順利作用的程式碼為何。</p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">react: 18.2.0</span></span>
+<span class="line"><span style="color: #e1e4e8">react-router-dom: 5.3.4</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="需求描述">需求描述</h3>
+<ul>
+<li>使用 react 的 <code>lazy</code> 搭配 <code>Suspense</code> 元件</li>
+<li>根據 <code>env.isDevelopment</code> 來決定是否要讓使用者進入 <code>/something-develop-only</code> 這個畫面，在非開發環境下，試圖進入 <code>/something-develop-only</code> 的使用者會被送到 <code>/404</code> 頁</li>
+<li>暫不考慮使用帳號系統來做權限管理</li>
+</ul>
+<h3 id="程式碼">程式碼</h3>
+<p>重點：</p>
+<ul>
+<li><code>React.Suspense</code> 要包在 <code>Switch</code> 外層</li>
+<li>作為 <code>React.Suspense</code> 的 fallback 元件不使用懶載入</li>
+</ul>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> React, { lazy, Suspense } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'react'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> { BrowserRouter, Switch, Route, Redirect } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'react-router-dom'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> Loading </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'@Component/Page/Loading'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> env </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'@Model/env'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">Landing</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">lazy</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> </span><span style="color: #F97583">import</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'@Component/Page/Landing'</span><span style="color: #E1E4E8">));</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">SomePage</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">lazy</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> </span><span style="color: #F97583">import</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'@Component/Page/SomePage'</span><span style="color: #E1E4E8">));</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">DevelopmentOnly</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">lazy</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> </span><span style="color: #F97583">import</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'@Component/Page/DevelopmentOnly'</span><span style="color: #E1E4E8">));</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">NotFound</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">lazy</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> </span><span style="color: #F97583">import</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'@Component/Page/NotFound'</span><span style="color: #E1E4E8">));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Router</span><span style="color: #E1E4E8">()</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">ReactElement</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;</span><span style="color: #79B8FF">BrowserRouter</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">      &#x3C;</span><span style="color: #79B8FF">Suspense</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">fallback</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{&#x3C;</span><span style="color: #79B8FF">Loading</span><span style="color: #E1E4E8"> />}></span></span>
+<span class="line"><span style="color: #E1E4E8">        &#x3C;</span><span style="color: #79B8FF">Switch</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">path</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"/"</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">exact</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">            &#x3C;</span><span style="color: #79B8FF">Landing</span><span style="color: #E1E4E8"> /></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;/</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">path</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"/page1"</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">            &#x3C;</span><span style="color: #79B8FF">SomePage</span><span style="color: #E1E4E8"> /></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;/</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">path</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"/development-only"</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">exact</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">            {env.isDevelopment </span><span style="color: #F97583">?</span><span style="color: #E1E4E8"> &#x3C;</span><span style="color: #79B8FF">DevelopmentOnly</span><span style="color: #E1E4E8"> /> </span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> &#x3C;</span><span style="color: #79B8FF">Redirect</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">to</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"/404"</span><span style="color: #E1E4E8"> />}</span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;/</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">path</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"/404"</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">            &#x3C;</span><span style="color: #79B8FF">NotFound</span><span style="color: #E1E4E8"> /></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;/</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">path</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"*"</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">            &#x3C;</span><span style="color: #79B8FF">Redirect</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">to</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"/404"</span><span style="color: #E1E4E8"> /></span></span>
+<span class="line"><span style="color: #E1E4E8">          &#x3C;/</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">        &#x3C;/</span><span style="color: #79B8FF">Switch</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">      &#x3C;/</span><span style="color: #79B8FF">Suspense</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;/</span><span style="color: #79B8FF">BrowserRouter</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  );</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">default</span><span style="color: #E1E4E8"> Router;</span></span></code></pre>
+<p>備註：以下兩種寫法可以互換，效果相同</p>
+<p>寫法ㄧ：根據 <code>env.isDevelopment</code> 與否決定顯示 <code>DevelopmentOnly</code> 或 <code>Redirect</code> 元件</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">&#x3C;</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">path</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"/develop-only"</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">exact</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  {env.isDevelopment </span><span style="color: #F97583">?</span><span style="color: #E1E4E8"> &#x3C;</span><span style="color: #79B8FF">DevelopmentOnly</span><span style="color: #E1E4E8"> /> </span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> &#x3C;</span><span style="color: #79B8FF">Redirect</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">to</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"/404"</span><span style="color: #E1E4E8"> />}</span></span>
+<span class="line"><span style="color: #E1E4E8">&#x3C;/</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8">></span></span></code></pre>
+<p>寫法二：根據 <code>env.isDevelopment</code> 來決定是否要在 <code>Switch</code> 元件內顯示 <code>/develop-only</code> 這條路由的 <code>Route</code> 元件</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">{</span></span>
+<span class="line"><span style="color: #E1E4E8">  env.isDevelopment </span><span style="color: #F97583">&#x26;&#x26;</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">path</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"/develop-only"</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">exact</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">      &#x3C;</span><span style="color: #79B8FF">DevelopmentOnly</span><span style="color: #E1E4E8"> /></span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;/</span><span style="color: #79B8FF">Route</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  );</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/63534693/404-route-issues-with-react-router-and-suspense">stackOverFlow: 404 route issues with React Router and Suspense</a></li>
+<li><a href="https://legacy.reactjs.org/docs/code-splitting.html#route-based-code-splitting">React official doc v1: Route-based code splitting</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

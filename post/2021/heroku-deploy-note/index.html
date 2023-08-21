@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>TODO：「部屬Express.js App至Heroku」</title>
+    <meta name="title" content="TODO：「部屬Express.js App至Heroku」">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/heroku-deploy-note/">
+    <meta property="og:title" content="TODO：「部屬Express.js App至Heroku」">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/heroku-deploy-note/">
+    <meta property="twitter:title" content="TODO：「部屬Express.js App至Heroku」">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">TODO：「部屬Express.js App至Heroku」</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-06-23 15:48</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Heroku
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#環境" class="astro-QTOKGA5Y">環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>重跑三次流程後依舊未解之兩個問題：</p>
+<ul>
+<li>確定 Heroku 的 Config Vars 沒有錯誤，但首次部屬後一定得修改 MongoDB Atlas 的連線密碼，才能讓 Heroku app 正常連線至 DB
+<ul>
+<li>錯誤訊息內容：<code>MongoError: Authentication failed.</code>；Google 未果，大多建議檢查密碼是否錯誤（與個人情境不符）</li>
+</ul>
+</li>
+<li>不確定 Heroku 是否有讀取到 Procfile 設定，修正 DB 連線問題後檢查 DB 內容永遠是空的，需手動於終端機執行<code>heroku -app &#x3C;app名稱> run npm run seed</code>才會建立種子資料
+<ul>
+<li>Procfile 內容如下</li>
+</ul>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">web: node models/seeds/categorySeeder.js &#x26;&#x26; node models/seeds/recordSeeder.js</span></span>
+<span class="line"><span style="color: #e1e4e8">web: node app.js</span></span></code></pre>
+</li>
+</ul>
+<h2 id="環境">環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">heroku: 7.53.0 win32-x64 node-v12.21.0</span></span>
+<span class="line"><span style="color: #e1e4e8">os: Windows_NT 10.0.18363 win32 x64</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<ul>
+<li>MongoDB Atlas DB 登入帳戶名稱在建立 DB 後不可修改，密碼可以</li>
+<li>MongoDB Atlas 提供的 URI 需自行修正部分內容（密碼與 cluster 名稱）：
+<ul>
+<li><code>mongodb+srv://&#x3C;使用者帳戶名稱>:&#x3C;密碼>@[這段會由MongoDB帶入，不需修正].mongodb.net/&#x3C;DB名稱>?retryWrites=true&#x26;w=majority</code></li>
+<li><code>&#x3C;></code>需移除</li>
+<li>測試 MongoDB Atlas 提供的密碼產生器，密碼或許只支援大小寫英數混合，不支援符號</li>
+</ul>
+</li>
+<li>若專案資料夾根目錄中未包含 Procfile 的話，Heroku 會執行<code>package.json</code>中的<code>start</code> scripts 來啟動 app
+<blockquote>
+<p>To determine how to start your app, Heroku first looks for a Procfile. If no Procfile exists for a Node.js app, we will attempt to start a default web process via the start script in your package.json. Reference: <a href="https://devcenter.heroku.com/articles/deploying-nodejs#specifying-a-start-script">https://devcenter.heroku.com/articles/deploying-nodejs#specifying-a-start-script</a></p>
+</blockquote>
+</li>
+<li>在 Heroku 建立新 app 後，需在專案資料夾中追加 Heroku 的 remote branch
+<ul>
+<li>指令：<code>git remote add heroku [heroku_git_url]</code></li>
+<li>追加後才可正常進行 push：<code>git push heroku main</code></li>
+<li><code>heroku</code>可替換成任意 branch 名稱</li>
+<li><code>main</code>須根據當下本機的 branch 名稱決定（也可能是<code>master</code>）</li>
+</ul>
+</li>
+<li>執行<code>heroku logs</code>須加上<code>-app &#x3C;app名稱></code>來調閱該 app 的 log 資料</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://devcenter.heroku.com/articles/nodejs-support#customizing-the-build-process">Heroku Node.js Support: Customizing the build process</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

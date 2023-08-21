@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第36週 實作筆記：ref merging</title>
+    <meta name="title" content="2022 第36週 實作筆記：ref merging">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-merge-ref/">
+    <meta property="og:title" content="2022 第36週 實作筆記：ref merging">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-merge-ref/">
+    <meta property="twitter:title" content="2022 第36週 實作筆記：ref merging">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第36週 實作筆記：ref merging</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-09-10 13:35</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#程式碼" class="astro-QTOKGA5Y">程式碼</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#mergerefcomponenttsx" class="astro-QTOKGA5Y">mergeRef.Component.tsx</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#mergerefts" class="astro-QTOKGA5Y">mergeRef.ts</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#mergerefparentcomponenttsx" class="astro-QTOKGA5Y">mergeRef.ParentComponent.tsx</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在寫鐵人賽時發現自己遇到「元件有自己的 local ref ，但使用該元件的親元件可能也需要透過 ref 來執行一些 DOM 操作」的情境，搜尋後發現可以進行 ref merge 來把內外部的 refs 整併起來。此篇筆記會記錄一下程式碼與相關參考資料。</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="程式碼">程式碼</h3>
+<script src="https://gist.github.com/tzynwang/8e86fec0c8c61dbb374ce3819dd7a374.js"></script>
+<h3 id="mergerefcomponenttsx">mergeRef.Component.tsx</h3>
+<p>使用 <code>React.forwardRef</code> 讓引用此元件的親代元件可以傳入 ref。本身也有自己的 local ref（第 10 行），透過小工具 mergeRef（第 15 行）來將多個 refs 整理為單一個 component instance</p>
+<p>參考 React 官方文件可得知元件的 ref props 除了可以傳入 <code>createRef()</code> 與 <code>useRef()</code> 建立的 <code>MutableRefObject</code> 以外，也能接受傳入 callback function：</p>
+<blockquote>
+<p>Callback Refs: Instead of passing a <code>ref</code> attribute created by <code>createRef()</code>, you pass a function. The function receives the <strong>React component instance or HTML DOM element as its argument</strong>, which can be stored and accessed elsewhere.</p>
+</blockquote>
+<p>把 callback function 傳入元件的 ref props 時，該 function 接受元件實例（instance）或 HTML DOM 物件作為參數。</p>
+<p>附上 stackOverFlow 上的說明：</p>
+<blockquote>
+<p>Ref callbacks are another option, which are needed for some advanced cases. You pass a function into the element, and the function will be called back when the instance is created or destroyed. These have the type <code>(instance: T) => void</code>.</p>
+</blockquote>
+<p>補充：在程式碼第 7 行使用非匿名的 function declaration 即可在 react devTool 中看到 forwardRef component 的名稱。</p>
+<p><img src="/2022/react-merge-ref/name-forwardRef-component.png" alt="forwardRef component name"></p>
+<h3 id="mergerefts">mergeRef.ts</h3>
+<ul>
+<li>第 8 行：當 ref 為的型別為 function 時，把元件實例或 HTML DOM 作為參數傳入</li>
+<li>第 10 行：若 ref 不為 null 則把該元件的實例或 HTML DOM 物件指派給 <code>MutableRefObject.current</code></li>
+</ul>
+<p>執行完 mergeRef 後，透過 forwardRef 傳入的 ref 與元件本身的 local ref 都會指向該元件。</p>
+<h3 id="mergerefparentcomponenttsx">mergeRef.ParentComponent.tsx</h3>
+<p>展示實際使用情境，在親元件使用 <code>createRef</code> 建立 refObject 傳給支援 ref merge 的 Button 元件。</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://reactjs.org/docs/refs-and-the-dom.html">React: Refs and the DOM</a></li>
+<li><a href="https://github.com/gregberge/react-merge-refs#react-merge-refs">gregberge/react-merge-refs</a></li>
+<li><a href="https://stackoverflow.com/questions/65876809/property-current-does-not-exist-on-type-instance-htmldivelement-null">Property ‘current’ does not exist on type ‘((instance: HTMLDivElement | null) => void) | RefObject<htmldivelement>’</htmldivelement></a></li>
+<li><a href="https://mayursinhsarvaiya.medium.com/how-to-merge-refs-in-react-component-d5e4623b6924">How to merge refs in React component?</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

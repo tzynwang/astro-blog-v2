@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第35週 實作筆記：為 typescript react 專案設定 @emotion/react 的 css props</title>
+    <meta name="title" content="2022 第35週 實作筆記：為 typescript react 專案設定 @emotion/react 的 css props">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-emotion-css-props-typescript/">
+    <meta property="og:title" content="2022 第35週 實作筆記：為 typescript react 專案設定 @emotion/react 的 css props">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-emotion-css-props-typescript/">
+    <meta property="twitter:title" content="2022 第35週 實作筆記：為 typescript react 專案設定 @emotion/react 的 css props">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第35週 實作筆記：為 typescript react 專案設定 @emotion/react 的 css props</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-09-01 22:21</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span><span class="astro-2IYMVI75">
+  React
+</span><span class="astro-2IYMVI75">
+  TypeScript
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#解決方法" class="astro-QTOKGA5Y">解決方法</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#ts-錯誤訊息" class="astro-QTOKGA5Y">TS 錯誤訊息</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#元件樣式名稱錯誤" class="astro-QTOKGA5Y">元件樣式名稱錯誤</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在透過 create-react-app 建立的 typescript react 專案中，使用 <code>@emotion/react</code> 時遇到兩個問題：</p>
+<ol>
+<li>試圖在元件上套用 props <code>css</code> 設定樣式時，ts 報錯：Property ‘css’ does not exist…（下略）</li>
+<li>透過 <code>localhost:3000</code> 測試專案時，元件的 class 出現的樣式是 <code>[object, object]</code> 而非編譯好的 class name</li>
+</ol>
+<p>此篇筆記記錄一下如何解決這些狀況</p>
+<p><img src="/2022/react-emotion-css-props-typescript/steps.png" alt="筆記本體很短，所以用 @emotion/react 的 css props 做了可愛步驟頁（？）"></p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">@emotion/babel-preset-css-prop: 11.10.0</span></span>
+<span class="line"><span style="color: #e1e4e8">@emotion/react: 11.10.4</span></span>
+<span class="line"><span style="color: #e1e4e8">create-react-app: 5.0.1</span></span>
+<span class="line"><span style="color: #e1e4e8">react: 18.2.0</span></span>
+<span class="line"><span style="color: #e1e4e8">typescript: 4.8.2</span></span></code></pre>
+<h2 id="解決方法">解決方法</h2>
+<h3 id="ts-錯誤訊息">TS 錯誤訊息</h3>
+<p>在專案的 tsconfig.json 加上以下設定，有使用到 props <code>css</code> 的元件檔案不再需要手動將 <code>/** @jsxImportSource @emotion/react */</code> 放到檔案最上方：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">{</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #79B8FF">"compilerOptions"</span><span style="color: #E1E4E8">: {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">"jsx"</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">"react-jsx"</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #79B8FF">"jsxImportSource"</span><span style="color: #E1E4E8">: </span><span style="color: #9ECBFF">"@emotion/react"</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<h3 id="元件樣式名稱錯誤">元件樣式名稱錯誤</h3>
+<ol>
+<li>先對專案執行 <code>npm run eject</code> 注入 <code>create-react-app</code> 封裝起來的設定</li>
+<li>執行 <code>npm i @emotion/babel-preset-css-prop</code> 安裝此套件</li>
+<li>打開 config/webpack.config.js 檔案，移動到 Babel 加工 <code>/\.(js|mjs|jsx|ts|tsx)$/</code> 類型檔案的段落，將 <code>@emotion/babel-preset-css-prop</code> 加到 <code>presets</code> 中</li>
+</ol>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #6A737D">// 以 create-react-app 5 來說，以下這段內容落在 410 到 425 之間</span></span>
+<span class="line"><span style="color: #6A737D">// 此段的註解說明是 'Process application JS with Babel.'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">{</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">test</span><span style="color: #E1E4E8">:</span><span style="color: #DBEDFF"> </span><span style="color: #9ECBFF">/</span><span style="color: #85E89D; font-weight: bold">\.</span><span style="color: #DBEDFF">(js</span><span style="color: #F97583">|</span><span style="color: #DBEDFF">mjs</span><span style="color: #F97583">|</span><span style="color: #DBEDFF">jsx</span><span style="color: #F97583">|</span><span style="color: #DBEDFF">ts</span><span style="color: #F97583">|</span><span style="color: #DBEDFF">tsx)</span><span style="color: #F97583">$</span><span style="color: #9ECBFF">/</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">include</span><span style="color: #E1E4E8">: paths.appSrc,</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">options</span><span style="color: #E1E4E8">: {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #B392F0">presets</span><span style="color: #E1E4E8">: [</span></span>
+<span class="line"><span style="color: #E1E4E8">      require.</span><span style="color: #B392F0">resolve</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'@emotion/babel-preset-css-prop'</span><span style="color: #E1E4E8">), </span><span style="color: #6A737D">// 加上這行</span></span>
+<span class="line"><span style="color: #E1E4E8">      [</span></span>
+<span class="line"><span style="color: #E1E4E8">        require.</span><span style="color: #B392F0">resolve</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'babel-preset-react-app'</span><span style="color: #E1E4E8">),</span></span>
+<span class="line"><span style="color: #E1E4E8">        {</span></span>
+<span class="line"><span style="color: #E1E4E8">          runtime: hasJsxRuntime </span><span style="color: #F97583">?</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'automatic'</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'classic'</span><span style="color: #E1E4E8">,</span></span>
+<span class="line"><span style="color: #E1E4E8">        },</span></span>
+<span class="line"><span style="color: #E1E4E8">      ],</span></span>
+<span class="line"><span style="color: #E1E4E8">    ],</span></span>
+<span class="line"><span style="color: #E1E4E8">  },</span></span>
+<span class="line"><span style="color: #E1E4E8">},</span></span></code></pre>
+<ol>
+<li>完成，重啟專案就能看到樣式有被正確地套用了</li>
+</ol>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://github.com/emotion-js/emotion/issues/1249">TS2322: Property ‘css’ does not exist…</a></li>
+<li><a href="https://github.com/emotion-js/emotion/issues/1122">css prop returns [object, object]</a></li>
+<li><a href="https://tzynwang.github.io/emotion-react-props-css-typescript/">開版步驟頁連結</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

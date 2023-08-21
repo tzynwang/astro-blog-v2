@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第27週 實作筆記：手風琴 (accordion) 分組元件</title>
+    <meta name="title" content="2022 第27週 實作筆記：手風琴 (accordion) 分組元件">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-accordion-like-tags-group/">
+    <meta property="og:title" content="2022 第27週 實作筆記：手風琴 (accordion) 分組元件">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-accordion-like-tags-group/">
+    <meta property="twitter:title" content="2022 第27週 實作筆記：手風琴 (accordion) 分組元件">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第27週 實作筆記：手風琴 (accordion) 分組元件</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-07-10 10:26</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#開發思路" class="astro-QTOKGA5Y">開發思路</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#其他" class="astro-QTOKGA5Y">其他</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>負責的專案未來有類似需求，試做一下練個手感</p>
+<p><img src="/2022/react-accordion-like-tags-group/demo.png" alt="accordion demo"></p>
+<p>展示：<a href="https://tzynwang.github.io/react-accordion-like-tags-group/">https://tzynwang.github.io/react-accordion-like-tags-group/</a>
+完整原始碼：<a href="https://github.com/tzynwang/react-accordion-like-tags-group">https://github.com/tzynwang/react-accordion-like-tags-group</a></p>
+<h2 id="開發思路">開發思路</h2>
+<script src="https://gist.github.com/tzynwang/fd1bcbd91bfe5216b06bcb6c4e48b789.js"></script>
+<ul>
+<li>11 至 54 行：模擬後端回傳的組 (parent) 與標籤 (tags) 資料</li>
+<li>55 行：設定畫面上每三個「組」為「一行」資料</li>
+<li>86 至 98 行：模擬透過 api 取得組與標籤資料，並將之保存到元件的 states 中</li>
+<li>99 至 131 行：
+<ul>
+<li>首先將組 (parent) 分割為「行」（每三組一行，使用 <code>lodash.chunk</code> 協助將資料切為三塊一組）</li>
+<li>於 101 至 129 行將「每一行」的「三組資料」做成「三組 UI 介面」，並於 106 行綁上 <code>handleGroupClick</code> 讓使用者可與其互動</li>
+<li><code>handleGroupClick</code> 的行為參考 68 至 76 行：觸發時會一併設定「使用者現在點擊了哪一行 (<code>setCurrentRow(row);</code>)」與「使用者點擊了哪一組 (<code>setCurrentGroup(/* ... */);</code>)」這兩類資料</li>
+<li>在這邊準備好的 <code>rows</code> 資料會在第 142 行展開，並每一行 (<code>row</code>) 會在第 152 行被渲染在畫面上</li>
+</ul>
+</li>
+<li>156 至 186 行：這邊負責渲染「使用者點選『組』後會看到該組全部『標籤』」的容器（參考螢幕截圖中灰底的部份）
+<ul>
+<li>目前的邏輯是「一次只會展開一組標籤容器」，所以 156 行會根據 <code>currentGroup</code> 的值以及 <code>currentRow === rowsIndex</code> 與否來決定容器是否該呈現在畫面上</li>
+</ul>
+</li>
+<li>以上邏輯的整體表現：使用者點選「組」時，會展開該行下方的標籤容器，標籤容器會包含該「組」所有的標籤；並目前的畫面一次只會展開一個標籤容器</li>
+</ul>
+<h3 id="其他">其他</h3>
+<p>這次使用 <code>.nvmrc</code> 來進行 node 版本控制：先透過 <code>nvm use {version}</code> 來切換到需求版本，再透過 <code>node -v > .nvmrc</code> 將版本寫入 <code>.nvmrc</code> 即可</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://stackoverflow.com/questions/57110542/how-to-write-a-nvmrc-file-which-automatically-change-node-version">How to write a .nvmrc file which automatically change node version</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

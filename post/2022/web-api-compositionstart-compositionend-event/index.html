@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第50週 實作筆記：透過 compositionstart/compositionend 來暫停驗證輸入內容</title>
+    <meta name="title" content="2022 第50週 實作筆記：透過 compositionstart/compositionend 來暫停驗證輸入內容">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/web-api-compositionstart-compositionend-event/">
+    <meta property="og:title" content="2022 第50週 實作筆記：透過 compositionstart/compositionend 來暫停驗證輸入內容">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/web-api-compositionstart-compositionend-event/">
+    <meta property="twitter:title" content="2022 第50週 實作筆記：透過 compositionstart/compositionend 來暫停驗證輸入內容">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第50週 實作筆記：透過 compositionstart/compositionend 來暫停驗證輸入內容</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-12-16 21:32</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>日前實做了一個「僅允許使用者輸入中文字」的 input 欄位，而實際使用時，發現在鍵入注音的過程中會頻繁跳出「輸入內容無效」的提示；最後透過 web api <code>compositionstart</code> 以及 <code>compositionend</code> 的搭配來達成「使用者輸入注音時，暫停檢查內容」的機制。</p>
+<p><img src="/2022/web-api-compositionstart-compositionend-event/compositionstart-compositionend-demo.gif" alt="demo"></p>
+<p>試玩：<a href="https://tzynwang.github.io/react-compositionstart-compositionend/">DEMO</a>
+原始碼：<a href="https://github.com/tzynwang/react-compositionstart-compositionend/tree/main">tzynwang/react-compositionstart-compositionend</a></p>
+<h2 id="筆記">筆記</h2>
+<p>實作上的邏輯非常簡單，僅是「偵測到 <code>compositionstart</code> 時，暫停驗證行為；反之當輸入完成（偵測到 <code>compositionend</code> 事件後），再透過 <code>String.prototype.match()</code> 來判定輸入的內容是否有效。</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> React, { memo, useRef, useState, useEffect } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'react'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> TextField </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'@mui/material/TextField'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D">// INFO: 定義好有效字元的 regex，以下內容是允許「所有的中文字元」</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">VALID_CHARS_REGEX</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #9ECBFF">/</span><span style="color: #F97583">^</span><span style="color: #79B8FF">[\u2E80-\u2FD5\u3190-\u319f\u3400-\u4DBF\u4E00-\u9FCC\uF900-\uFAAD]</span><span style="color: #F97583">*$</span><span style="color: #9ECBFF">/</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Input1</span><span style="color: #E1E4E8">()</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">ReactElement</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/* States */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">inputRef</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">useRef</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">HTMLInputElement</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">null</span><span style="color: #E1E4E8">>(</span><span style="color: #79B8FF">null</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> [</span><span style="color: #79B8FF">canVerify</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">setCanVerify</span><span style="color: #E1E4E8">] </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">useState</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #79B8FF">boolean</span><span style="color: #E1E4E8">>(</span><span style="color: #79B8FF">true</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> [</span><span style="color: #79B8FF">userInput</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">setUserInput</span><span style="color: #E1E4E8">] </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">useState</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">>(</span><span style="color: #9ECBFF">''</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// INFO: 只有在應該要開始驗證的時候，才回傳字元驗證結果，否則一律回傳 true 讓輸入欄位不要出現錯誤與提示文字</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">isValidInput</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> canVerify </span><span style="color: #F97583">?</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">!!</span><span style="color: #E1E4E8">userInput.</span><span style="color: #B392F0">match</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">VALID_CHARS_REGEX</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">true</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/* Functions */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">handleUserInput</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> (</span><span style="color: #FFAB70">e</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">ChangeEvent</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">HTMLInputElement</span><span style="color: #E1E4E8">>)</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">void</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #B392F0">setUserInput</span><span style="color: #E1E4E8">(e.target.value);</span></span>
+<span class="line"><span style="color: #E1E4E8">  };</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">startVerify</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> ()</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">void</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #B392F0">setCanVerify</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">true</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">  };</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">stopVerify</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> ()</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">void</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #B392F0">setCanVerify</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">false</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/* Hooks */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">useEffect</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">ref</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> inputRef.current;</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #6A737D">// INFO: 偵測到 compositionstart 時，停止驗證；反之當 compositionend 時，開始內容驗證</span></span>
+<span class="line"><span style="color: #E1E4E8">    ref?.</span><span style="color: #B392F0">addEventListener</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'compositionstart'</span><span style="color: #E1E4E8">, stopVerify);</span></span>
+<span class="line"><span style="color: #E1E4E8">    ref?.</span><span style="color: #B392F0">addEventListener</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'compositionend'</span><span style="color: #E1E4E8">, startVerify);</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> () </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">      ref?.</span><span style="color: #B392F0">removeEventListener</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'compositionstart'</span><span style="color: #E1E4E8">, stopVerify);</span></span>
+<span class="line"><span style="color: #E1E4E8">      ref?.</span><span style="color: #B392F0">removeEventListener</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">'compositionend'</span><span style="color: #E1E4E8">, startVerify);</span></span>
+<span class="line"><span style="color: #E1E4E8">    };</span></span>
+<span class="line"><span style="color: #E1E4E8">  }, []);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/* Main */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">    &#x3C;</span><span style="color: #79B8FF">TextField</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #B392F0">error</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{</span><span style="color: #F97583">!</span><span style="color: #E1E4E8">isValidInput}</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #B392F0">fullWidth</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #B392F0">helperText</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{isValidInput </span><span style="color: #F97583">?</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">''</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'只能輸入中文字'</span><span style="color: #E1E4E8">}</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #B392F0">label</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"輸入一些中文（在你輸入注音時，不會進行內容判定）"</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #B392F0">margin</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"normal"</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #B392F0">onChange</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{handleUserInput}</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #B392F0">ref</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{inputRef}</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #B392F0">value</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{userInput}</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #B392F0">variant</span><span style="color: #F97583">=</span><span style="color: #9ECBFF">"standard"</span></span>
+<span class="line"><span style="color: #E1E4E8">    /></span></span>
+<span class="line"><span style="color: #E1E4E8">  );</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">default</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">memo</span><span style="color: #E1E4E8">(Input1);</span></span></code></pre>
+<p>簡單，但能提升使用者進行中文輸入的體驗。</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionstart_event">MDN: Element: compositionstart event</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/compositionend_event">MDN: Element: compositionend event</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match">String.prototype.match()</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

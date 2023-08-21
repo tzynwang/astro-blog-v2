@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>30天挑戰：「CSS 多行文字溢出後改為顯示刪節號」技術記錄</title>
+    <meta name="title" content="30天挑戰：「CSS 多行文字溢出後改為顯示刪節號」技術記錄">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/ithome2021-4-text-overflow-ellipsis/">
+    <meta property="og:title" content="30天挑戰：「CSS 多行文字溢出後改為顯示刪節號」技術記錄">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/ithome2021-4-text-overflow-ellipsis/">
+    <meta property="twitter:title" content="30天挑戰：「CSS 多行文字溢出後改為顯示刪節號」技術記錄">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">30天挑戰：「CSS 多行文字溢出後改為顯示刪節號」技術記錄</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-08-11 10:01</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span><span class="astro-2IYMVI75">
+  2021鐵人賽
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#單行文字" class="astro-QTOKGA5Y">單行文字</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#多行文字" class="astro-QTOKGA5Y">多行文字</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p><code>text-overflow: ellipsis;</code>僅能處理單行文字，若想要讓多行文字的尾端改為顯示刪節號，需使用<code>-webkit-line-clamp</code></p>
+<p class="codepen" data-height="400" data-theme-id="dark" data-default-tab="css,result" data-slug-hash="poPGJPx" data-user="Charlie7779" style="height: 400px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/Charlie7779/pen/poPGJPx">
+  text-overflow ellipsis</a> by Charlie (<a href="https://codepen.io/Charlie7779">@Charlie7779</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+<p>應用（卡片標題與內文）：</p>
+<p><img src="/2021/ithome2021-4-text-overflow-ellipsis/demo.gif" alt="效果展示"></p>
+<p>展示位置：<a href="https://tzynwang.github.io/ac_challenge_2-3F_profile-card/">https://tzynwang.github.io/ac_challenge_2-3F_profile-card/</a>
+原始碼：<a href="https://github.com/tzynwang/ac_challenge_2-3F_profile-card">https://github.com/tzynwang/ac_challenge_2-3F_profile-card</a></p>
+<h2 id="筆記">筆記</h2>
+<h3 id="單行文字">單行文字</h3>
+<blockquote>
+<p>MDN: The text-overflow property <strong>doesn’t force an overflow to occur</strong>. To make text overflow its container you have to set other CSS properties: <code>overflow</code> and <code>white-space</code>.</p>
+</blockquote>
+<ul>
+<li>務必搭配<code>overflow: hidden;</code>與<code>white-space: nowrap;</code></li>
+</ul>
+<h3 id="多行文字">多行文字</h3>
+<blockquote>
+<p>MDN: It only works in combination with the <strong>display property</strong> set to <code>-webkit-box</code> or <code>-webkit-inline-box</code>, and the <code>-webkit-box-orient</code> property set to <strong>vertical</strong>.</p>
+</blockquote>
+<blockquote>
+<p>MDN: In most cases you will also want to set <code>overflow</code> to <strong>hidden</strong>, otherwise the <strong>contents won’t be clipped but an ellipsis will still be shown</strong> after the specified number of lines.</p>
+</blockquote>
+<ul>
+<li><code>-webkit-line-clamp</code>需搭配<code>display: -webkit-box;</code>（或<code>display: -webkit-inline-box;</code>）與<code>-webkit-box-orient: vertical;</code></li>
+<li><code>-webkit-line-clamp</code>的數值代表顯示在畫面上的行數</li>
+<li>最後補上<code>overflow: hidden;</code>與<code>text-overflow: ellipsis;</code>來讓溢出的文字改顯示為刪節號；沒有設定<code>overflow: hidden;</code>的話，文字末端的刪節號還是會出現，但是超出<code>-webkit-line-clamp</code>的文字行也會跟著顯示出來</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow">MDN: text-overflow</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-orient">MDN: box-orient</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-line-clamp">MDN: -webkit-line-clamp</a></li>
+<li><a href="https://stackoverflow.com/questions/3922739/limit-text-length-to-n-lines-using-css">Limit text length to n lines using CSS</a></li>
+<li><a href="https://stackoverflow.com/questions/33058004/applying-an-ellipsis-to-multiline-text/41137262">Applying an ellipsis to multiline text</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

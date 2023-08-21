@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>在 MUI 5 中讓自定義的 CSS 樣式擁有較高的權重</title>
+    <meta name="title" content="在 MUI 5 中讓自定義的 CSS 樣式擁有較高的權重">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/mui-StyledEngineProvider-injectFirst/">
+    <meta property="og:title" content="在 MUI 5 中讓自定義的 CSS 樣式擁有較高的權重">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/mui-StyledEngineProvider-injectFirst/">
+    <meta property="twitter:title" content="在 MUI 5 中讓自定義的 CSS 樣式擁有較高的權重">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">在 MUI 5 中讓自定義的 CSS 樣式擁有較高的權重</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-01-26 20:37</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  MaterialUI
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#版本與環境" class="astro-QTOKGA5Y">版本與環境</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#使用實例" class="astro-QTOKGA5Y">使用實例</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#原始碼部分" class="astro-QTOKGA5Y">原始碼部分</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>簡單來說就是透過元件 <code>StyledEngineProvider</code> 搭配 <code>injectFirst</code> 來讓 MUI 的樣式先被注入，接著才是引入使用者自定義的 CSS 內容。如此一來可以不用把所有需要追加到 MUI 元件的樣式都放到 <code>styleOverrides</code> 中來處理、也可避免在自訂樣式中透過 <code>!important</code> 來覆蓋掉 MUI 的設定。</p>
+<h2 id="版本與環境">版本與環境</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #e1e4e8">@mui/material: ^5.0.0</span></span></code></pre>
+<h2 id="筆記">筆記</h2>
+<h3 id="使用實例">使用實例</h3>
+<p>使用方式如下：</p>
+<iframe src="https://codesandbox.io/embed/mui-styledengineprovider-injectfirst-lq5091?autoresize=1&#x26;fontsize=14&#x26;hidenavigation=1&#x26;module=%2Fdemo.tsx&#x26;theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="mui-StyledEngineProvider-injectFirst" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+<p>打開 DevTool 可看到 MUI 的樣式被提前到 head 第一順位，下方才接著是使用者自訂的 CSS 內容：</p>
+<p><img src="/2023/mui-StyledEngineProvider-injectFirst/injectFirst.png" alt="inject first"></p>
+<p>而以下是沒有使用 <code>injectFirst</code> 的情況，可以看到使用者自定義的 h1 樣式被 MUI 的設定覆蓋掉：</p>
+<iframe src="https://codesandbox.io/embed/mui-styledengineprovider-injectfirst-forked-ro4zt9?fontsize=14&#x26;hidenavigation=1&#x26;module=%2Fdemo.tsx&#x26;theme=dark" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" title="mui-StyledEngineProvider-injectFirst (forked)" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+<p>沒有搭配 <code>injectFirst</code> 時會讓 MUI 的設定壓軸引入，樣式權重會比使用者定義的 CSS 來得高：</p>
+<p><img src="/2023/mui-StyledEngineProvider-injectFirst/no-injectFirst.png" alt="without inject first"></p>
+<h3 id="原始碼部分">原始碼部分</h3>
+<p>追蹤 <code>import { StyledEngineProvider } from "@mui/material/styles";</code> 會發現 <code>StyledEngineProvider</code> 的本體位在 <code>material-ui/packages/mui-styled-engine/src/StyledEngineProvider/StyledEngineProvider.js</code> 中（<a href="https://github.com/mui/material-ui/blob/master/packages/mui-styled-engine/src/StyledEngineProvider/StyledEngineProvider.js">repo 連結在此</a>），而檔案中的註解也有說明：當使用者傳入 <code>props.injectFirst = true</code> 時，會讓樣式被移動到 <code>&#x3C;head></code> 的最上方。</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">*</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">as</span><span style="color: #E1E4E8"> React </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'react'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> PropTypes </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'prop-types'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> { CacheProvider } </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'@emotion/react'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">import</span><span style="color: #E1E4E8"> createCache </span><span style="color: #F97583">from</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'@emotion/cache'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #6A737D">// prepend: true moves MUI styles to the top of the &#x3C;head> so they're loaded first.</span></span>
+<span class="line"><span style="color: #6A737D">// It allows developers to easily override MUI styles with other styling solutions, like CSS modules.</span></span>
+<span class="line"><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">cache</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">createCache</span><span style="color: #E1E4E8">({ key: </span><span style="color: #9ECBFF">'css'</span><span style="color: #E1E4E8">, prepend: </span><span style="color: #79B8FF">true</span><span style="color: #E1E4E8"> });</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">default</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">StyledEngineProvider</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">props</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> { </span><span style="color: #79B8FF">injectFirst</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">children</span><span style="color: #E1E4E8"> } </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> props;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> injectFirst </span><span style="color: #F97583">?</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">&#x3C;</span><span style="color: #E1E4E8">CacheProvider value</span><span style="color: #F97583">=</span><span style="color: #E1E4E8">{cache}</span><span style="color: #F97583">></span><span style="color: #E1E4E8">{children}</span><span style="color: #F97583">&#x3C;/</span><span style="color: #E1E4E8">CacheProvider</span><span style="color: #F97583">></span></span>
+<span class="line"><span style="color: #E1E4E8">  ) </span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">    children</span></span>
+<span class="line"><span style="color: #E1E4E8">  );</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">StyledEngineProvider.propTypes </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/**</span></span>
+<span class="line"><span style="color: #6A737D">   * Your component tree.</span></span>
+<span class="line"><span style="color: #6A737D">   */</span></span>
+<span class="line"><span style="color: #E1E4E8">  children: PropTypes.node,</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/**</span></span>
+<span class="line"><span style="color: #6A737D">   * By default, the styles are injected last in the &#x3C;head> element of the page.</span></span>
+<span class="line"><span style="color: #6A737D">   * As a result, they gain more specificity than any other style sheet.</span></span>
+<span class="line"><span style="color: #6A737D">   * If you want to override MUI's styles, set this prop.</span></span>
+<span class="line"><span style="color: #6A737D">   */</span></span>
+<span class="line"><span style="color: #E1E4E8">  injectFirst: PropTypes.bool,</span></span>
+<span class="line"><span style="color: #E1E4E8">};</span></span></code></pre>
+<p>查詢 <code>@emotion/cache</code> <code>createCache</code> 的<a href="https://emotion.sh/docs/@emotion/cache">官方文件</a>也可看到 <code>prepend</code> 的功能：</p>
+<blockquote>
+<p>prepend: A <code>boolean</code> representing whether to prepend rather than append style tags into the specified container DOM node.</p>
+</blockquote>
+<p>結論：使用 <code>StyledEngineProvider</code> 搭配 <code>injectFirst</code> 可確保使用者自訂的樣式獲得較高的權重。</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://mui.com/material-ui/guides/interoperability/#css-injection-order">MUI: CSS injection order</a></li>
+<li><a href="https://stackoverflow.com/questions/69217739/material-ui-new-v5-0-0-injectfirst-fails-to-set-specificity">stackOverFlow: material ui ‘new’ v5.0.0 injectFirst fails to set specificity</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>閱讀筆記：Good Code, Bad Code Chapter 10 Unit testing principles</title>
+    <meta name="title" content="閱讀筆記：Good Code, Bad Code Chapter 10 Unit testing principles">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/good-code-bad-code-ch10-unit-testing-principles/">
+    <meta property="og:title" content="閱讀筆記：Good Code, Bad Code Chapter 10 Unit testing principles">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/good-code-bad-code-ch10-unit-testing-principles/">
+    <meta property="twitter:title" content="閱讀筆記：Good Code, Bad Code Chapter 10 Unit testing principles">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">閱讀筆記：Good Code, Bad Code Chapter 10 Unit testing principles</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-04-19 19:48</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Software Architecture
+</span><span class="astro-2IYMVI75">
+  Testing
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#確實反映問題" class="astro-QTOKGA5Y">確實反映問題</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#忽略實作細節" class="astro-QTOKGA5Y">忽略實作細節</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#具體的錯誤說明" class="astro-QTOKGA5Y">具體的錯誤說明</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#容易理解的測試內容" class="astro-QTOKGA5Y">容易理解的測試內容</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#容易被執行" class="astro-QTOKGA5Y">容易被執行</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>此篇是 Good Code, Bad Code: Think like a software engineer 第十章（Unit testing principles）的閱讀筆記，本章簡單介紹了單元測試，並探討「何謂好的測試」。</p>
+<h2 id="筆記">筆記</h2>
+<p>本書作者認為好的單元測試會有以下特性：</p>
+<ul>
+<li>能夠確實反映問題</li>
+<li>忽略實作細節</li>
+<li>具體的錯誤說明</li>
+<li>容易理解的測試內容</li>
+<li>容易被執行</li>
+</ul>
+<h3 id="確實反映問題">確實反映問題</h3>
+<p>好的單元測試除了要能抓出程式碼的問題外，也要在程式碼沒有問題時能夠穩定得到「測試順利結束」的結論。一個測試如果時常出現誤報，就會像狼來了的故事一樣，時間久了之後，工程師通常會：</p>
+<ol>
+<li>不再進行測試，因為結果也不準確</li>
+<li>即使測試「報錯」了，也不會認真對待這個測試結果（因為可能是誤報）</li>
+</ol>
+<p>故良好的單元測試只會在被測驗的程式碼「真的有問題」時報錯，並在程式碼能正常運行時，不進行任何誤報。</p>
+<h3 id="忽略實作細節">忽略實作細節</h3>
+<p>本書作者認為單元測試應將重點放在「確認執行一段程式碼後，其結果是否符合預期」，而非驗證其實作細節。一個好的測試<strong>不</strong>應該在一段程式碼進行重構後也需要跟著變動，如果重構程式碼導致測試需要一起翻新，這可能代表這些測試有牽涉到「檢驗實作細節」的部分。</p>
+<p>但本節同時也提醒工程師：</p>
+<blockquote>
+<p>What ultimately matters is that we properly <strong>test all the important behaviors of the code</strong>, and there may be occasions where we can’t do this using only what we consider the public API.</p>
+</blockquote>
+<p>重點是——測試應覆蓋一段程式碼中所有的重要邏輯，但不一定所有的重要邏輯都會被暴露出來，故撰寫測試時，還是要參考程式碼的實際行為來設計測試。</p>
+<p>書中舉例如下：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">class</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">AddressBook</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">private</span><span style="color: #E1E4E8"> </span><span style="color: #FFAB70">server</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Server</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">private</span><span style="color: #E1E4E8"> </span><span style="color: #FFAB70">emailAddressCache</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Record</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">>;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">lookupEmailAddress</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">userId</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">cachedEmail</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.emailAddressCache[userId];</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (cachedEmail) {</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> cachedEmail;</span></span>
+<span class="line"><span style="color: #E1E4E8">    }</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">fetchAndCacheEmailAddress</span><span style="color: #E1E4E8">(userId);</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">private</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">fetchAndCacheEmailAddress</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">userId</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">const</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">fetchedEmail</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.server.</span><span style="color: #B392F0">fetchEmailAddress</span><span style="color: #E1E4E8">(userId);</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> (fetchedEmail) {</span></span>
+<span class="line"><span style="color: #E1E4E8">      </span><span style="color: #79B8FF">this</span><span style="color: #E1E4E8">.emailAddressCache[userId] </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> fetchedEmail;</span></span>
+<span class="line"><span style="color: #E1E4E8">    }</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #F97583">return</span><span style="color: #E1E4E8"> fetchedEmail;</span></span>
+<span class="line"><span style="color: #E1E4E8">  }</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<p>上述 <code>AddressBook</code> 除了測試 <code>lookupEmailAddress</code> 是否能根據 <code>userId</code> 回傳正確的 emailAddress 外，也應該要測試「執行 <code>lookupEmailAddress</code> 時若 <code>cachedEmail</code> 中有對應的快取，就<strong>不會</strong>觸發 <code>fetchAndCacheEmailAddress</code>」此功能。畢竟設計 <code>emailAddressCache</code> 就是為了避免 <code>AddressBook</code> 在快取中有可用內容時繼續對 server 送出請求，故此行為應該也要被驗證。</p>
+<h3 id="具體的錯誤說明">具體的錯誤說明</h3>
+<p>重點：幫助工程師在測試報錯時能夠更快理解「到底發生什麼事」。</p>
+<p>以前端常用的測試框架 Jest 與 Cypress 來說，兩者都會在測試結果不符預期時同時提供「預期中」與「實際收到」的結果比對，工程師如果有針對每一個測試情境撰寫合理的測試描述，報錯時就應該不會花費太多時間在「理解錯誤到底是什麼、發生在哪裡」這些事情上。</p>
+<h3 id="容易理解的測試內容">容易理解的測試內容</h3>
+<p>「容易理解」指的是當工程師看到一個測試時，能知道這個測試要檢驗的是被測試程式碼的「哪一個段落」。當工程師對程式碼進行修改後，「容易理解的測試」會讓工程師很快就知道：</p>
+<ol>
+<li>單元測試是否需要跟著一起更新</li>
+<li>如果要一起更新，那有哪些測試需要修改</li>
+</ol>
+<p>另外，易懂的測試內容也可作為說明手冊，來為其他工程師說明該程式碼包含哪些功能。</p>
+<h3 id="容易被執行">容易被執行</h3>
+<p>重點：跑得慢或是很難跑起來的測試會讓工程師放棄進行測試，當測試不常被執行的話，就無法得知被測驗的程式碼是否功能安好，測試便失去意義。</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.manning.com/books/good-code-bad-code">Manning: Good Code, Bad Code</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

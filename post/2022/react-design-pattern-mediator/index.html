@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第26週 工作筆記：在 React App 中的 mediator pattern</title>
+    <meta name="title" content="2022 第26週 工作筆記：在 React App 中的 mediator pattern">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-design-pattern-mediator/">
+    <meta property="og:title" content="2022 第26週 工作筆記：在 React App 中的 mediator pattern">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-design-pattern-mediator/">
+    <meta property="twitter:title" content="2022 第26週 工作筆記：在 React App 中的 mediator pattern">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第26週 工作筆記：在 React App 中的 mediator pattern</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-07-02 13:01</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  Design Patterns
+</span><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#什麼是-mediator-pattern" class="astro-QTOKGA5Y">什麼是 mediator pattern</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#如何應用在-react-app-中" class="astro-QTOKGA5Y">如何應用在 React App 中</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#何謂無外觀元件" class="astro-QTOKGA5Y">何謂無外觀元件</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>最近為手上的專案加裝純文字複製與格式複製功能，與前輩討論後發現適合使用 mediator pattern 來管理此功能的相關邏輯</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="什麼是-mediator-pattern">什麼是 mediator pattern</h3>
+<blockquote>
+<p>patterns.dev: Use a central mediator object to handle communication between components</p>
+</blockquote>
+<blockquote>
+<p>refactoring.guru: Mediator is a behavioral design pattern that lets you <strong>reduce chaotic dependencies</strong> between objects.</p>
+</blockquote>
+<ul>
+<li>核心概念：此模式類似現實中的機場塔台與飛機；飛機們不會直接與彼此溝通，而是只會與塔台聯繫，塔台負責將資訊整理給各飛機</li>
+<li>優點：將資料的流動單純化
+<ul>
+<li>只會透過中央元件來處理資料（邏輯）</li>
+<li>其他需要執行特定操作的元件，只負責發送需求，不負責處理邏輯實作</li>
+<li>如果要 debug 也只需要集中檢查中央元件的內容即可，不需要將每一個元件的內容都挑出來檢查</li>
+</ul>
+</li>
+<li>缺點：有可能會造出 God Object
+<ul>
+<li>在沒有審慎分類功能的情況下，將不相干的資料都保存在同一個 class 中</li>
+<li><a href="https://en.wikipedia.org/wiki/God_object">Wikipedia</a>: In object-oriented programming, a God object is an object that references a large number of distinct types, <strong>has too many unrelated or un-categorized methods</strong>, or some combination of both.</li>
+</ul>
+</li>
+</ul>
+<h3 id="如何應用在-react-app-中">如何應用在 React App 中</h3>
+<ul>
+<li>mediator pattern 在 React 可以解決的問題：集中管理，避免實作的 code 散落（重複）於 App 各處</li>
+<li>應用解說：
+<ul>
+<li>假設一個 React App 中有複數個位置可以執行「複製」行為，直觀的解決方式是在「每一個需要執行複製的元件」中實作複製邏輯</li>
+<li>mediator 風味的解決方式是，將複製邏輯實作在一個沒有外觀的 Layer (middleware) 元件中，此元件負責監聽、處理 App 裡所有的複製需求；而此元件本身沒有（也不需要）視覺外觀</li>
+<li>而負責提供「複製功能」這個外觀的元件（比如一個按鈕），在使用者與元件互動（比如點了此按鈕）後，即發送「複製事件」，觸發 Layer (middleware) 的一連串行為</li>
+</ul>
+</li>
+</ul>
+<h3 id="何謂無外觀元件">何謂無外觀元件</h3>
+<script src="https://gist.github.com/tzynwang/6ad8892dbfd4fdd2b0105d2d2494cfed.js"></script>
+<p>參考上方範例，元件本身不提供視覺效果，僅包覆 children ，由 children 元件來處理與使用者互動的視覺</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.patterns.dev/posts/mediator-pattern/">patterns.dev: Mediator/Middleware Pattern</a></li>
+<li><a href="https://refactoring.guru/design-patterns/mediator">refactoring.guru: Mediator</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

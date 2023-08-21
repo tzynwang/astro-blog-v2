@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>30天挑戰：「設定input autofill樣式」技術記錄</title>
+    <meta name="title" content="30天挑戰：「設定input autofill樣式」技術記錄">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2021/ithome2021-6-css-input-autofill/">
+    <meta property="og:title" content="30天挑戰：「設定input autofill樣式」技術記錄">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2021/ithome2021-6-css-input-autofill/">
+    <meta property="twitter:title" content="30天挑戰：「設定input autofill樣式」技術記錄">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">30天挑戰：「設定input autofill樣式」技術記錄</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2021-08-15 09:29</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  CSS
+</span><span class="astro-2IYMVI75">
+  2021鐵人賽
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#樣式套用前" class="astro-QTOKGA5Y">樣式套用前</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#樣式修改後" class="astro-QTOKGA5Y">樣式修改後</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>並非透過<code>background-color</code>，而是<code>box-shadow</code>來調整 input 在 autofill 狀態下的背景顏色</p>
+<h2 id="樣式套用前">樣式套用前</h2>
+<p><img src="/2021/ithome2021-6-css-input-autofill/browser-default-input-autofill.png" alt="Chrome預設樣式"></p>
+<ul>
+<li>透過 autofill 選擇要填入表單的內容後，發現 input 欄位呈現出瀏覽器預設的文字與背景顏色，且無法透過<code>color</code>與<code>background-color</code>來修改其設定</li>
+<li>解決方式：
+<ul>
+<li>選取偽類<code>:-webkit-autofill</code>、<code>:-webkit-autofill:hover</code>與<code>:-webkit-autofill:focus</code></li>
+<li>文字顏色透過<code>-webkit-text-fill-color</code>來設定</li>
+<li>input 背景色使用<code>box-shadow</code>來實作</li>
+</ul>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #E1E4E8">-webkit-text-fill-color: var(--dark);</span></span>
+<span class="line"><span style="color: #85E89D">box-shadow</span><span style="color: #E1E4E8">: inset 0 0 0 1000px var(--white);</span></span>
+<span class="line"><span style="color: #6A737D">/* 使用內陰影，模糊程度為0，並設定散播1000px */</span></span></code></pre>
+</li>
+</ul>
+<h2 id="樣式修改後">樣式修改後</h2>
+<p><img src="/2021/ithome2021-6-css-input-autofill/set-autofill-style.png" alt="樣式套用後">
+<img src="/2021/ithome2021-6-css-input-autofill/menu.png" alt="不影響autofill選單樣式"></p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://css-tricks.com/snippets/css/change-autocomplete-styles-webkit-browsers/">Change Autocomplete Styles in WebKit Browsers</a></li>
+<li><a href="https://blog.csdn.net/lys20000913/article/details/104529698">chrome 浏览器中自带 input 样式 input:-internal-autofill-selected（修改 input 背景色）</a></li>
+<li><a href="https://blog.csdn.net/zhengjie0722/article/details/90319321">CSS（一）chrome 浏览器表单自动填充默认样式-autofill</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第33週 學習筆記：手刻對話框元件</title>
+    <meta name="title" content="2022 第33週 學習筆記：手刻對話框元件">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-home-made-dialog/">
+    <meta property="og:title" content="2022 第33週 學習筆記：手刻對話框元件">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-home-made-dialog/">
+    <meta property="twitter:title" content="2022 第33週 學習筆記：手刻對話框元件">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第33週 學習筆記：手刻對話框元件</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-08-20 09:18</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  HTML
+</span><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#元件設計" class="astro-QTOKGA5Y">元件設計</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#dialogground" class="astro-QTOKGA5Y">DialogGround</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#homemadedialog" class="astro-QTOKGA5Y">HomeMadeDialog</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#portal" class="astro-QTOKGA5Y">Portal</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>參考了 <a href="https://github.com/mui/material-ui/blob/master/packages/mui-material/src/Dialog/Dialog.js">Material UI Dialog 的原始碼</a>，刻了一個自用的對話框元件</p>
+<ul>
+<li>除了使用 <code>classNames</code> 套件來管理元件的 css class name 外，目前暫時不需要其他的 dependency package</li>
+<li>待改善：目前的設計還無法透過 props 傳入動畫樣式設定</li>
+</ul>
+<p>原始碼：<a href="https://github.com/tzynwang/react-home-made-dialog">https://github.com/tzynwang/react-home-made-dialog</a>
+展示頁：<a href="https://tzynwang.github.io/react-home-made-dialog/">https://tzynwang.github.io/react-home-made-dialog/</a></p>
+<h2 id="元件設計">元件設計</h2>
+<script src="https://gist.github.com/tzynwang/eeb23c983ef8fcaac9b56699d7f59798.js"></script>
+<h3 id="dialogground">DialogGround</h3>
+<ul>
+<li>對話框元件的背景，設定 <code>aria role</code> 為 <code>presentation</code> 代表此元件僅作為視覺表現用
+<ul>
+<li>MDN: This is done with the <code>presentation</code> role or its synonym role <code>none</code>, which declare that an element is being used <strong>only for presentation</strong> and therefore <strong>does not have any accessibility semantics</strong>.</li>
+</ul>
+</li>
+<li>負責監聽 <code>click</code> 與 <code>keydown</code> 事件，再根據 props 是否傳入 <code>disableCloseByBackdropClick</code> 與 <code>disableCloseByKeyPress</code> 來決定事件發生時是否要關閉對話框</li>
+</ul>
+<h3 id="homemadedialog">HomeMadeDialog</h3>
+<ul>
+<li>對話框本體，在這裡監聽 <code>transitionend</code> 事件
+<ul>
+<li>偵測到 <code>dialogOpen</code> 轉變為 <code>false</code> 時，對元件的 css class 加上 <code>scopedStyle.unmountedAnimation</code> 執行 transition 動畫效果</li>
+<li>監聽到 transition 動畫效果結束時，將 state <code>mounted</code> 設定為 <code>false</code>，此時才將元件自畫面上移除</li>
+<li>透過以上流程，讓對話框元件先執行透明度轉變為 0 的動畫，動畫結束後，再移除對話框元件</li>
+</ul>
+</li>
+<li>另外，因為元件本身允許傳入所有 HTMLDivElement 原生的 attributes，故在透過 <code>...rest</code> 取得剩下所有的 props 後，將 <code>style</code>、<code>className</code> 與 <code>role</code> 的值複製一份到變數中，移除 <code>rest</code> 物件裡前述的鍵值，最後才使用 spread syntax 將原生 attributes 傳給 div 本身；移除對應鍵值是為了避免 spread syntax 覆蓋掉元件本身 <code>style</code>、<code>className</code> 與 <code>role</code> 的設定</li>
+</ul>
+<h3 id="portal">Portal</h3>
+<script src="https://gist.github.com/tzynwang/41db5e893a77591dd4134420634dab45.js"></script>
+<ul>
+<li>使用 react-dom 提供的 <code>ReactDOM.createPortal</code> 來將元件掛載至指定 DOM 元件中，在這邊預設目的地為 <code>document.body</code></li>
+<li>將對話框元件掛載出去的好處是可以不受親代元件 <code>z-index</code> 或 <code>overflow: hidden</code> 限制元件的可見度；且將對話框掛載到另外一個平面節點上的話，可以在對話框本身需要重渲染時，重渲染的演算只需要處理該節點
+<ul>
+<li>如果將對話框原地掛載到使用此元件的節點，有可能該節點處在巢狀結構深處，對話框需要重渲染時會連帶影響一整串節點</li>
+</ul>
+</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/presentation_role">MDN ARIA: presentation role</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionend_event">MDN: transitionend event</a></li>
+<li><a href="https://stackoverflow.com/questions/40064249/react-animate-mount-and-unmount-of-a-single-component">StackOverFlow: React - animate mount and unmount of a single component</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

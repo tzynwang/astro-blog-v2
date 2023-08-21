@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>2022 第49週 學習筆記：React.SyntheticEvent</title>
+    <meta name="title" content="2022 第49週 學習筆記：React.SyntheticEvent">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/react-synthetic-event/">
+    <meta property="og:title" content="2022 第49週 學習筆記：React.SyntheticEvent">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/react-synthetic-event/">
+    <meta property="twitter:title" content="2022 第49週 學習筆記：React.SyntheticEvent">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">2022 第49週 學習筆記：React.SyntheticEvent</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-12-09 08:03</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  MaterialUI
+</span><span class="astro-2IYMVI75">
+  React
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#materialui-4-與-5-的型別定義差別" class="astro-QTOKGA5Y">MaterialUI 4 與 5 的型別定義差別</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#reactsyntheticevent" class="astro-QTOKGA5Y">React.SyntheticEvent</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>在將專案的 MaterialUI 從 4 升級到 5 時需要調整一部分元件的 <code>onChange</code> <code>event</code> 型別定義，記錄一下關於 <code>React.SyntheticEvent</code> 的相關筆記。</p>
+<h2 id="筆記">筆記</h2>
+<h3 id="materialui-4-與-5-的型別定義差別">MaterialUI 4 與 5 的型別定義差別</h3>
+<p>根據 <a href="https://mui.com/material-ui/migration/v5-component-changes/#update-event-type-typescript-3">MaterialUI: Breaking changes in v5, part two: core components</a> 中對於 <code>Select</code> 元件的說明：</p>
+<blockquote>
+<p>The event in <code>onChange</code> is now typed as a <code>React.SyntheticEvent</code> instead of a <code>React.ChangeEvent</code>.</p>
+</blockquote>
+<p>直接來檢查一下兩代的型別定義內容，首先 4 代對 <code>Select</code> 的 <code>onChange</code> 型別定義如下：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">interface</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">SelectProps</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">extends</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">StandardProps</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">InputProps</span><span style="color: #E1E4E8">, </span><span style="color: #B392F0">SelectClassKey</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'value'</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'onChange'</span><span style="color: #E1E4E8">>,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #B392F0">Pick</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">SelectInputProps</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'onChange'</span><span style="color: #E1E4E8">> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/**</span></span>
+<span class="line"><span style="color: #6A737D">   * Callback function fired when a menu item is selected.</span></span>
+<span class="line"><span style="color: #6A737D">   *</span></span>
+<span class="line"><span style="color: #6A737D">   * </span><span style="color: #F97583">@param</span><span style="color: #6A737D"> </span><span style="color: #B392F0">{object}</span><span style="color: #6A737D"> </span><span style="color: #E1E4E8">event</span><span style="color: #6A737D"> The event source of the callback.</span></span>
+<span class="line"><span style="color: #6A737D">   * You can pull out the new value by accessing `event.target.value` (any).</span></span>
+<span class="line"><span style="color: #6A737D">   * </span><span style="color: #F97583">@param</span><span style="color: #6A737D"> </span><span style="color: #B392F0">{object}</span><span style="color: #6A737D"> </span><span style="color: #E1E4E8">[child]</span><span style="color: #6A737D"> The react element that was selected when `native` is `false` (default).</span></span>
+<span class="line"><span style="color: #6A737D">   * </span><span style="color: #F97583">@document</span></span>
+<span class="line"><span style="color: #6A737D">   */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">onChange</span><span style="color: #F97583">?:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">SelectInputProps</span><span style="color: #E1E4E8">[</span><span style="color: #9ECBFF">'onChange'</span><span style="color: #E1E4E8">];</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">interface</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">SelectInputProps</span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// ...</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">onChange</span><span style="color: #F97583">?:</span><span style="color: #E1E4E8"> (</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #FFAB70">event</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">ChangeEvent</span><span style="color: #E1E4E8">&#x3C;{ </span><span style="color: #FFAB70">name</span><span style="color: #F97583">?:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">; </span><span style="color: #FFAB70">value</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">unknown</span><span style="color: #E1E4E8"> }>,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #FFAB70">child</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">ReactNode</span></span>
+<span class="line"><span style="color: #E1E4E8">  ) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">void</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<p>MaterialUI 4 <code>Select</code> 元件 <code>onChange</code> 的 <code>event</code> 型別為 <code>React.ChangeEvent&#x3C;{ name?: string; value: unknown }></code>；這裡的定義內容跟官方 migration 文件的說明一致。</p>
+<p>而以下是 5 代的型別定義：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">interface</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">SelectProps</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">T</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">unknown</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">extends</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">StandardProps</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">InputProps</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'value'</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'onChange'</span><span style="color: #E1E4E8">>,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #B392F0">Omit</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">OutlinedInputProps</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">'value'</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'onChange'</span><span style="color: #E1E4E8">>,</span></span>
+<span class="line"><span style="color: #E1E4E8">    </span><span style="color: #B392F0">Pick</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">SelectInputProps</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">T</span><span style="color: #E1E4E8">>, </span><span style="color: #9ECBFF">'onChange'</span><span style="color: #E1E4E8">> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">/**</span></span>
+<span class="line"><span style="color: #6A737D">   * Callback fired when a menu item is selected.</span></span>
+<span class="line"><span style="color: #6A737D">   *</span></span>
+<span class="line"><span style="color: #6A737D">   * </span><span style="color: #F97583">@param</span><span style="color: #6A737D"> </span><span style="color: #B392F0">{SelectChangeEvent&#x3C;T>}</span><span style="color: #6A737D"> </span><span style="color: #E1E4E8">event</span><span style="color: #6A737D"> The event source of the callback.</span></span>
+<span class="line"><span style="color: #6A737D">   * You can pull out the new value by accessing `event.target.value` (any).</span></span>
+<span class="line"><span style="color: #6A737D">   * **Warning**: This is a generic event, not a change event, unless the change event is caused by browser autofill.</span></span>
+<span class="line"><span style="color: #6A737D">   * </span><span style="color: #F97583">@param</span><span style="color: #6A737D"> </span><span style="color: #B392F0">{object}</span><span style="color: #6A737D"> </span><span style="color: #E1E4E8">[child]</span><span style="color: #6A737D"> The react element that was selected when `native` is `false` (default).</span></span>
+<span class="line"><span style="color: #6A737D">   */</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">onChange</span><span style="color: #F97583">?:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">SelectInputProps</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">T</span><span style="color: #E1E4E8">>[</span><span style="color: #9ECBFF">'onChange'</span><span style="color: #E1E4E8">];</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">export</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">interface</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">SelectInputProps</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">T</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">unknown</span><span style="color: #E1E4E8">> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// ...</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">onChange</span><span style="color: #F97583">?:</span><span style="color: #E1E4E8"> (</span><span style="color: #FFAB70">event</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">SelectChangeEvent</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">T</span><span style="color: #E1E4E8">>, </span><span style="color: #FFAB70">child</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">ReactNode</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">void</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// 反而是 onClose 與 onOpen 的 event 才是直接被定義為 SyntheticEvent</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">onClose</span><span style="color: #F97583">?:</span><span style="color: #E1E4E8"> (</span><span style="color: #FFAB70">event</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">SyntheticEvent</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">void</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">onOpen</span><span style="color: #F97583">?:</span><span style="color: #E1E4E8"> (</span><span style="color: #FFAB70">event</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">SyntheticEvent</span><span style="color: #E1E4E8">) </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">void</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">type</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">SelectChangeEvent</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">T</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">> </span><span style="color: #F97583">=</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> (</span><span style="color: #B392F0">Event</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">&#x26;</span><span style="color: #E1E4E8"> { </span><span style="color: #FFAB70">target</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> { </span><span style="color: #FFAB70">value</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">T</span><span style="color: #E1E4E8">; </span><span style="color: #FFAB70">name</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8"> } })</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">React</span><span style="color: #E1E4E8">.</span><span style="color: #B392F0">ChangeEvent</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">HTMLInputElement</span><span style="color: #E1E4E8">>;</span></span></code></pre>
+<p>MaterialUI 5 <code>Select</code> 元件 <code>onChange</code> 的 <code>event</code> 型別可能是 <code>Event &#x26; { target: { value: T; name: string } }</code> 或 <code>React.ChangeEvent&#x3C;HTMLInputElement></code></p>
+<p>再追一下 <code>React.ChangeEvent</code> 到底是什麼內容，發現其實就是 <code>SyntheticEvent</code> 的延伸：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">interface</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">ChangeEvent</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">T</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Element</span><span style="color: #E1E4E8">> </span><span style="color: #F97583">extends</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">SyntheticEvent</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">T</span><span style="color: #E1E4E8">> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">target</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">EventTarget</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">&#x26;</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">T</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">interface</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">SyntheticEvent</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">T</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Element</span><span style="color: #E1E4E8">, </span><span style="color: #B392F0">E</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">Event</span><span style="color: #E1E4E8">></span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #F97583">extends</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">BaseSyntheticEvent</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">E</span><span style="color: #E1E4E8">, </span><span style="color: #B392F0">EventTarget</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">&#x26;</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">T</span><span style="color: #E1E4E8">, </span><span style="color: #B392F0">EventTarget</span><span style="color: #E1E4E8">> {}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #F97583">interface</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">BaseSyntheticEvent</span><span style="color: #E1E4E8">&#x3C;</span><span style="color: #B392F0">E</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">object</span><span style="color: #E1E4E8">, </span><span style="color: #B392F0">C</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">any</span><span style="color: #E1E4E8">, </span><span style="color: #B392F0">T</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">any</span><span style="color: #E1E4E8">> {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">nativeEvent</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">E</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">currentTarget</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">C</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">target</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">T</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">bubbles</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">boolean</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">cancelable</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">boolean</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">defaultPrevented</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">boolean</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">eventPhase</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">number</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">isTrusted</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">boolean</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">preventDefault</span><span style="color: #E1E4E8">()</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">void</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">isDefaultPrevented</span><span style="color: #E1E4E8">()</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">boolean</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">stopPropagation</span><span style="color: #E1E4E8">()</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">void</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">isPropagationStopped</span><span style="color: #E1E4E8">()</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">boolean</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">persist</span><span style="color: #E1E4E8">()</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">void</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">timeStamp</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">number</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #FFAB70">type</span><span style="color: #F97583">:</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">string</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<p>雖然 <code>React.ChangeEvent</code> 確實是 <code>React.SyntheticEvent</code> 的延伸，但就跟 migration 文件裡面的描述有點微妙出入，五代的 <code>Select</code> <code>onChange</code> 事件並沒有直接被定義為 <code>React.SyntheticEvent</code> 🤔</p>
+<h3 id="reactsyntheticevent">React.SyntheticEvent</h3>
+<blockquote>
+<p>React official: Your event handlers will be passed instances of <code>SyntheticEvent</code>, a <strong>cross-browser wrapper</strong> around the browser’s native event. React normalizes events so that they have consistent properties across different browsers.</p>
+</blockquote>
+<p>為了在不同的瀏覽器之間都能有一致的事件行為，在 event handlers 收到的事件會是 React 包裝過的 <code>SyntheticEvent</code> 而非原生事件（<code>nativeEvent</code>）。</p>
+<p>並且在 React 17 以前，<code>SyntheticEvent</code> 有 <code>pooling</code> 特性，亦即這些事件會被重複地使用：</p>
+<blockquote>
+<p>The <code>SyntheticEvent</code> objects are pooled. This means that the <code>SyntheticEvent</code> object will <strong>be reused</strong> and <strong>all properties will be nullified</strong> after the event handler has been called.</p>
+</blockquote>
+<p>所以以下這種行為在 React 17 以前是行不通的：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">handleChange</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">e</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// This won't work because the event object gets reused.</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">setTimeout</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(e.target.value); </span><span style="color: #6A737D">// Too late!</span></span>
+<span class="line"><span style="color: #E1E4E8">  }, </span><span style="color: #79B8FF">100</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<p>解決辦法是透過 <code>e.persist()</code> 來強制保留事件內容：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">function</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">handleChange</span><span style="color: #E1E4E8">(</span><span style="color: #FFAB70">e</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #6A737D">// Prevents React from resetting its properties:</span></span>
+<span class="line"><span style="color: #E1E4E8">  e.</span><span style="color: #B392F0">persist</span><span style="color: #E1E4E8">();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #E1E4E8">  </span><span style="color: #B392F0">setTimeout</span><span style="color: #E1E4E8">(() </span><span style="color: #F97583">=></span><span style="color: #E1E4E8"> {</span></span>
+<span class="line"><span style="color: #E1E4E8">    console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(e.target.value); </span><span style="color: #6A737D">// Works</span></span>
+<span class="line"><span style="color: #E1E4E8">  }, </span><span style="color: #79B8FF">100</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<p>但這樣做（<code>e.persist()</code>）也會失去一開始使用 event pooling 的意義。後來這個行為也在 React 17 之後被拔掉了。</p>
+<blockquote>
+<p>React 17 on the web <strong>does not</strong> use event pooling.</p>
+</blockquote>
+<p>╮( ˘･з･)╭</p>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://reactjs.org/docs/events.html">React: SyntheticEvent</a></li>
+<li><a href="https://reactjs.org/docs/legacy-event-pooling.html">React: Event Pooling</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

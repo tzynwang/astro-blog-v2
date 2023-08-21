@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>閱讀筆記：The Programmer&#39;s Brain Chapter 8 How to get better at naming things</title>
+    <meta name="title" content="閱讀筆記：The Programmer's Brain Chapter 8 How to get better at naming things">
+    <meta name="description" content="命名很重要，名稱是工程師閱讀一段程式碼時最優先接觸到的內容，會影響工程師如何理解一段程式碼。">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2023/the-programmers-brain-ch8-how-to-get-better-at-naming-things/">
+    <meta property="og:title" content="閱讀筆記：The Programmer's Brain Chapter 8 How to get better at naming things">
+    <meta property="og:description" content="命名很重要，名稱是工程師閱讀一段程式碼時最優先接觸到的內容，會影響工程師如何理解一段程式碼。">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2023/the-programmers-brain-ch8-how-to-get-better-at-naming-things/">
+    <meta property="twitter:title" content="閱讀筆記：The Programmer's Brain Chapter 8 How to get better at naming things">
+    <meta property="twitter:description" content="命名很重要，名稱是工程師閱讀一段程式碼時最優先接觸到的內容，會影響工程師如何理解一段程式碼。">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">閱讀筆記：The Programmer&#39;s Brain Chapter 8 How to get better at naming things</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2023-08-03 20:53</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  General
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#總結" class="astro-QTOKGA5Y">總結</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#筆記" class="astro-QTOKGA5Y">筆記</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#為何名稱很重要" class="astro-QTOKGA5Y">為何名稱很重要</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#如何命名" class="astro-QTOKGA5Y">如何命名</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="總結">總結</h2>
+<p>此篇是 Good Code, Bad Code: Think like a software engineer 第八章（How to get better at naming things）的閱讀筆記，重點如下：</p>
+<ol>
+<li>命名很重要，因為名稱會影響工程師如何理解一段程式碼</li>
+<li>命名的技巧：
+<ol>
+<li>整個 code base 盡量使用一致的命名模式</li>
+<li>根據一段程式碼的重點來挑選合適的單字，並將這些單字組合成語意化的名稱</li>
+</ol>
+</li>
+</ol>
+<h2 id="筆記">筆記</h2>
+<h3 id="為何名稱很重要">為何名稱很重要</h3>
+<p>名稱是工程師閱讀一段程式碼時最優先接觸到的內容。且（變數）名稱本身也能作為信標（beacon）來提示閱讀者該段程式碼究竟想達成什麼樣的任務。</p>
+<blockquote>
+<p>…names serve as an important type of documentation because they are <strong>available right inside the codebase</strong>. Hence the “documentation” read most will be comments in the code and names.</p>
+</blockquote>
+<blockquote>
+<p>Variable names are important beacons that help readers make sense of code in addition to comments.</p>
+</blockquote>
+<p>整個 code base 使用連貫的命名可以幫助分塊（chunking）；如果類似的概念在 code base 中換個位置就換個名稱，則讀者需要耗費大量精力來記住這些名字。</p>
+<blockquote>
+<p>…using consistent naming practices across a codebase. That is sensible since it is likely to support chunking. If all names were formatted in different ways, you would have to spend effort on every name to find its meaning.</p>
+</blockquote>
+<p>名稱也能作為提示來幫助工程師回想長期記憶（long-term memory）中是否有「有助於理解程式碼的相關內容」。</p>
+<blockquote>
+<p>Using the <strong>right domain concept</strong> for a variable name or class can help the reader of code <strong>find relevant information in their LTM</strong>.</p>
+</blockquote>
+<p>可參考下圖：變數名稱可以提示讀者相關的「領域知識」、「程式碼概念」（比如用 <code>tree</code> 來命名樹狀的資料結構），也有可能是「慣用命名」（比如使用 <code>i</code> 來作為迴圈中的 index 變數）。</p>
+<p><img src="/2023/the-programmers-brain-ch8-how-to-get-better-at-naming-things/CH08_F02_Hermans2.png" alt="variable name as a hint"></p>
+<h3 id="如何命名">如何命名</h3>
+<ol>
+<li>整份 code base 使用連貫性的命名規則，一致的名稱有助於分塊（chunking），降低認知負荷</li>
+<li>使用有意義的單字；謹慎使用前綴（prefix）、後綴（suffix），因為加上這些綴詞帶來的好處可能低於閱讀時產生的困難度</li>
+<li>先列出一段程式碼要完成的任務重點，再根據這些重點挑出合適單字；最後，將這些單字以「書寫成句子時」會出現的順序來合成名稱</li>
+</ol>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://www.manning.com/books/the-programmers-brain">Manning: The Programmer’s Brain</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" class="astro-D4ZPMAD2">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="sitemap" href="/sitemap-index.xml">
+    <meta name="generator" content="Astro v2.10.12">
+
+    <!-- Primary Meta Tags -->
+    <title>奇妙的 JavaScript 程式碼： for (var of of of) {...}</title>
+    <meta name="title" content="奇妙的 JavaScript 程式碼： for (var of of of) {...}">
+    <meta name="description" content="">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tzynwang.github.io/post/2022/js-of-of-of/">
+    <meta property="og:title" content="奇妙的 JavaScript 程式碼： for (var of of of) {...}">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://tzynwang.github.io/post/2022/js-of-of-of/">
+    <meta property="twitter:title" content="奇妙的 JavaScript 程式碼： for (var of of of) {...}">
+    <meta property="twitter:description" content="">
+    <meta property="twitter:image" content="https://tzynwang.github.io/alexander-andrews-mEdKuPYJe1I.jpg">
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/_astro/index.5f60e57f.css" />
+<link rel="stylesheet" href="/_astro/2-1-movie-list-i18n-note.5f900e92.css" /></head>
+  <body class="astro-D4ZPMAD2">
+    <section class="side-contnet astro-D4ZPMAD2">
+      <h1 class="astro-D4ZPMAD2">普通文組 2.0</h1>
+      <nav class="astro-D4ZPMAD2">
+        <a href="/" class="astro-D4ZPMAD2">首頁</a>
+        <a href="/archive" class="astro-D4ZPMAD2">全文章歸檔</a>
+      </nav>
+    </section>
+    <section class="main-content astro-D4ZPMAD2">
+      
+  <div class="post-container astro-QTOKGA5Y">
+    <h1 class="astro-QTOKGA5Y">奇妙的 JavaScript 程式碼： for (var of of of) {...}</h1>
+    <div class="info astro-QTOKGA5Y">
+      <span class="astro-QTOKGA5Y">2022-06-21 20:46</span>
+      <span class="astro-QTOKGA5Y"><span class="astro-2IYMVI75">
+  JavaScript
+</span></span>
+      <ul class="astro-QTOKGA5Y">
+        <li class="toc-2 astro-QTOKGA5Y">
+              <a href="#奇妙範例" class="astro-QTOKGA5Y">奇妙範例</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#解析" class="astro-QTOKGA5Y">解析</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#變形-a" class="astro-QTOKGA5Y">變形 A</a>
+            </li><li class="toc-3 astro-QTOKGA5Y">
+              <a href="#變形-b" class="astro-QTOKGA5Y">變形 B</a>
+            </li><li class="toc-2 astro-QTOKGA5Y">
+              <a href="#參考文件" class="astro-QTOKGA5Y">參考文件</a>
+            </li>
+      </ul>
+    </div>
+    <h2 id="奇妙範例">奇妙範例</h2>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">var</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> [</span><span style="color: #9ECBFF">'of'</span><span style="color: #E1E4E8">];</span></span>
+<span class="line"><span style="color: #F97583">for</span><span style="color: #E1E4E8"> (</span><span style="color: #F97583">var</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(</span><span style="color: #F97583">of</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<p>輸出結果是字串型態的 <code>'of'</code></p>
+<h2 id="解析">解析</h2>
+<p>把開頭的題目整理一下，先去掉眾多 <code>of</code> 帶來的混亂：</p>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">var</span><span style="color: #E1E4E8"> arr </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> [</span><span style="color: #9ECBFF">'hello world'</span><span style="color: #E1E4E8">];</span></span>
+<span class="line"><span style="color: #F97583">for</span><span style="color: #E1E4E8"> (</span><span style="color: #F97583">var</span><span style="color: #E1E4E8"> a </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> arr) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(a); </span><span style="color: #6A737D">// 輸出 'hello world'</span></span>
+<span class="line"><span style="color: #E1E4E8">  console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(arr); </span><span style="color: #6A737D">// 輸出 ['hello world']</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span></code></pre>
+<ul>
+<li>可反推得知開頭題目被輸出到終端的是 <code>(var of of of)</code> 的第一個 <code>of</code></li>
+<li>另外已知透過 <code>var</code> 可以重複宣告同名變數：
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">var</span><span style="color: #E1E4E8"> str </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'hello'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">var</span><span style="color: #E1E4E8"> str </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'world'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #E1E4E8">console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(str); </span><span style="color: #6A737D">// 'world'</span></span></code></pre>
+</li>
+<li>謎底：其實開頭的題目就是 <code>var of = ['of'];</code> 被 <code>(var of of of)</code> 覆蓋過去，內容從原本的 <code>['of']</code> 變成 <code>'of'</code></li>
+</ul>
+<h3 id="變形-a">變形 A</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">let</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> [</span><span style="color: #9ECBFF">'of'</span><span style="color: #E1E4E8">];</span></span>
+<span class="line"><span style="color: #F97583">for</span><span style="color: #E1E4E8"> (</span><span style="color: #F97583">let</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(</span><span style="color: #F97583">of</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"><span style="color: #6A737D">// Uncaught ReferenceError: Cannot access 'of' before initialization</span></span></code></pre>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">var</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> [</span><span style="color: #9ECBFF">'of'</span><span style="color: #E1E4E8">];</span></span>
+<span class="line"><span style="color: #F97583">for</span><span style="color: #E1E4E8"> (</span><span style="color: #F97583">let</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  console.</span><span style="color: #B392F0">log</span><span style="color: #E1E4E8">(</span><span style="color: #F97583">of</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"><span style="color: #6A737D">// Uncaught ReferenceError: Cannot access 'of' before initialization</span></span></code></pre>
+<ul>
+<li>以上兩組 code 的爆炸點都在 <code>let of of of</code> 的第二個 <code>of</code></li>
+<li>出事的理由是因為踩到 Temporal dead zone 的坑，參考 MDN 說明：
+<ul>
+<li>A <code>let</code> or <code>const</code> variable is said to be in a “temporal dead zone” (TDZ) from the start of the block until code execution reaches the line where the variable is declared. While inside the TDZ, the variable has not been initialized with a value, and <strong>any attempt to access it will result in a ReferenceError</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="變形-b">變形 B</h3>
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">let</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> [</span><span style="color: #9ECBFF">'of'</span><span style="color: #E1E4E8">];</span></span>
+<span class="line"><span style="color: #F97583">for</span><span style="color: #E1E4E8"> (</span><span style="color: #F97583">var</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">of</span><span style="color: #E1E4E8">) {</span></span>
+<span class="line"><span style="color: #E1E4E8">  console.</span><span style="color: #B392F0">info</span><span style="color: #E1E4E8">(</span><span style="color: #F97583">of</span><span style="color: #E1E4E8">);</span></span>
+<span class="line"><span style="color: #E1E4E8">}</span></span>
+<span class="line"><span style="color: #6A737D">// Uncaught SyntaxError: Identifier 'of' has already been declared</span></span></code></pre>
+<ul>
+<li>其實就是不能對透過 <code>let</code> 宣告的變數再進行一次同名變數宣告</li>
+<li>變形 B 可抽換成：
+<pre is:raw="" class="astro-code github-dark" style="background-color: #24292e; overflow-x: auto;" tabindex="0"><code><span class="line"><span style="color: #F97583">let</span><span style="color: #E1E4E8"> str </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'hello'</span><span style="color: #E1E4E8">;</span></span>
+<span class="line"><span style="color: #F97583">var</span><span style="color: #E1E4E8"> str </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">'world'</span><span style="color: #E1E4E8">;</span></span></code></pre>
+</li>
+<li>JavaScript 只允許 <code>var</code> 進行同名變數的重複宣告，透過 <code>let</code> 或 <code>const</code> 宣告的變數都不允許此行為</li>
+</ul>
+<h2 id="參考文件">參考文件</h2>
+<ul>
+<li><a href="https://twitter.com/madzadev/status/1538432593137483783?s=20&#x26;t=mr7eOBs-wUlDQAVPUY4y1g">Question: will this JS code throw an error?</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#reserved_keywords_as_of_ecmascript_2015">MDN: Reserved keywords as of ECMAScript 2015</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#temporal_dead_zone_tdz">MDN: let/Temporal dead zone (TDZ)</a></li>
+</ul>
+  </div>
+
+      <footer class="astro-QLGQ3ONJ">Tzu Yin (Charlie) 🦊 Made in Taiwan</footer>
+    </section>
+  </body></html>
